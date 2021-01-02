@@ -13,7 +13,18 @@ const UserInfoInner : React.FC<UserInfoInnerProps> = ({setToken}) => {
     // @ts-ignore
     const isSignedIn = (): boolean => initialized && window.gapi.auth2.getAuthInstance().isSignedIn.get();
 
-    const updateSignedIn = () => setSignedIn(isSignedIn());
+    const updateSignedIn = () => {
+        let si = isSignedIn();
+        
+        if (si && !signedIn) {
+            // @ts-ignore
+            let gUser = window.gapi.auth2.getAuthInstance().currentUser.get();
+            let currentToken = gUser.getAuthResponse().id_token;
+            setToken(currentToken);
+        }
+
+        setSignedIn(si);
+    };
 
     function onSignIn(googleUser: any) {
         var profile = googleUser.getBasicProfile();

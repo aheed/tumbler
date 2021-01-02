@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { UserTokenContext } from '../services/UserTokenContext';
+
+interface UserInfoInnerProps {
+    setToken: (token: string) => void
+}
 
 
-
-
-export const UserInfo = () => {
+const UserInfoInner : React.FC<UserInfoInnerProps> = ({setToken}) => {
     const [initialized, setInitialized] = useState(false);
     const [signedIn, setSignedIn] = useState(false);
 
@@ -20,6 +23,7 @@ export const UserInfo = () => {
         console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
         var id_token = googleUser.getAuthResponse().id_token;
         console.log('id_token: ' + id_token);
+        setToken(id_token);
     
         console.log('cool!');
         updateSignedIn();
@@ -37,6 +41,7 @@ export const UserInfo = () => {
         console.log(auth2?.isSignedIn.get());
         auth2?.signOut().then(function () {
           console.log('User signed out.');
+          setToken('');
           updateSignedIn();
         });
     }
@@ -47,8 +52,6 @@ export const UserInfo = () => {
         gapi.load('auth2', function() {
 
             gapi.auth2.init({
-          
-              //client_id: 'my_client_info.apps.googleusercontent.com',
           
             }).then(function(){
           
@@ -83,7 +86,7 @@ export const UserInfo = () => {
   );
   
       
-  return (
+  return (    
     <div className="UserInfo">
         
         <div>User</div>
@@ -98,6 +101,13 @@ export const UserInfo = () => {
   );
 }
 
-//<div id="g-signin2" className="g-signin2"></div>
-//<div id="g-signin2" className="g-signin2" data-onsuccess="onSignIn"></div>
-//<div id="g-signin2" className="g-signin2" data-onsuccess="onSignIn" data-onfailure="onFailedSignIn"></div>
+export const UserInfo = () => {
+    return (
+        <UserTokenContext.Consumer>
+        {({token, setToken}) => (
+            <UserInfoInner setToken={setToken}></UserInfoInner>
+        )}
+        </UserTokenContext.Consumer>
+      );
+}
+

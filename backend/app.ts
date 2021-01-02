@@ -2,12 +2,14 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
+var cors = require('cors')
 
 const CLIENT_ID = "354253354749-bfp5ial5k53abr4o9q5c44f66nbnkjrn.apps.googleusercontent.com";
 
 const app: express.Application = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 const client = new OAuth2Client(CLIENT_ID);
 

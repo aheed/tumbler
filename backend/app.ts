@@ -11,7 +11,13 @@ app.use(bodyParser.json());
 
 const client = new OAuth2Client(CLIENT_ID);
 
-async function verify(token: any): Promise<string> {
+const verifyToken = async (token: string) => client.verifyIdToken(
+  {
+    idToken: token,
+    audience: CLIENT_ID
+  });
+
+async function getUser(token: any): Promise<string> {
   const ticket = await client.verifyIdToken({
       idToken: token,
       audience: CLIENT_ID
@@ -21,34 +27,68 @@ async function verify(token: any): Promise<string> {
   return userid;
 }
 
+async function getUserFromHeader(req: express.Request): Promise<string> {
+  const bearerHeader = req.headers['authorization'];
+    
+  const bearer = bearerHeader!.split(' ');
+  const bearerToken = bearer[1];
+  let token = bearerToken;    
 
+  return getUser(token);
+}
 
 app.get('/api', (req, res) => {
   res.json({
-    message: 'Welcome to the APIzz'
+    message: 'Welcome to the API'
   });
 });
 
 
-app.post('/api/secure', async (req, res) => {
+const verifyTokenInHeader = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  let token = 'notoken';
+  let ok = false;
+  let status = 403;
 
-  let verified = false;
-  let msg = 'Failed to verify JWT token';
-  let user = '';
-
-  let token = req.body.id_token;
-  
   try {
-    user = await verify(token);
-    msg = 'Welcome to the secure API ' + user;
-    verified = true;
+    const bearerHeader = req.headers['authorization'];
+    if(typeof bearerHeader !== 'undefined') {
+      const bearer = bearerHeader.split(' ');
+      const bearerToken = bearer[1];
+      token = bearerToken;
+      
+    }
   } catch(error) {
     console.error(error);
   }
-  
 
-  res.json({
-    message: msg
+  try {
+    await verifyToken(token);
+    ok = true;
+  } catch(error) {
+    console.error(error);
+  }
+
+  if (ok) {
+    next();
+  }
+  else {
+    res.status(403).send('Failed to verify JWT token');
+  }
+}
+
+app.post('/api/secure', verifyTokenInHeader, async (req, res) => {
+
+  
+  let status = 403;
+
+  let user = await getUserFromHeader(req);
+
+  let bod = req.body;
+  console.log(bod);
+  
+  status = 200;
+  res.status(status).json({
+    message: 'yooo!' + user
   });
 });
 

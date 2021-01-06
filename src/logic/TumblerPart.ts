@@ -32,6 +32,9 @@ export class EmptyReceiver implements IBallReceiver {
 export class EmptyTumblerPart extends TumblerPart {
     constructor(partType: TumblerPartType, leftExit: IBallReceiver, rightExit: IBallReceiver) {
         super(partType, leftExit, rightExit);
+        this.leftEntrance = this.rightEntrance = {
+            putBall: async (c) => c === TumblerBallColor.Blue ? TumblerResult.BlueBallDropped : TumblerResult.RedBallDropped
+        };
     }
 }
 

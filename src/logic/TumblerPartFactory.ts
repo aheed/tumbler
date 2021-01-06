@@ -1,3 +1,4 @@
+import { TumblerInterceptor } from "./TumblerInterceptor";
 import { EmptyTumblerPart, TumblerCrossover, TumblerPart, TumblerRamp } from "./TumblerPart";
 import { IBallReceiver, TumblerPartType } from "./TumblerTypes";
 
@@ -9,10 +10,11 @@ export class TumblerPartFactory {
                 return new TumblerRamp(leftExit, rightExit, facingLeft ?? true);
             case TumblerPartType.Crossover:
                 return new TumblerCrossover(leftExit, rightExit);
+            case TumblerPartType.Interceptor:
+                return new TumblerInterceptor();
             case TumblerPartType.Bit:
             case TumblerPartType.GearBit:
             case TumblerPartType.Gear:
-            case TumblerPartType.Interceptor:
                 throw new Error("Not implemented");
             case TumblerPartType.NoPart:
             case TumblerPartType.EmptyPartPeg:

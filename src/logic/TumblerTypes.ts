@@ -38,6 +38,7 @@ export enum TumblerEvent {
     GearbitResetByBall,
     GearCW,
     GearCCW,
+    Interception,
     None
 }
 

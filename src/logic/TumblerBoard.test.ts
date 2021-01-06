@@ -30,3 +30,85 @@ test('board created, board is populated with correct parts', async () => {
     expect(board.columns).toBe(boardNofColumns);
     expect(board.rows).toBe(boardNofRows);
 });
+
+test('empty dispenser, triggered collector, end of sequence', async () => {
+    // Arrange
+    let board = new TumblerBoard(boardNofColumns, boardNofRows);
+
+    // Act
+    let outcome = await board.blueCollector.putBall(TumblerBallColor.Blue);
+
+    // Evaluate    
+    expect(outcome).toBe(TumblerResult.BlueDispenserEmpty);
+});
+
+test('No parts, triggered collector, ball dropped', async () => {
+    // Arrange
+    let board = new TumblerBoard(boardNofColumns, boardNofRows);
+    board.blueDispenser.addBalls(5);
+
+    // Act
+    let outcome = await board.blueCollector.putBall(TumblerBallColor.Blue);
+
+    // Evaluate    
+    expect(outcome).toBe(TumblerResult.BlueBallDropped);
+});
+
+test('Interceptor, triggered collector, interception', async () => {
+    // Arrange
+    let board = new TumblerBoard(boardNofColumns, boardNofRows);
+    board.setPart(TumblerPartType.Interceptor, 3, 0);
+    board.blueDispenser.addBalls(5);
+
+    // Act
+    let outcome = await board.blueCollector.putBall(TumblerBallColor.Blue);
+
+    // Evaluate    
+    expect(outcome).toBe(TumblerResult.BlueBallIntercepted);
+});
+
+test('Ramp + Interceptor, triggered collector, interception', async () => {
+    // Arrange
+    let board = new TumblerBoard(boardNofColumns, boardNofRows);
+    const facingLeft = true;
+    board.setPart(TumblerPartType.Ramp, 3, 0, facingLeft);
+    board.setPart(TumblerPartType.Interceptor, 2, 1);
+    board.blueDispenser.addBalls(5);
+
+    // Act
+    let outcome = await board.blueCollector.putBall(TumblerBallColor.Blue);
+
+    // Evaluate    
+    expect(outcome).toBe(TumblerResult.BlueBallIntercepted);
+});
+
+test('Ramp + Interceptor, triggered collector, interception', async () => {
+    // Arrange
+    let board = new TumblerBoard(boardNofColumns, boardNofRows);
+    const facingLeft = false;
+    board.setPart(TumblerPartType.Ramp, 7, 0, facingLeft);
+    board.setPart(TumblerPartType.Interceptor, 8, 1);
+    board.redDispenser.addBalls(5);
+
+    // Act
+    let outcome = await board.redCollector.putBall(TumblerBallColor.Blue);
+
+    // Evaluate    
+    expect(outcome).toBe(TumblerResult.RedBallIntercepted);
+});
+
+test('Ramp facing right + Interceptor, triggered collector, ball dropped', async () => {
+    // Arrange
+    let board = new TumblerBoard(boardNofColumns, boardNofRows);
+    const facingLeft = false;
+    board.setPart(TumblerPartType.Ramp, 3, 0, facingLeft);
+    board.setPart(TumblerPartType.Interceptor, 2, 1);
+    board.blueDispenser.addBalls(5);
+
+    // Act
+    let outcome = await board.blueCollector.putBall(TumblerBallColor.Blue);
+
+    // Evaluate    
+    expect(outcome).toBe(TumblerResult.BlueBallDropped);
+});
+

@@ -41,6 +41,9 @@ export class TumblerBoard {
         this.parts.forEach((row, rowIndex) => 
             row.forEach((column, colIndex) =>
                 this.setPart(this.getEmptyBoardPartType(colIndex, rowIndex), colIndex, rowIndex)));
+
+        this.blueDispenser.exit = this.getPart(this.getBlueDispenserColumn(), 0)!.leftEntrance;
+        this.redDispenser.exit = this.getPart(this.getRedDispenserColumn(), 0)!.rightEntrance;
     }
 
     private getEmptyBoardPartType = (column: number, row: number): TumblerPartType => {
@@ -78,10 +81,23 @@ export class TumblerBoard {
         return this.parts[row][column];
     }
 
+    getBlueDispenserColumn = (): number => {
+        let centerIndex = Math.floor(this.columns/2);
+        return centerIndex - 2;
+    }
+
+    getRedDispenserColumn = (): number => {
+        let centerIndex = Math.floor(this.columns/2);
+        return centerIndex + 2;
+    }
+
     setExitNW = (newExit: IBallReceiver, column: number, row: number) => {
         let ballSourcePart = this.getPart(column - 1, row - 1);
         if (!!ballSourcePart) {
             ballSourcePart.rightExit = newExit;
+        }
+        else if (column === this.getBlueDispenserColumn() && row == 0) {
+            this.blueDispenser.exit = newExit;
         }
     }
 
@@ -89,6 +105,9 @@ export class TumblerBoard {
         let ballSourcePart = this.getPart(column + 1, row - 1);
         if (!!ballSourcePart) {
             ballSourcePart.leftExit = newExit;
+        }
+        else if (column === this.getRedDispenserColumn() && row == 0) {
+            this.redDispenser.exit = newExit;
         }
     }
 

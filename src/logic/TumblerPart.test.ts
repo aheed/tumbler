@@ -30,7 +30,7 @@ test('ramp faces left, blue ball inserted, blue ball comes out left', async () =
     let ramp = new TumblerRamp(left, right, true);
 
     // Act
-    let res = await ramp.entrance.putBall(TumblerBallColor.Blue);
+    let res = await ramp.leftEntrance.putBall(TumblerBallColor.Blue);
 
     // Evaluate
     expect(res).toBe(TumblerResult.BlueBallIntercepted);
@@ -45,7 +45,7 @@ test('ramp faces right, blue ball inserted, blue ball comes out right', async ()
     let ramp = new TumblerRamp(left, right, false);
 
     // Act
-    let res = await ramp.entrance.putBall(TumblerBallColor.Blue);
+    let res = await ramp.leftEntrance.putBall(TumblerBallColor.Blue);
 
     // Evaluate
     expect(res).toBe(TumblerResult.BlueBallIntercepted);
@@ -62,7 +62,7 @@ test('ramp faces right, blue ball inserted, RampRight event reported', async () 
     ramp.addObserver(obsSpy);
 
     // Act
-    let res = await ramp.entrance.putBall(TumblerBallColor.Blue);
+    let res = await ramp.leftEntrance.putBall(TumblerBallColor.Blue);
 
     // Evaluate
     expect(obsSpy.lastObservedEvent).toBe(TumblerEvent.RampRight);

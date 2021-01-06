@@ -1,14 +1,19 @@
-import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerEvent, TumblerResult } from "./TumblerTypes";
+import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerEvent, TumblerPartType, TumblerResult } from "./TumblerTypes";
 
 
 export abstract class TumblerPart {
-    protected leftExit: IBallReceiver;
-    protected rightExit: IBallReceiver;
+    public leftEntrance: IBallReceiver;
+    public rightEntrance: IBallReceiver;
+    public leftExit: IBallReceiver;
+    public rightExit: IBallReceiver;
     private observers: ITumblerPartObserver[] = [];
+    public partType: TumblerPartType;
     
-    constructor(leftExit: IBallReceiver, rightExit: IBallReceiver) {
+    constructor(partType: TumblerPartType, leftExit: IBallReceiver, rightExit: IBallReceiver) {
+        this.partType = partType;
         this.leftExit = leftExit;
-        this.rightExit = rightExit;    
+        this.rightExit = rightExit;
+        this.leftEntrance = this.rightEntrance = {putBall: async (c) => TumblerResult.Error};
     }
 
     public addObserver = (obs: ITumblerPartObserver) => this.observers.push(obs);
@@ -24,42 +29,20 @@ export class EmptyReceiver implements IBallReceiver {
     }
 }
 
-export abstract class SingleInputTumblerPart extends TumblerPart {
-
-    public entrance: IBallReceiver;
-    
-    constructor(leftExit: IBallReceiver, rightExit: IBallReceiver) {
-        super(leftExit, rightExit);
-        this.entrance = new EmptyReceiver();
-    }
-
-}
-
-export abstract class DualInputTumblerPart extends TumblerPart {
-
-    public leftEntrance: IBallReceiver;
-    public rightEntrance: IBallReceiver;
-    
-    constructor(leftExit: IBallReceiver, rightExit: IBallReceiver) {
-        super(leftExit, rightExit);
-        this.leftEntrance = this.rightEntrance = {putBall: async (c) => TumblerResult.Error};
+export class EmptyTumblerPart extends TumblerPart {
+    constructor(partType: TumblerPartType, leftExit: IBallReceiver, rightExit: IBallReceiver) {
+        super(partType, leftExit, rightExit);
     }
 }
 
-export class EmptyTumblerPart extends SingleInputTumblerPart {
-    constructor(leftExit: IBallReceiver, rightExit: IBallReceiver) {
-        super(leftExit, rightExit);
-    }
-}
-
-export class TumblerRamp extends SingleInputTumblerPart {
+export class TumblerRamp extends TumblerPart {
     private facingLeft: boolean;
 
     constructor(leftExit: IBallReceiver, rightExit: IBallReceiver, facingLeft: boolean) {
-        super(leftExit, rightExit);
+        super(TumblerPartType.Ramp, leftExit, rightExit);
         this.facingLeft = facingLeft;
 
-        this.entrance = {
+        this.leftEntrance = this.rightEntrance = {
             putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {
                 let evt = this.facingLeft ? TumblerEvent.RampLeft : TumblerEvent.RampRight;
                 await this.reportEvent(evt);
@@ -70,9 +53,9 @@ export class TumblerRamp extends SingleInputTumblerPart {
     }
 }
 
-export class TumblerCrossover extends DualInputTumblerPart {
+export class TumblerCrossover extends TumblerPart {
     constructor(leftExit: IBallReceiver, rightExit: IBallReceiver) {
-        super(leftExit, rightExit);
+        super(TumblerPartType.Crossover, leftExit, rightExit);
 
         this.leftEntrance = {
             putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {

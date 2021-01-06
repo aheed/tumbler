@@ -3,6 +3,18 @@ export enum TumblerBallColor {
     Red
 }
 
+export enum TumblerPartType {
+    NoPart = 0,
+    EmptyPartPeg,
+    EmptyGearPeg,
+    Ramp,
+    Crossover,
+    Bit,
+    GearBit,
+    Gear,
+    Interceptor
+}
+
 export enum TumblerResult {
     BlueBallIntercepted = 0,
     RedBallIntercepted,

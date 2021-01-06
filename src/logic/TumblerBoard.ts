@@ -1,3 +1,4 @@
+import { pathToFileURL } from "url";
 import { BallCollector } from "./BallCollector";
 import { BallDispenser } from "./BallDispenser";
 import { EmptyReceiver, EmptyTumblerPart, TumblerPart } from "./TumblerPart";
@@ -9,7 +10,7 @@ export class TumblerBoard {
     redDispenser: BallDispenser;
     blueCollector: IBallReceiver;
     redCollector: IBallReceiver;
-    parts: TumblerPart[][];
+    private parts: TumblerPart[][];
     columns: number;
     rows: number;
 
@@ -17,20 +18,56 @@ export class TumblerBoard {
 
         this.columns = columns;
         this.rows = rows;
-        
-        this.parts = (new Array(rows)).map((row, rowindex) => (new Array(columns)).map((part, colIndex) => {
-                let leftExit = new EmptyReceiver();
-                let rightExit = new EmptyReceiver();
-                
-                return TumblerPartFactory.createPart(TumblerPartType.NoPart, leftExit, rightExit);
+
+        this.parts = [];
+
+        // create array of placeholder parts. Each part will be replaced.
+        for(let rowIndex=0; rowIndex<rows; ++rowIndex) {
+            let row:TumblerPart[] = [];
+            for(let colIndex=0; colIndex<rows; ++colIndex) {
+                let p = TumblerPartFactory.createPart(TumblerPartType.NoPart, new EmptyReceiver(), new EmptyReceiver());
+                row.push(p);
             }
-        ));
+            this.parts.push(row);
+        }
 
         this.blueDispenser = new BallDispenser(TumblerBallColor.Blue, new EmptyReceiver());
         this.redDispenser = new BallDispenser(TumblerBallColor.Red, new EmptyReceiver());
 
         this.blueCollector = new BallCollector(this.blueDispenser);
         this.redCollector = new BallCollector(this.redDispenser);
+
+        // Populate the array with appropriate part types
+        this.parts.forEach((row, rowIndex) => 
+            row.forEach((column, colIndex) =>
+                this.setPart(this.getEmptyBoardPartType(colIndex, rowIndex), colIndex, rowIndex)));
+    }
+
+    private getEmptyBoardPartType = (column: number, row: number): TumblerPartType => {
+
+        let centerIndex = Math.floor(this.columns/2);
+        let res = (column + row) % 2 == 0 ? TumblerPartType.EmptyGearPeg : TumblerPartType.EmptyPartPeg;
+
+        if (row === (this.rows - 1)) {
+            
+            if (column != centerIndex) {
+                res = TumblerPartType.NoPart;
+            }
+            else {
+                res = TumblerPartType.EmptyPartPeg;
+            }
+        }
+        else {
+            if ( (column + row) < (centerIndex - 3)) {
+                res = TumblerPartType.NoPart;
+            }
+
+            if (column > (centerIndex + 3 + row)) {
+                res = TumblerPartType.NoPart;
+            }
+        }
+
+        return res;
     }
 
 
@@ -38,7 +75,6 @@ export class TumblerBoard {
         if (column < 0 || column >= this.columns || row < 0 || row >= this.rows) {
             return null;
         }
-
         return this.parts[row][column];
     }
 
@@ -57,19 +93,8 @@ export class TumblerBoard {
     }
 
     setPart = (partType: TumblerPartType, column: number, row: number, facingLeft?: boolean) => {
-        //let oldPart = this.parts[row][column];
         let leftExit = new EmptyReceiver();
         let rightExit = new EmptyReceiver();
-        let centerIndex = Math.floor(this.columns/2);
-
-        if (row === (this.rows - 1)) {
-            
-            if (column != centerIndex) {
-                throw new Error("illegal part placement");
-            }
-            leftExit = this.blueCollector;
-            rightExit = this.redCollector;
-        }
 
         if ((row === (this.rows - 1)) || (row === (this.rows - 2))) {
             let centerIndex = Math.floor(this.columns/2);
@@ -82,7 +107,8 @@ export class TumblerBoard {
                 rightExit = this.redCollector;
             }
             else {
-                throw new Error("illegal part placement");
+                leftExit = this.blueCollector;
+                rightExit = this.redCollector;
             }                    
         }
 
@@ -92,14 +118,6 @@ export class TumblerBoard {
 
         this.parts[row][column] = newPart;
     }
+
+    // todo: removePart = ...  Reuse getEmptyBoardPartType
 }
-
-
-
-/*
-for (let col=0; col<columns; ++col) {
-            for (let row=0; col<columns; ++col) {
-                
-            }    
-        }
-        */

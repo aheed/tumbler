@@ -1,5 +1,5 @@
 import { EmptyReceiver, TumblerPart } from "./TumblerPart";
-import { IBallReceiver, TumblerBallColor, TumblerEvent, TumblerPartType, TumblerResult } from "./TumblerTypes";
+import { TumblerBallColor, TumblerEvent, TumblerPartType, TumblerResult } from "./TumblerTypes";
 
 export class TumblerInterceptor extends TumblerPart {
 

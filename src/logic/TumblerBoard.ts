@@ -1,7 +1,6 @@
-import { pathToFileURL } from "url";
 import { BallCollector } from "./BallCollector";
 import { BallDispenser } from "./BallDispenser";
-import { EmptyReceiver, EmptyTumblerPart, TumblerPart } from "./TumblerPart";
+import { EmptyReceiver, TumblerPart } from "./TumblerPart";
 import { TumblerPartFactory } from "./TumblerPartFactory";
 import { IBallReceiver, TumblerBallColor, TumblerPartType } from "./TumblerTypes";
 
@@ -10,7 +9,7 @@ export class TumblerBoard {
     redDispenser: BallDispenser;
     blueCollector: IBallReceiver;
     redCollector: IBallReceiver;
-    private parts: TumblerPart[][];
+    parts: TumblerPart[][];
     columns: number;
     rows: number;
 
@@ -49,11 +48,11 @@ export class TumblerBoard {
     private getEmptyBoardPartType = (column: number, row: number): TumblerPartType => {
 
         let centerIndex = Math.floor(this.columns/2);
-        let res = (column + row) % 2 == 0 ? TumblerPartType.EmptyGearPeg : TumblerPartType.EmptyPartPeg;
+        let res = (column + row) % 2 === 0 ? TumblerPartType.EmptyGearPeg : TumblerPartType.EmptyPartPeg;
 
         if (row === (this.rows - 1)) {
             
-            if (column != centerIndex) {
+            if (column !== centerIndex) {
                 res = TumblerPartType.NoPart;
             }
             else {
@@ -68,6 +67,10 @@ export class TumblerBoard {
             if (column > (centerIndex + 3 + row)) {
                 res = TumblerPartType.NoPart;
             }
+        }
+
+        if (row === 0 && column === centerIndex) {
+            res = TumblerPartType.NoPart;
         }
 
         return res;
@@ -96,7 +99,7 @@ export class TumblerBoard {
         if (!!ballSourcePart) {
             ballSourcePart.rightExit = newExit;
         }
-        else if (column === this.getBlueDispenserColumn() && row == 0) {
+        else if (column === this.getBlueDispenserColumn() && row === 0) {
             this.blueDispenser.exit = newExit;
         }
     }
@@ -106,7 +109,7 @@ export class TumblerBoard {
         if (!!ballSourcePart) {
             ballSourcePart.leftExit = newExit;
         }
-        else if (column === this.getRedDispenserColumn() && row == 0) {
+        else if (column === this.getRedDispenserColumn() && row === 0) {
             this.redDispenser.exit = newExit;
         }
     }

@@ -17,13 +17,14 @@ interface BoardProps {
 
 export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
 
-    const [board] = useState(new TumblerBoard(columns, rows));
-
-    useEffect(() => {
-        // TEMP: set up initial parts
-        board.setPart(TumblerPartType.Ramp, 3, 0, true);
-    }, [board]);
-
+    const getInitialBoard = () => {
+        let ret = new TumblerBoard(columns, rows);
+        ret.setPart(TumblerPartType.Ramp, 3, 0, true);
+        ret.setPart(TumblerPartType.Ramp, 2, 1, false);
+        ret.blueDispenser.addBalls(10);
+        return ret;
+    }
+    const [board] = useState(getInitialBoard());
 
     const renderPartGrid = () => {
         return <div className='part-grid'>

@@ -1,0 +1,16 @@
+.part {
+    transition-property: all;
+    transition-duration: 0.5s;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition-delay: 0s;
+}
+
+.ramp-outer.reverse {
+    transform: scaleX(-1);
+}
+
+.part.part-tilt {
+    transform: rotateZ(-30deg);
+}
+
+

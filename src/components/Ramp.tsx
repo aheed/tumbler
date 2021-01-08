@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { TumblerRamp } from "../logic/TumblerPart";
 import { TumblerEvent } from "../logic/TumblerTypes";
+import './Ramp.css';
 
 interface RampProps {
     ramp: TumblerRamp,
@@ -8,15 +9,31 @@ interface RampProps {
 
 export const Ramp : React.FC<RampProps> = ({ramp}) => {
 
-    const onObserveEvent = async (evt: TumblerEvent) => {
-        console.log(`ramp event: ${TumblerEvent[evt]}`);
-    }
-
     useEffect(() => {
+        const onObserveEvent = async (evt: TumblerEvent) => {
+            console.log(`ramp event: ${TumblerEvent[evt]}`);
+            
+            if (imgRef.current) {
+                imgRef.current.classList.add('part-tilt');
+            }
+
+            await new Promise(r => setTimeout(r, 500));
+
+            if (imgRef.current) {
+                imgRef.current.classList.remove('part-tilt');
+            }
+            return;
+        }
+
         ramp.addObserver({reportEvent: onObserveEvent})
     }, [ramp]);
 
+    let imgRef = useRef<HTMLImageElement>(null);
+    let outerRef = useRef<HTMLImageElement>(null);
+
     return (
-        <img src='./ramp.png' alt='ramp'></img>
+        <div className={`ramp-outer ${!ramp.facingLeft ? 'reverse' : ''}`} ref={outerRef}>
+            <img className={`ramp part`} src='./ramp.png' alt='ramp' ref={imgRef}></img>
+        </div>
     );
 }

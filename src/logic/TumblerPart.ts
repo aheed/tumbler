@@ -39,7 +39,7 @@ export class EmptyTumblerPart extends TumblerPart {
 }
 
 export class TumblerRamp extends TumblerPart {
-    private facingLeft: boolean;
+    facingLeft: boolean;
 
     constructor(leftExit: IBallReceiver, rightExit: IBallReceiver, facingLeft: boolean) {
         super(TumblerPartType.Ramp, leftExit, rightExit);

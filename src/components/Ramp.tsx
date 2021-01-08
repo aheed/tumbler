@@ -14,7 +14,7 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
 
     useEffect(() => {
         ramp.addObserver({reportEvent: onObserveEvent})
-    });
+    }, [ramp]);
 
     return (
         <img src='./ramp.png' alt='ramp'></img>

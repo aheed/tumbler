@@ -22,7 +22,7 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
     useEffect(() => {
         // TEMP: set up initial parts
         board.setPart(TumblerPartType.Ramp, 3, 0, true);
-    }, []);
+    }, [board]);
 
 
     const renderPartGrid = () => {

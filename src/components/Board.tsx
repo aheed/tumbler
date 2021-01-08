@@ -29,7 +29,11 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
         ret.setPart(TumblerPartType.Crossover, 2, 3);
         ret.setPart(TumblerPartType.Ramp, 3, 4, true);
         ret.setPart(TumblerPartType.Ramp, 1, 4, false);
-        ret.setPart(TumblerPartType.Ramp, 2, 5, false);
+        ret.setPart(TumblerPartType.Ramp, 2, 5, true);
+        ret.setPart(TumblerPartType.Ramp, 1, 6, false);
+        ret.setPart(TumblerPartType.Ramp, 2, 7, true);
+        ret.setPart(TumblerPartType.Ramp, 1, 8, false);
+        ret.setPart(TumblerPartType.Ramp, 2, 9, false);
         ret.blueDispenser.addBalls(10);
         return ret;
     }

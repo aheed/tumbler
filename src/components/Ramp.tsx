@@ -17,7 +17,7 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
                 imgRef.current.classList.add('part-tilt');
             }
 
-            await new Promise(r => setTimeout(r, 500));
+            await new Promise(r => setTimeout(r, 400));
 
             if (imgRef.current) {
                 imgRef.current.classList.remove('part-tilt');
@@ -29,10 +29,9 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
     }, [ramp]);
 
     let imgRef = useRef<HTMLImageElement>(null);
-    let outerRef = useRef<HTMLImageElement>(null);
 
     return (
-        <div className={`ramp-outer ${!ramp.facingLeft ? 'reverse' : ''}`} ref={outerRef}>
+        <div className={`ramp-outer ${!ramp.facingLeft ? 'reverse' : ''}`}>
             <img className={`ramp part`} src='./ramp.png' alt='ramp' ref={imgRef}></img>
         </div>
     );

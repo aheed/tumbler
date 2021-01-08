@@ -18,9 +18,3 @@ export const EmptyGearPart : React.FC = () => {
         <img src='./emptygearpart.png' alt='empty'></img>
     );
 }
-
-export const Crossover : React.FC = () => {
-    return (
-        <img src='./crossover.png' alt='crossover'></img>
-    );
-}

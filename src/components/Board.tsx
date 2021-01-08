@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { TumblerBoard } from '../logic/TumblerBoard';
-import { TumblerPart, TumblerRamp } from '../logic/TumblerPart';
+import { TumblerCrossover, TumblerPart, TumblerRamp } from '../logic/TumblerPart';
 import { TumblerPartType } from '../logic/TumblerTypes';
 import { EmptyGearPart, EmptyPart, NoPart } from './EmptyPart';
 import { Ramp } from './Ramp';
 import './Board.css'
 import { Trigger } from './Trigger';
 import { Dispenser } from './Dispenser';
+import { Bit } from './Bit';
+import { TumblerBit } from '../logic/TumblerBit';
+import { Crossover } from './Crossover';
 
 
 interface BoardProps {
@@ -20,8 +23,13 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
     const getInitialBoard = () => {
         let ret = new TumblerBoard(columns, rows);
         ret.setPart(TumblerPartType.Ramp, 3, 0, true);
-        ret.setPart(TumblerPartType.Ramp, 2, 1, false);
-        ret.setPart(TumblerPartType.Ramp, 3, 2, false);
+        ret.setPart(TumblerPartType.Bit, 2, 1, false);
+        ret.setPart(TumblerPartType.Ramp, 3, 2, true);
+        ret.setPart(TumblerPartType.Ramp, 1, 2, false);
+        ret.setPart(TumblerPartType.Crossover, 2, 3);
+        ret.setPart(TumblerPartType.Ramp, 3, 4, true);
+        ret.setPart(TumblerPartType.Ramp, 1, 4, false);
+        ret.setPart(TumblerPartType.Ramp, 2, 5, false);
         ret.blueDispenser.addBalls(10);
         return ret;
     }
@@ -51,8 +59,10 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
                 return <EmptyGearPart key={id}></EmptyGearPart>;
             case TumblerPartType.Ramp:
                 return <Ramp ramp={part as TumblerRamp} key={id}></Ramp>;
-            case TumblerPartType.Crossover:
             case TumblerPartType.Bit:
+                return <Bit bit={part as TumblerBit} key={id}></Bit>;
+            case TumblerPartType.Crossover:
+                return <Crossover crossover={part as TumblerCrossover} key={id}></Crossover>;
             case TumblerPartType.GearBit:
             case TumblerPartType.Gear:
             case TumblerPartType.Interceptor:      

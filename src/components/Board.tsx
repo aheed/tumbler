@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { TumblerBoard } from '../logic/TumblerBoard';
-import { TumblerPart } from '../logic/TumblerPart';
+import { TumblerPart, TumblerRamp } from '../logic/TumblerPart';
 import { TumblerPartType } from '../logic/TumblerTypes';
 import { EmptyGearPart, EmptyPart, NoPart } from './EmptyPart';
 import { Ramp } from './Ramp';
 import './Board.css'
+import { Trigger } from './Trigger';
+import { Dispenser } from './Dispenser';
 
 
 interface BoardProps {
@@ -18,8 +20,9 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
     const [board] = useState(new TumblerBoard(columns, rows));
 
     useEffect(() => {
-
-    });
+        // TEMP: set up initial parts
+        board.setPart(TumblerPartType.Ramp, 3, 0, true);
+    }, []);
 
 
     const renderPartGrid = () => {
@@ -45,7 +48,7 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
             case TumblerPartType.EmptyGearPeg:
                 return <EmptyGearPart key={id}></EmptyGearPart>;
             case TumblerPartType.Ramp:
-                return <Ramp key={id}></Ramp>;
+                return <Ramp ramp={part as TumblerRamp} key={id}></Ramp>;
             case TumblerPartType.Crossover:
             case TumblerPartType.Bit:
             case TumblerPartType.GearBit:
@@ -60,6 +63,8 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
     <>
         <div>it's a board alright</div>
         <div>{test}</div>
+        <Dispenser dispenser={board.blueDispenser} ></Dispenser>
         {renderPartGrid()}
+        <Trigger receiver={board.blueCollector}></Trigger>
     </>);
 }

@@ -21,6 +21,7 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
         let ret = new TumblerBoard(columns, rows);
         ret.setPart(TumblerPartType.Ramp, 3, 0, true);
         ret.setPart(TumblerPartType.Ramp, 2, 1, false);
+        ret.setPart(TumblerPartType.Ramp, 3, 2, false);
         ret.blueDispenser.addBalls(10);
         return ret;
     }

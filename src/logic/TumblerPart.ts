@@ -18,7 +18,11 @@ export abstract class TumblerPart {
 
     public addObserver = (obs: ITumblerPartObserver) => this.observers.push(obs);
     
-    protected reportEvent = async (evt: TumblerEvent) => this.observers.forEach(async (obs) => await obs.reportEvent(evt));
+    protected reportEvent = async (evt: TumblerEvent) => { 
+        for( let i=0; i<this.observers.length; ++i) {
+            await this.observers[i].reportEvent(evt);
+        }
+    }
 }
 
 export class EmptyReceiver implements IBallReceiver {

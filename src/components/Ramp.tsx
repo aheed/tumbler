@@ -17,7 +17,7 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
                 imgRef.current.classList.add('part-tilt');
             }
 
-            await new Promise(r => setTimeout(r, 400));
+            await new Promise(r => setTimeout(r, 500));
 
             if (imgRef.current) {
                 imgRef.current.classList.remove('part-tilt');

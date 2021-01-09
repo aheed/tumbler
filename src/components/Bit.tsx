@@ -22,7 +22,7 @@ export const Bit : React.FC<BitProps> = ({bit}) => {
                 }
             }
 
-            await new Promise(r => setTimeout(r, 400));
+            await new Promise(r => setTimeout(r, 500));
             
             return;
         }

@@ -11,6 +11,10 @@ import { Bit } from './Bit';
 import { TumblerBit } from '../logic/TumblerBit';
 import { Crossover } from './Crossover';
 import { PartContainer } from './PartContainer';
+import { Gear } from './Gear';
+import { TumblerGear } from '../logic/TumblerGear';
+import { GearBit } from './GearBit';
+import { TumblerGearBit } from '../logic/TumblerGearBit';
 
 
 interface BoardProps {
@@ -23,7 +27,7 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
 
     const getInitialBoard = () => {
         let ret = new TumblerBoard(columns, rows);
-        ret.setPart(TumblerPartType.Ramp, 3, 0, true);
+        ret.setPart(TumblerPartType.Bit, 3, 0, true);
         ret.setPart(TumblerPartType.Bit, 2, 1, false);
         ret.setPart(TumblerPartType.Ramp, 3, 2, true);
         ret.setPart(TumblerPartType.Ramp, 1, 2, false);
@@ -36,6 +40,10 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
         ret.setPart(TumblerPartType.Ramp, 1, 8, false);
         ret.setPart(TumblerPartType.Ramp, 2, 9, false);
         ret.setPart(TumblerPartType.Ramp, 0, 5, false);
+        ret.setPart(TumblerPartType.Gear, 5, 1, true);
+        ret.setPart(TumblerPartType.GearBit, 4, 1, true);
+        ret.setPart(TumblerPartType.GearBit, 5, 2, true);
+        ret.setPart(TumblerPartType.Ramp, 4, 3, true);
         ret.blueDispenser.addBalls(10);
         return ret;
     }
@@ -79,7 +87,9 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
                 case TumblerPartType.Crossover:
                     return <Crossover crossover={part as TumblerCrossover}></Crossover>;
                 case TumblerPartType.GearBit:
+                    return <GearBit bit={part as TumblerGearBit}></GearBit>
                 case TumblerPartType.Gear:
+                    return <Gear gear={part as TumblerGear}></Gear>;
                 case TumblerPartType.Interceptor:      
                 default:
                     return <NoPart></NoPart>;

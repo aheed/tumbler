@@ -1,5 +1,5 @@
 import { TumblerPart } from "./TumblerPart";
-import { IBallReceiver, TumblerBallColor, TumblerEvent, TumblerPartType, TumblerResult } from "./TumblerTypes";
+import { IBallReceiver, TumblerEvent, TumblerPartType } from "./TumblerTypes";
 
 export class TumblerGear extends TumblerPart {
 
@@ -9,7 +9,7 @@ export class TumblerGear extends TumblerPart {
         this.setGearPosition(facingLeft);
     }
 
-    setGearPosition = async (set: boolean) => {
+    async setGearPosition(set: boolean) {
         if (set === this.gearSet) {
             return;
         }

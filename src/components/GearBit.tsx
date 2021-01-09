@@ -1,30 +1,30 @@
 import { useEffect, useRef } from "react";
-import { TumblerBit } from "../logic/TumblerBit";
+import { TumblerGearBit } from "../logic/TumblerGearBit";
 import { TumblerEvent } from "../logic/TumblerTypes";
-import './Bit.css';
+import './GearBit.css';
 
-interface BitProps {
-    bit: TumblerBit,
+interface GearBitProps {
+    bit: TumblerGearBit,
 }
 
-export const Bit : React.FC<BitProps> = ({bit}) => {
+export const GearBit : React.FC<GearBitProps> = ({bit}) => {
 
     useEffect(() => {
         const updateBitState = () => {
             if (imgRef.current) {
-                if (bit.set) {
-                    imgRef.current.classList.add('bit-tilt');
+                if (bit.gearSet) {
+                    imgRef.current.classList.add('gearbit-tilt');
                 }
                 else {
-                    imgRef.current.classList.remove('bit-tilt');
+                    imgRef.current.classList.remove('gearbit-tilt');
                 }
             }
         }
 
         const onObserveEvent = async (evt: TumblerEvent) => {
-            console.log(`bit event: ${TumblerEvent[evt]}`);
+            console.log(`gearbit event: ${TumblerEvent[evt]}`);
             
-            updateBitState();
+            updateBitState();    
 
             await new Promise(r => setTimeout(r, 500));
             
@@ -32,14 +32,15 @@ export const Bit : React.FC<BitProps> = ({bit}) => {
         }
 
         updateBitState();
+
         bit.addObserver({reportEvent: onObserveEvent})
     }, [bit]);
 
     let imgRef = useRef<HTMLImageElement>(null);
 
     return (
-        <div className={`bit-outer`}>
-            <img className={`bit`} src='./bit.png' alt='bit' ref={imgRef}></img>
+        <div className={`gearbit-outer`}>
+            <img className={`gearbit`} src='./gearbit.png' alt='gearbit' ref={imgRef}></img>
         </div>
     );
 }

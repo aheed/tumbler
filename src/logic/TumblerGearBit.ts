@@ -18,7 +18,7 @@ export class TumblerGearBit extends TumblerPart {
         this.setGearPosition(facingLeft);
     }
 
-    setGearPosition = async (set: boolean) => {
+    async setGearPosition(set: boolean) {
         if (set === this.gearSet) {
             return;
         }

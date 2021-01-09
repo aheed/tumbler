@@ -155,6 +155,32 @@ export class TumblerBoard {
         this.setExitNW(newPart.leftEntrance, column, row);
         this.setExitNE(newPart.rightEntrance, column, row);
 
+        ////
+        let gearNeighbor = this.getPart(column, row - 1);
+        if (!!gearNeighbor) {
+            newPart.n = gearNeighbor;
+            gearNeighbor.s = newPart;
+        }
+
+        gearNeighbor = this.getPart(column, row + 1);
+        if (!!gearNeighbor) {
+            newPart.s = gearNeighbor;
+            gearNeighbor.n = newPart;
+        }
+
+        gearNeighbor = this.getPart(column - 1, row);
+        if (!!gearNeighbor) {
+            newPart.w = gearNeighbor;
+            gearNeighbor.e = newPart;
+        }
+
+        gearNeighbor = this.getPart(column + 1, row);
+        if (!!gearNeighbor) {
+            newPart.e = gearNeighbor;
+            gearNeighbor.w = newPart;
+        }
+        ////
+
         this.parts[row][column] = newPart;
     }
 

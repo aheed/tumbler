@@ -11,9 +11,9 @@ export class TumblerBit extends TumblerPart {
         this.leftEntrance = this.rightEntrance = {
             putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {
                 let evt = this.set ? TumblerEvent.BitReset : TumblerEvent.BitSet;
-                await this.reportEvent(evt);
                 let currentExit = this.set ? this.leftExit : this.rightExit;
                 this.set = !this.set;
+                await this.reportEvent(evt);
                 return currentExit.putBall(color);
             }
         }

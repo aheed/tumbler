@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TumblerBoard } from '../logic/TumblerBoard';
 import { TumblerCrossover, TumblerPart, TumblerRamp } from '../logic/TumblerPart';
 import { TumblerPartType } from '../logic/TumblerTypes';
@@ -10,6 +10,7 @@ import { Dispenser } from './Dispenser';
 import { Bit } from './Bit';
 import { TumblerBit } from '../logic/TumblerBit';
 import { Crossover } from './Crossover';
+import { PartContainer } from './PartContainer';
 
 
 interface BoardProps {
@@ -34,10 +35,12 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
         ret.setPart(TumblerPartType.Ramp, 2, 7, true);
         ret.setPart(TumblerPartType.Ramp, 1, 8, false);
         ret.setPart(TumblerPartType.Ramp, 2, 9, false);
+        ret.setPart(TumblerPartType.Ramp, 0, 5, false);
         ret.blueDispenser.addBalls(10);
         return ret;
     }
     const [board] = useState(getInitialBoard());
+    const [boardVersion, setBoardversion] = useState(0);
 
     const renderPartGrid = () => {
         return <div className='part-grid'>
@@ -52,27 +55,39 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
             }    
         }*/
 
+    const onClick = (colIndex: number, rowIndex: number) => {
+        console.log(`board got click at (${colIndex}, ${rowIndex})`);
+        board.setPart(TumblerPartType.Crossover, colIndex, rowIndex);
+        setBoardversion(boardVersion + 1);
+    }
+
+    const getCurriedOnClick = (colIndex: number, rowIndex: number) => () => onClick(colIndex, rowIndex);
+
     const renderPart = (part: TumblerPart, colIndex: number, rowIndex:number) => {
-        let id = rowIndex * 100 + colIndex;
-        switch (part.partType) {
-            case TumblerPartType.NoPart:
-                return <NoPart key={id}></NoPart>;
-            case TumblerPartType.EmptyPartPeg:
-                return <EmptyPart key={id}></EmptyPart>;        
-            case TumblerPartType.EmptyGearPeg:
-                return <EmptyGearPart key={id}></EmptyGearPart>;
-            case TumblerPartType.Ramp:
-                return <Ramp ramp={part as TumblerRamp} key={id}></Ramp>;
-            case TumblerPartType.Bit:
-                return <Bit bit={part as TumblerBit} key={id}></Bit>;
-            case TumblerPartType.Crossover:
-                return <Crossover crossover={part as TumblerCrossover} key={id}></Crossover>;
-            case TumblerPartType.GearBit:
-            case TumblerPartType.Gear:
-            case TumblerPartType.Interceptor:      
-            default:
-                return <NoPart key={id}></NoPart>;
+        const renderPartInner = (part: TumblerPart) => {
+            switch (part.partType) {
+                case TumblerPartType.NoPart:
+                    return <NoPart></NoPart>;
+                case TumblerPartType.EmptyPartPeg:
+                    return <EmptyPart></EmptyPart>;        
+                case TumblerPartType.EmptyGearPeg:
+                    return <EmptyGearPart></EmptyGearPart>;
+                case TumblerPartType.Ramp:
+                    return <Ramp ramp={part as TumblerRamp}></Ramp>;
+                case TumblerPartType.Bit:
+                    return <Bit bit={part as TumblerBit}></Bit>;
+                case TumblerPartType.Crossover:
+                    return <Crossover crossover={part as TumblerCrossover}></Crossover>;
+                case TumblerPartType.GearBit:
+                case TumblerPartType.Gear:
+                case TumblerPartType.Interceptor:      
+                default:
+                    return <NoPart></NoPart>;
+            }
         }
+
+        let id = rowIndex * 100 + colIndex;
+        return <PartContainer key={id} onClick={getCurriedOnClick(colIndex, rowIndex)}>{renderPartInner(part)}</PartContainer>;        
     }
 
     return (

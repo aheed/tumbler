@@ -14,7 +14,7 @@ export const Bit : React.FC<BitProps> = ({bit}) => {
             console.log(`bit event: ${TumblerEvent[evt]}`);
             
             if (imgRef.current) {
-                if (evt == TumblerEvent.BitSet) {
+                if (evt === TumblerEvent.BitSet) {
                     imgRef.current.classList.add('bit-tilt');
                 }
                 else {

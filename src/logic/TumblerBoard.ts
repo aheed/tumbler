@@ -118,20 +118,37 @@ export class TumblerBoard {
         let leftExit = new EmptyReceiver();
         let rightExit = new EmptyReceiver();
 
-        if ((row === (this.rows - 1)) || (row === (this.rows - 2))) {
-            let centerIndex = Math.floor(this.columns/2);
-            if (column < centerIndex) {
-                leftExit = this.blueCollector;
-                rightExit = this.blueCollector;
-            }
-            else if (column > centerIndex) {
-                leftExit = this.redCollector;
-                rightExit = this.redCollector;
-            }
-            else {
+        let ballReceiverPart = this.getPart(column - 1, row + 1);
+        if (!!ballReceiverPart) {
+           leftExit = ballReceiverPart.rightEntrance;
+        }
+
+        ballReceiverPart = this.getPart(column + 1, row + 1);
+        if (!!ballReceiverPart) {
+           rightExit = ballReceiverPart.leftEntrance;
+        }
+
+        let centerIndex = Math.floor(this.columns/2);
+        if (row === (this.rows - 1)) {
+            if (column === centerIndex) {
                 leftExit = this.blueCollector;
                 rightExit = this.redCollector;
             }                    
+        }
+
+        if (row === (this.rows - 2)) {
+            if (column < centerIndex) {
+                leftExit = this.blueCollector;
+                if (column !== (centerIndex - 1)) {
+                    rightExit =  this.blueCollector;    
+                }
+            }
+            else if (column > centerIndex) {
+                rightExit = this.redCollector;
+                if (column !== (centerIndex + 1)) {
+                    leftExit = this.redCollector;
+                }
+            }
         }
 
         let newPart = TumblerPartFactory.createPart(partType, leftExit, rightExit, facingLeft);

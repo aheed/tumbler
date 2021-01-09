@@ -1,5 +1,11 @@
 import React from 'react';
 
+export const EmptyPartInteractor : React.FC = () => {
+    return (
+        <>
+        </>
+    );
+}
 
 export const NoPart : React.FC = () => {
     return (

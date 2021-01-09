@@ -39,6 +39,11 @@ export enum TumblerEvent {
     GearCW,
     GearCCW,
     Interception,
+    DispenserEmpty,
+    BallDispensed,
+    BallAddedToDispenser,
+    BallCollected,
+    BallDropped,
     None
 }
 

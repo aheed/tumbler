@@ -1,3 +1,4 @@
+import { TumblerObservable } from "./TumblerObservable";
 import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerEvent, TumblerPartType, TumblerResult } from "./TumblerTypes";
 
 
@@ -8,21 +9,19 @@ export abstract class TumblerPart {
     public rightExit: IBallReceiver;
     private observers: ITumblerPartObserver[] = [];
     public partType: TumblerPartType;
+    private observableImplementation: TumblerObservable;
     
     constructor(partType: TumblerPartType, leftExit: IBallReceiver, rightExit: IBallReceiver) {
         this.partType = partType;
         this.leftExit = leftExit;
         this.rightExit = rightExit;
         this.leftEntrance = this.rightEntrance = {putBall: async (c) => TumblerResult.Error};
+        this.observableImplementation =  new TumblerObservable();
     }
 
-    public addObserver = (obs: ITumblerPartObserver) => this.observers.push(obs);
-    
-    protected reportEvent = async (evt: TumblerEvent) => { 
-        for( let i=0; i<this.observers.length; ++i) {
-            await this.observers[i].reportEvent(evt);
-        }
-    }
+    public addObserver = (obs: ITumblerPartObserver) => this.observableImplementation.addObserver(obs);
+
+    protected reportEvent = async (evt: TumblerEvent) => this.observableImplementation.reportEvent(evt);
 }
 
 export class EmptyReceiver implements IBallReceiver {

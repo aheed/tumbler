@@ -40,7 +40,7 @@ export const Gear : React.FC<GearProps> = ({gear}) => {
 
     return (
         <div className={`gear-outer`}>
-            <img className={`gear part`} src='./gear.png' alt='gear' ref={imgRef}></img>
+            <img className={`gear`} src='./gear.png' alt='gear' ref={imgRef}></img>
         </div>
     );
 }

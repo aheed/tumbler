@@ -1,5 +1,7 @@
 .part-grid {
     display: grid;
-    grid-template-columns: repeat(11, 100px);
-    grid-template-rows: auto;
+    grid-template-columns: repeat(11, 70px);
+    grid-template-rows: repeat(11, 70px);
+    justify-items: center;
+    align-items: center;
 }

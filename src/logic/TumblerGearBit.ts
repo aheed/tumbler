@@ -1,10 +1,10 @@
-import { TumblerPart } from "./TumblerPart";
+import { TumblerGearPartBase } from "./TumblerGearPartBase";
 import { IBallReceiver, TumblerBallColor, TumblerEvent, TumblerPartType, TumblerResult } from "./TumblerTypes";
 
-export class TumblerGearBit extends TumblerPart {
+export class TumblerGearBit extends TumblerGearPartBase {
 
     constructor(leftExit: IBallReceiver, rightExit: IBallReceiver, facingLeft: boolean) {
-        super(TumblerPartType.GearBit, leftExit, rightExit);
+        super(TumblerPartType.GearBit, leftExit, rightExit, facingLeft);
 
         this.leftEntrance = this.rightEntrance = {
             putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {
@@ -19,10 +19,6 @@ export class TumblerGearBit extends TumblerPart {
     }
 
     async setGearPosition(set: boolean) {
-        if (set === this.gearSet) {
-            return;
-        }
-        
         super.setGearPosition(set);
 
         let evt = set ? TumblerEvent.GearbitSet : TumblerEvent.GearbitReset;

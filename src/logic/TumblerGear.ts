@@ -1,19 +1,15 @@
-import { TumblerPart } from "./TumblerPart";
+import { TumblerGearPartBase } from "./TumblerGearPartBase";
 import { IBallReceiver, TumblerEvent, TumblerPartType } from "./TumblerTypes";
 
-export class TumblerGear extends TumblerPart {
+export class TumblerGear extends TumblerGearPartBase {
 
     constructor(leftExit: IBallReceiver, rightExit: IBallReceiver, facingLeft: boolean) {
-        super(TumblerPartType.Gear, leftExit, rightExit);
+        super(TumblerPartType.Gear, leftExit, rightExit, facingLeft);
 
         this.setGearPosition(facingLeft);
     }
 
     async setGearPosition(set: boolean) {
-        if (set === this.gearSet) {
-            return;
-        }
-        
         super.setGearPosition(set);
 
         let evt = set ? TumblerEvent.GearbitSet : TumblerEvent.GearbitReset;

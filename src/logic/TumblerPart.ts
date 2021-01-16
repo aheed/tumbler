@@ -14,7 +14,6 @@ export abstract class TumblerPart implements IGearInteractor {
     s: IGearInteractor;
     e: IGearInteractor;
     w: IGearInteractor;
-    gearSet: boolean;
     
     constructor(partType: TumblerPartType, leftExit: IBallReceiver, rightExit: IBallReceiver) {
         this.partType = partType;
@@ -23,25 +22,13 @@ export abstract class TumblerPart implements IGearInteractor {
         this.leftEntrance = this.rightEntrance = {putBall: async (c) => TumblerResult.Error};
         this.observableImplementation =  new TumblerObservable();
         this.n = this.s = this.w = this.e = new NullGearInteractor();
-        this.gearSet = false;
     }
 
     public addObserver = (obs: ITumblerPartObserver) => this.observableImplementation.addObserver(obs);
 
     protected reportEvent = async (evt: TumblerEvent) => this.observableImplementation.reportEvent(evt);
 
-    setGearPosition (set: boolean) {
-        if (set === this.gearSet) {
-            return;
-        }
-
-        this.gearSet = set;
-
-        this.n.setGearPosition(set);
-        this.s.setGearPosition(set);
-        this.e.setGearPosition(set);
-        this.w.setGearPosition(set);
-    }
+    setGearPosition (set: boolean) {}
 }
 
 export class EmptyReceiver implements IBallReceiver {

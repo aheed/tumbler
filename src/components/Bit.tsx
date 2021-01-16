@@ -39,6 +39,7 @@ export const Bit : React.FC<BitProps> = ({bit}) => {
 
     return (
         <div className={`bit-outer`}>
+            <img className={`bit`} src='./emptypart.png' alt='empty'></img>
             <img className={`bit`} src='./bit.png' alt='bit' ref={imgRef}></img>
         </div>
     );

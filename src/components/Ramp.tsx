@@ -32,7 +32,7 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
 
     return (
         <div className={`ramp-outer ${!ramp.facingLeft ? 'reverse' : ''}`}>
-            <img className={`ramp part`} src='./emptypart.png' alt='ramp' ref={imgRef}></img>
+            <img className={`ramp part`} src='./emptypart.png' alt='empty'></img>
             <img className={`ramp part`} src='./ramp.png' alt='ramp' ref={imgRef}></img>
         </div>
     );

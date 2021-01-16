@@ -40,6 +40,7 @@ export const GearBit : React.FC<GearBitProps> = ({bit}) => {
 
     return (
         <div className={`gearbit-outer`}>
+            <img className={`gearbit-background`} src='./emptypart.png' alt='empty'></img>
             <img className={`gearbit`} src='./gearbit.png' alt='gearbit' ref={imgRef}></img>
         </div>
     );

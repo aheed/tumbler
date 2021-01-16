@@ -15,6 +15,8 @@ import { Gear } from './Gear';
 import { TumblerGear } from '../logic/TumblerGear';
 import { GearBit } from './GearBit';
 import { TumblerGearBit } from '../logic/TumblerGearBit';
+import { TumblerInterceptor } from '../logic/TumblerInterceptor';
+import { Interceptor } from './Interceptor';
 
 
 interface BoardProps {
@@ -32,7 +34,9 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
         ret.setPart(TumblerPartType.Ramp, 3, 2, true);
         ret.setPart(TumblerPartType.Ramp, 1, 2, false);
         ret.setPart(TumblerPartType.Crossover, 2, 3);
-        ret.setPart(TumblerPartType.Ramp, 3, 4, true);
+        ret.setPart(TumblerPartType.Bit, 3, 4, true);
+        ret.setPart(TumblerPartType.Interceptor, 4, 5);
+        ret.setPart(TumblerPartType.Gear, 4, 6);
         ret.setPart(TumblerPartType.Ramp, 1, 4, false);
         ret.setPart(TumblerPartType.Ramp, 2, 5, true);
         ret.setPart(TumblerPartType.Ramp, 1, 6, false);
@@ -90,7 +94,8 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
                     return <GearBit bit={part as TumblerGearBit}></GearBit>
                 case TumblerPartType.Gear:
                     return <Gear gear={part as TumblerGear}></Gear>;
-                case TumblerPartType.Interceptor:      
+                case TumblerPartType.Interceptor:
+                    return <Interceptor interceptor={part as TumblerInterceptor}></Interceptor>;
                 default:
                     return <NoPart></NoPart>;
             }

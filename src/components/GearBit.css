@@ -3,6 +3,21 @@
     transition-duration: 0.4s;
     transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
     transition-delay: 0s;
+    position: absolute;
+    top: -42px;
+    left: -42px;
+}
+
+.gearbit-background {
+    position: absolute;
+    top: -40px;
+    left: -40px;
+}
+
+.gearbit-outer {
+    /*width: 84px;
+    height: 84px;*/
+    position: relative;
 }
 
 .gearbit.gearbit-tilt {

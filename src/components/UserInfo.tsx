@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { UserTokenContext } from '../services/UserTokenContext';
 
 interface UserInfoInnerProps {
@@ -57,7 +57,24 @@ const UserInfoInner : React.FC<UserInfoInnerProps> = ({setToken}) => {
         });
     }
 
-    useEffect(() => {
+    const TryInitGoogleSignIn = () => {
+        // @ts-ignore
+        let gapi = window.gapi;
+        if (!gapi ) {
+            setTimeout(() => {
+                console.log("Retrying Google signin");
+                TryInitGoogleSignIn();
+            }, 1000);
+        }
+        else {
+            InitGoogleSignIn();  
+        }
+                
+    }
+
+    const InitGoogleSignIn = () => {
+        console.log("Google signin");
+
         // @ts-ignore
         let gapi = window.gapi;
         gapi.load('auth2', function() {
@@ -83,7 +100,13 @@ const UserInfoInner : React.FC<UserInfoInnerProps> = ({setToken}) => {
                 updateSignedIn();
             });
           });
-      })
+    }
+
+    const MemoizedTryInitGoogleSignIn = useCallback(TryInitGoogleSignIn, [TryInitGoogleSignIn, InitGoogleSignIn]);
+
+    useEffect(() => {
+        MemoizedTryInitGoogleSignIn();    
+    },[MemoizedTryInitGoogleSignIn])
 
     
   const renderSignedOut = () => (

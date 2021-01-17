@@ -44,10 +44,10 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
         ret.setPart(TumblerPartType.Ramp, 1, 8, false);
         ret.setPart(TumblerPartType.Ramp, 2, 9, false);
         ret.setPart(TumblerPartType.Ramp, 0, 5, false);
-        ret.setPart(TumblerPartType.Gear, 5, 1, true);
-        ret.setPart(TumblerPartType.GearBit, 4, 1, true);
-        ret.setPart(TumblerPartType.GearBit, 5, 2, true);
-        ret.setPart(TumblerPartType.GearBit, 6, 1, false);
+        ret.setPart(TumblerPartType.Gear, 5, 1, false);
+        ret.setPart(TumblerPartType.GearBit, 4, 1, false);
+        ret.setPart(TumblerPartType.GearBit, 5, 2, false);
+        ret.setPart(TumblerPartType.GearBit, 6, 1, true);
         ret.setPart(TumblerPartType.Ramp, 4, 3, true);
         ret.blueDispenser.addBalls(10);
         return ret;

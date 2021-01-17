@@ -11,17 +11,20 @@ export class TumblerGearPartBase extends TumblerPart {
         this.setGearPosition(facingLeft);
     }
 
+    updateGearPosition = () => {
+        this.n.setGearPosition(this.gearSet ?? false);
+        this.s.setGearPosition(this.gearSet ?? false);
+        this.e.setGearPosition(this.gearSet ?? false);
+        this.w.setGearPosition(this.gearSet ?? false);
+    }
+
     async setGearPosition(set: boolean) {
         if (set === this.gearSet) {
             return;
         }
 
         this.gearSet = set;
-
-        this.n.setGearPosition(set);
-        this.s.setGearPosition(set);
-        this.e.setGearPosition(set);
-        this.w.setGearPosition(set);
+        this.updateGearPosition();
     }
 }
 

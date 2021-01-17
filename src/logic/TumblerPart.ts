@@ -28,7 +28,8 @@ export abstract class TumblerPart implements IGearInteractor {
 
     protected reportEvent = async (evt: TumblerEvent) => this.observableImplementation.reportEvent(evt);
 
-    setGearPosition (set: boolean) {}
+    setGearPosition(set: boolean) {}
+    updateGearPosition() {}
 }
 
 export class EmptyReceiver implements IBallReceiver {

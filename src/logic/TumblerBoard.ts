@@ -182,6 +182,7 @@ export class TumblerBoard {
         ////
 
         this.parts[row][column] = newPart;
+        newPart.updateGearPosition();
     }
 
     // todo: removePart = ...  Reuse getEmptyBoardPartType

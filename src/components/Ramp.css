@@ -19,4 +19,58 @@
     transform: rotateZ(-90deg);
 }
 
+@keyframes ball-movement {
+    0% {
+      transform: translate(55px, -17px);
+    }
+    5% {
+        transform: translate(53px, -14px);
+      }
+    25% {
+        transform: translate(10px, -2px);
+    }
+    50% {
+        transform: translate(0px, 12px);
+    }    
+    95% {
+        transform: translate(-14px, 27px);
+    }
+    100% {
+        transform: translate(-15px, 48px);
+    }
+}
 
+.ball {
+    position: absolute;
+    opacity: 0;
+    z-index: 2;
+}
+
+.ball.in-transit {
+    opacity: 1;
+    animation: ball-movement 400ms 1 linear;
+    animation-fill-mode: forwards;
+}
+
+
+/*TEMP!!!!*/
+
+/*
+@keyframes dbg {
+    0% {
+      transform: rotateZ(0deg);
+    }    
+    100% {
+        transform: rotateZ(-90deg);
+    }
+}
+
+.ball {
+    opacity: 1;
+    animation: ball-movement 900ms 1 linear;
+    animation-iteration-count: infinite;
+}
+
+.part.ramp {
+    animation: dbg 900ms infinite linear;
+}*/

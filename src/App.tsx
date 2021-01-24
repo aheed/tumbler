@@ -3,7 +3,7 @@ import './App.css';
 import { Client } from './components/Client';
 import { UserInfo } from './components/UserInfo';
 import { UserTokenContext } from './services/UserTokenContext';
-import { Board } from './components/Board';
+import { Controller } from './components/Controller';
 
 function App() {
   
@@ -28,7 +28,7 @@ function App() {
       </div>
       <UserInfo></UserInfo>
       <Client></Client>
-      <Board test='zeroo' columns={11} rows={11}></Board>
+      <Controller text='zerooc' columns={11} rows={11}></Controller>
     </UserTokenContext.Provider>
     </>
   );

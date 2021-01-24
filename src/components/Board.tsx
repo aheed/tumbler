@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TumblerBoard } from '../logic/TumblerBoard';
 import { TumblerCrossover, TumblerPart, TumblerRamp } from '../logic/TumblerPart';
 import { TumblerPartType } from '../logic/TumblerTypes';
@@ -20,40 +20,16 @@ import { Interceptor } from './Interceptor';
 
 
 interface BoardProps {
-    columns: number,
-    rows: number,
-    test: string
+    /*columns: number,
+    rows: number,*/
+    test: string,
+    board: TumblerBoard,
+    onClickCallback: (colIndex: number, rowIndex: number) => void
 }
 
-export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
+export const Board : React.FC<BoardProps> = ({test, board, onClickCallback}) => {
 
-    const getInitialBoard = () => {
-        let ret = new TumblerBoard(columns, rows);
-        ret.setPart(TumblerPartType.Bit, 3, 0, true);
-        ret.setPart(TumblerPartType.Bit, 2, 1, false);
-        ret.setPart(TumblerPartType.Ramp, 3, 2, true);
-        ret.setPart(TumblerPartType.Ramp, 1, 2, false);
-        ret.setPart(TumblerPartType.Crossover, 2, 3);
-        ret.setPart(TumblerPartType.Bit, 3, 4, true);
-        ret.setPart(TumblerPartType.Interceptor, 4, 5);
-        ret.setPart(TumblerPartType.Gear, 4, 6);
-        ret.setPart(TumblerPartType.Ramp, 1, 4, false);
-        ret.setPart(TumblerPartType.Ramp, 2, 5, true);
-        ret.setPart(TumblerPartType.Ramp, 1, 6, false);
-        ret.setPart(TumblerPartType.Ramp, 2, 7, true);
-        ret.setPart(TumblerPartType.Ramp, 1, 8, false);
-        ret.setPart(TumblerPartType.Ramp, 2, 9, false);
-        ret.setPart(TumblerPartType.Ramp, 0, 5, false);
-        ret.setPart(TumblerPartType.Gear, 5, 1, false);
-        ret.setPart(TumblerPartType.GearBit, 4, 1, false);
-        ret.setPart(TumblerPartType.GearBit, 5, 2, false);
-        ret.setPart(TumblerPartType.GearBit, 6, 1, true);
-        ret.setPart(TumblerPartType.Ramp, 4, 3, true);
-        ret.blueDispenser.addBalls(10);
-        return ret;
-    }
-    const [board] = useState(getInitialBoard());
-    const [boardVersion, setBoardversion] = useState(0);
+    
 
     const renderPartGrid = () => {
         return <div className='part-grid'>
@@ -62,19 +38,8 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
     }
 
     const renderParts = () => board.parts.map((row, rowIndex) => row.map((part, colIndex) => renderPart(part, colIndex, rowIndex)));
-        /*for (let row=0; row<rows; ++row) {
-            for (let column=0; column<columns; ++column) {
-                let part = board.getPart(column, row);
-            }    
-        }*/
 
-    const onClick = (colIndex: number, rowIndex: number) => {
-        console.log(`board got click at (${colIndex}, ${rowIndex})`);
-        board.setPart(TumblerPartType.Crossover, colIndex, rowIndex);
-        setBoardversion(boardVersion + 1);
-    }
-
-    const getCurriedOnClick = (colIndex: number, rowIndex: number) => () => onClick(colIndex, rowIndex);
+    const getCurriedOnClick = (colIndex: number, rowIndex: number) => () => onClickCallback(colIndex, rowIndex);
 
     const renderPart = (part: TumblerPart, colIndex: number, rowIndex:number) => {
         const renderPartInner = (part: TumblerPart) => {
@@ -103,7 +68,7 @@ export const Board : React.FC<BoardProps> = ({columns, rows, test}) => {
         }
 
         let id = rowIndex * 100 + colIndex;
-        return <PartContainer key={id} onClick={getCurriedOnClick(colIndex, rowIndex)}>{renderPartInner(part)}</PartContainer>;        
+        return <PartContainer key={id} onClick={getCurriedOnClick(colIndex, rowIndex)}>{renderPartInner(part)}</PartContainer>;
     }
 
     return (

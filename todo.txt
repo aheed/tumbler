@@ -30,3 +30,8 @@ Add DB model for TumblerBoard + functions to serialize/deserialize TumblerBoard.
 
 Add board storage interface. Implementation: DB client
 
+transparent background for crossover and interceptor parts
+
+change favicon (to tumble dry icon?)
+
+animation for lost ball error (explosion?)

@@ -20,8 +20,6 @@ import { Interceptor } from './Interceptor';
 
 
 interface BoardProps {
-    /*columns: number,
-    rows: number,*/
     test: string,
     board: TumblerBoard,
     onClickCallback: (colIndex: number, rowIndex: number) => void

@@ -9,14 +9,16 @@ export abstract class TumblerPart implements IGearInteractor {
     public leftExit: IBallReceiver;
     public rightExit: IBallReceiver;
     public partType: TumblerPartType;
+    public facingLeft: boolean;
     private observableImplementation: TumblerObservable;
     n: IGearInteractor;
     s: IGearInteractor;
     e: IGearInteractor;
     w: IGearInteractor;
     
-    constructor(partType: TumblerPartType, leftExit: IBallReceiver, rightExit: IBallReceiver) {
+    constructor(partType: TumblerPartType, facingLeft: boolean, leftExit: IBallReceiver, rightExit: IBallReceiver) {
         this.partType = partType;
+        this.facingLeft = facingLeft;
         this.leftExit = leftExit;
         this.rightExit = rightExit;
         this.leftEntrance = this.rightEntrance = {putBall: async (c) => TumblerResult.Error};
@@ -42,7 +44,7 @@ export class EmptyReceiver implements IBallReceiver {
 
 export class EmptyTumblerPart extends TumblerPart {
     constructor(partType: TumblerPartType, leftExit: IBallReceiver, rightExit: IBallReceiver) {
-        super(partType, leftExit, rightExit);
+        super(partType, false, leftExit, rightExit);
         this.leftEntrance = this.rightEntrance = {
             putBall: async (c) => c === TumblerBallColor.Blue ? TumblerResult.BlueBallDropped : TumblerResult.RedBallDropped
         };
@@ -50,11 +52,9 @@ export class EmptyTumblerPart extends TumblerPart {
 }
 
 export class TumblerRamp extends TumblerPart {
-    facingLeft: boolean;
 
     constructor(leftExit: IBallReceiver, rightExit: IBallReceiver, facingLeft: boolean) {
-        super(TumblerPartType.Ramp, leftExit, rightExit);
-        this.facingLeft = facingLeft;
+        super(TumblerPartType.Ramp, facingLeft, leftExit, rightExit);
 
         this.leftEntrance = this.rightEntrance = {
             putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {
@@ -69,7 +69,7 @@ export class TumblerRamp extends TumblerPart {
 
 export class TumblerCrossover extends TumblerPart {
     constructor(leftExit: IBallReceiver, rightExit: IBallReceiver) {
-        super(TumblerPartType.Crossover, leftExit, rightExit);
+        super(TumblerPartType.Crossover, false, leftExit, rightExit);
 
         this.leftEntrance = {
             putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {

@@ -1,5 +1,7 @@
 import { BallCollector } from "./BallCollector";
 import { BallDispenser } from "./BallDispenser";
+import { BoardModel } from "./model/BoardModel";
+import { PartModel } from "./model/PartModel";
 import { EmptyReceiver, TumblerPart } from "./TumblerPart";
 import { TumblerPartFactory } from "./TumblerPartFactory";
 import { IBallReceiver, TumblerBallColor, TumblerPartType } from "./TumblerTypes";
@@ -183,6 +185,29 @@ export class TumblerBoard {
 
         this.parts[row][column] = newPart;
         newPart.updateGearPosition();
+    }
+
+    getModel = (): BoardModel => {
+        let ret = new BoardModel(this.columns, this.rows);
+
+        ret.blueBallsInDispenser = this.blueDispenser.getBalls();
+        ret.redBallsInDispenser = this.redDispenser.getBalls();
+
+        ret.parts = this.parts.map(row => row.map(p => new PartModel(p.partType, p.facingLeft)));
+
+        return ret;
+    }
+
+    init = (model: BoardModel) => {
+        this.blueDispenser.setBalls(model.blueBallsInDispenser);
+        this.redDispenser.setBalls(model.redBallsInDispenser);
+
+        model.parts.forEach((row, rowIndex) => row.forEach((part, colIndex) => {
+            this.setPart(part.partType, colIndex, rowIndex, part.facingLeft);
+        }));
+
+        this.blueDispenser.exit = this.getPart(this.getBlueDispenserColumn(), 0)!.leftEntrance;
+        this.redDispenser.exit = this.getPart(this.getRedDispenserColumn(), 0)!.rightEntrance;
     }
 
     // todo: removePart = ...  Reuse getEmptyBoardPartType

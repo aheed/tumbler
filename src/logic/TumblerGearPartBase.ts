@@ -6,7 +6,7 @@ export class TumblerGearPartBase extends TumblerPart {
     gearSet?: boolean;
 
     constructor(partType: TumblerPartType, leftExit: IBallReceiver, rightExit: IBallReceiver, facingLeft: boolean) {
-        super(partType, leftExit, rightExit);
+        super(partType, facingLeft, leftExit, rightExit);
 
         this.setGearPosition(facingLeft);
     }

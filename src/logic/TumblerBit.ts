@@ -5,7 +5,7 @@ export class TumblerBit extends TumblerPart {
     set: boolean;
 
     constructor(leftExit: IBallReceiver, rightExit: IBallReceiver, facingLeft: boolean) {
-        super(TumblerPartType.Bit, leftExit, rightExit);
+        super(TumblerPartType.Bit, facingLeft, leftExit, rightExit);
         this.set = facingLeft;
 
         this.leftEntrance = this.rightEntrance = {

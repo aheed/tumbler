@@ -4,7 +4,7 @@ import { TumblerBallColor, TumblerEvent, TumblerPartType, TumblerResult } from "
 export class TumblerInterceptor extends TumblerPart {
 
     constructor() {
-        super(TumblerPartType.Interceptor, new EmptyReceiver(), new EmptyReceiver());
+        super(TumblerPartType.Interceptor, false, new EmptyReceiver(), new EmptyReceiver());
 
         this.leftEntrance = this.rightEntrance = {
             putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {

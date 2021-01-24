@@ -1,18 +1,32 @@
 Populate initial board with the right part types*
+
 Change part execution model: let tumblerResult contain (be?) delegate to next fcn to execute (curryed with ball color when necessary).
 Test board
   Insert parts, execute
 
 
-Adding a dependency array to useEffect in UserInfo component causes the ramp part to not be rendered on page reload (but the board renders).
-Why?
+Adding a dependency array to useEffect in UserInfo component causes the ramp part to not be rendered on page reload (but the board renders).*
+Why?*
 
 Add observability to dispenser and collector classes*
 
-Change tilt of gear.png to match gearbits.
+Change tilt of gear.png to match gearbits.*
 
-Tighten the grid
+Tighten the grid*
 
-Tune the .png files. Use transparent background and use separate images for part pegs in the background.
+Tune the .png files. Use transparent background and use separate images for part pegs in the background.*
 
 Add red dispenser and release button
+
+Let Board component take board as prop
+
+Introduce a Controller component
+
+Let Controller keep board state
+
+Interaction with DB shall go through Controller component.
+
+Add DB model for TumblerBoard + functions to serialize/deserialize TumblerBoard.
+
+Add board storage interface. Implementation: DB client
+

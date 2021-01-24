@@ -29,6 +29,10 @@ export class BallDispenser implements IBallReleaser, ITumblerObservable {
         this.reportEvent(TumblerEvent.BallAddedToDispenser);
     }
 
+    setBalls = (balls: number) => {
+        this.balls = balls;
+    }
+
     release = async (): Promise<TumblerResult> => {
         if (this.balls < 1) {
             this.reportEvent(TumblerEvent.DispenserEmpty);

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { BoardModel } from "../logic/model/BoardModel";
 import { TumblerBoard } from "../logic/TumblerBoard";
 import { TumblerPartType } from "../logic/TumblerTypes";
+import { UserTokenContext } from "../services/UserTokenContext";
 import { Board } from "./Board";
 
 interface ControllerProps {
@@ -9,7 +11,16 @@ interface ControllerProps {
     rows: number,
 }
 
-export const Controller : React.FC<ControllerProps> = ({text, columns, rows}) => {
+interface ControllerInnerProps {
+    token: string,
+    controllerProps: ControllerProps
+}
+
+const ControllerInner: React.FC<ControllerInnerProps> = ({ token, controllerProps }) => {
+
+    let { text, columns, rows } = controllerProps;
+
+    const [response, setResponse] = useState('');
 
     const getInitialBoard = () => {
         let ret = new TumblerBoard(columns, rows);
@@ -46,6 +57,30 @@ export const Controller : React.FC<ControllerProps> = ({text, columns, rows}) =>
         setBoardversion(boardVersion + 1);
     }
 
+    const save = (boardModel: BoardModel) => {
+        const url = 'http://localhost:5000/api/secure';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(boardModel)
+        };
+
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setResponse(JSON.stringify(data));
+            })
+            .catch(error => {
+                console.error(error);
+                setResponse('error!');
+            });
+    }
+
     const onSaveClicked = () => {
         console.log(`Save button clicked`);
         let boardModel = board.getModel();
@@ -53,7 +88,9 @@ export const Controller : React.FC<ControllerProps> = ({text, columns, rows}) =>
 
         // todo:
         // Check login status
+
         // Call backend
+        save(boardModel);
     }
 
     const onLoadClicked = () => {
@@ -62,9 +99,21 @@ export const Controller : React.FC<ControllerProps> = ({text, columns, rows}) =>
 
     return (
         <>
-        <button onClick={onSaveClicked}>Save</button>
-        <button onClick={onLoadClicked}>Load</button>
-        <Board test='Controlled Board' board={board} onClickCallback={onClick}></Board>
+            <button onClick={onSaveClicked}>Save</button>
+            <button onClick={onLoadClicked}>Load</button>
+            <div>{text}</div>
+            <div>{response}</div>
+            <Board test='Controlled Board' board={board} onClickCallback={onClick}></Board>
         </>
+    );
+}
+
+export const Controller = (props: ControllerProps) => {
+    return (
+        <UserTokenContext.Consumer>
+            {({ token, setToken }) => (
+                <ControllerInner token={token} controllerProps={props}></ControllerInner>
+            )}
+        </UserTokenContext.Consumer>
     );
 }

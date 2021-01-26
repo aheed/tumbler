@@ -58,7 +58,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({ token, controllerProp
     }
 
     const save = (boardModel: BoardModel) => {
-        const url = 'http://localhost:5000/api/secure';
+        const url = 'http://localhost:5000/api/saveboard';
         const options = {
             method: 'POST',
             headers: {

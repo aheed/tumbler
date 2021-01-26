@@ -57,6 +57,28 @@ export interface User extends mongoose.Document {
 
 const UserModel = mongoose.model<User>('User', userSchema);
 
+const boardSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+    required: true
+  },
+  inner: {
+    type: String,
+    required: true
+  },
+});
+
+export interface BoardDocument extends mongoose.Document {
+  userId: string;
+  inner: string;
+}
+
+const BoardDBModel = mongoose.model<BoardDocument>('Board', boardSchema);
+
+const saveBoard = async (boardDoc: any) => {
+  return await BoardDBModel.findOneAndUpdate({userId: boardDoc.userId}, boardDoc, {upsert: true, setDefaultsOnInsert: true});
+}
+
 const createUser = async (userDoc: any) => {
   let u = new UserModel(userDoc);
   await u.save();
@@ -198,6 +220,24 @@ app.post('/api/secure', verifyTokenInHeader, async (req, res) => {
   status = 200;
   res.status(status).json({
     message: 'yooo!' + user
+  });
+});
+
+app.post('/api/saveboard', verifyTokenInHeader, async (req, res) => {
+  
+  let status = 403;
+
+  let user = await getUserFromHeader(req);
+
+  let bod = JSON.stringify(req.body);
+  console.log(bod);
+  
+  let doc = {userId: user, inner: bod};
+  await saveBoard(doc);
+
+  status = 200;
+  res.status(status).json({
+    message: 'board saved for ' + user
   });
 });
 

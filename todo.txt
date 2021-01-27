@@ -35,3 +35,5 @@ transparent background for crossover and interceptor parts
 change favicon (to tumble dry icon?)
 
 animation for lost ball error (explosion?)
+
+validate board data before writing to DB

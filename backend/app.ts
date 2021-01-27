@@ -76,6 +76,13 @@ export interface BoardDocument extends mongoose.Document {
 const BoardDBModel = mongoose.model<BoardDocument>('Board', boardSchema);
 
 const saveBoard = async (boardDoc: any) => {
+  let tmp = new BoardDBModel(boardDoc);
+  let valerr = tmp.validateSync();
+  if (!!valerr) {
+    console.log(valerr.name, valerr.message);
+    return;
+  }  
+  
   return await BoardDBModel.findOneAndUpdate({userId: boardDoc.userId}, boardDoc, {upsert: true, setDefaultsOnInsert: true});
 }
 

@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
 import * as dotenv from 'dotenv';
 import mongoose from "mongoose";
+import { BoardModel } from '../src/logic/model/BoardModel';
+import { TumblerPartType } from '../src/logic/TumblerTypes';
 var cors = require('cors')
 
 const CLIENT_ID = "354253354749-bfp5ial5k53abr4o9q5c44f66nbnkjrn.apps.googleusercontent.com";
@@ -63,27 +65,69 @@ const boardSchema = new mongoose.Schema({
     required: true
   },
   inner: {
-    type: String,
-    required: true
+    columns: {
+      type: Number,
+      min: 3,
+      max: 31,
+      required: true,
+    },
+    rows: {
+      type: Number,
+      min: 3,
+      max: 31,
+      required: true,
+    },
+    blueBallsInDispenser: {
+      type: Number,
+      min: 0,
+      max: 18,
+      required: true,
+    },
+    redBallsInDispenser: {
+      type: Number,
+      min: 0,
+      max: 18,
+      required: true,
+    },
+    parts: [[{
+      partType: {
+        type: Number,
+        min: 0,
+        max: TumblerPartType.__LENGTH - 1,
+        required: true,
+      },
+      facingLeft: {
+        type: Boolean,
+        required: true
+      }
+    }]]
   },
 });
 
 export interface BoardDocument extends mongoose.Document {
   userId: string;
-  inner: string;
+  inner: BoardModel;
 }
 
 const BoardDBModel = mongoose.model<BoardDocument>('Board', boardSchema);
 
-const saveBoard = async (boardDoc: any) => {
+const saveBoard = async (boardDoc: any): Promise<Boolean> => {
   let tmp = new BoardDBModel(boardDoc);
   let valerr = tmp.validateSync();
   if (!!valerr) {
     console.log(valerr.name, valerr.message);
-    return;
+    return false;
   }  
   
-  return await BoardDBModel.findOneAndUpdate({userId: boardDoc.userId}, boardDoc, {upsert: true, setDefaultsOnInsert: true});
+  let res = await BoardDBModel.findOneAndUpdate({userId: boardDoc.userId}, boardDoc, {upsert: true, setDefaultsOnInsert: true});
+  console.log(res);
+  return !!res;
+}
+
+const loadBoard = async (user: string): Promise<any> => {
+  let board = await BoardDBModel.findOne({userId: user});
+  console.log(board);
+  return board;
 }
 
 const createUser = async (userDoc: any) => {
@@ -232,20 +276,42 @@ app.post('/api/secure', verifyTokenInHeader, async (req, res) => {
 
 app.post('/api/saveboard', verifyTokenInHeader, async (req, res) => {
   
-  let status = 403;
-
   let user = await getUserFromHeader(req);
 
-  let bod = JSON.stringify(req.body);
-  console.log(bod);
-  
-  let doc = {userId: user, inner: bod};
-  await saveBoard(doc);
+  let status = 403;
+  let msg = 'failed to save board for ' + user;
 
-  status = 200;
+  // let bod = JSON.stringify(req.body);
+  // console.log(bod);
+  
+  //let doc = {userId: user, inner: bod};
+  let doc = {userId: user, inner: req.body};
+
+  if (await saveBoard(doc)) {
+    status = 200;
+    msg = 'board saved for ' + user;
+  }
+  
   res.status(status).json({
-    message: 'board saved for ' + user
+    message: msg
   });
+});
+
+app.get('/api/loadboard', verifyTokenInHeader, async (req, res) => {
+  console.log('load board 1');
+  let user = await getUserFromHeader(req);
+
+  let status = 403;
+  let retval = null;
+
+  let board = await loadBoard(user);
+  if (!!board) {
+    status = 200;
+    retval = board;
+  }
+  
+  console.log('load board 2');
+  res.status(status).json(retval);
 });
 
 app.listen(5000, () => console.log('Server started on port 5000'));

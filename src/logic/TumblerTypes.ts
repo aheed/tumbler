@@ -1,6 +1,7 @@
 export enum TumblerBallColor {
     Blue = 0,
-    Red
+    Red,
+    __LENGTH
 }
 
 export enum TumblerPartType {
@@ -12,7 +13,8 @@ export enum TumblerPartType {
     Bit,
     GearBit,
     Gear,
-    Interceptor
+    Interceptor,
+    __LENGTH
 }
 
 export enum TumblerResult {

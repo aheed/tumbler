@@ -29,7 +29,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-backend": "tsc -p ./backend",
-    "start-backend": "ts-node backend_dist/app.js"
+    "start-backend": "ts-node backend_dist/backend/app.js"
   },
   "eslintConfig": {
     "extends": [

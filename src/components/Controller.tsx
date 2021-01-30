@@ -48,7 +48,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({ token, controllerProp
         return ret;
     }
 
-    const [board] = useState(getInitialBoard());
+    const [board, setBoard] = useState(getInitialBoard());
     const [boardVersion, setBoardversion] = useState(0);
 
     const onClick = (colIndex: number, rowIndex: number) => {
@@ -100,6 +100,12 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({ token, controllerProp
                 console.log(data);
                 setResponse('board loaded');
                 ret = data;
+
+                if (!!data) {
+                    let newBoard = new TumblerBoard(data.columns, data.rows, data);
+                    console.log('board loaded**')
+                    setBoard(newBoard);
+                }
             })
             .catch(error => {
                 console.error(error);
@@ -126,9 +132,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({ token, controllerProp
         // todo:
         // Check login status
 
-        let newBoard = load();
-
-        // todo: update board state
+        load();
     }
 
     return (

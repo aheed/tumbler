@@ -31,6 +31,7 @@ export const Dispenser : React.FC<DispenserProps> = ({dispenser}) => {
             return;
         }
 
+        setNofBalls(dispenser.getBalls());
         dispenser.addObserver({reportEvent: onObserveEvent})
     }, [dispenser]);
 

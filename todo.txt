@@ -20,13 +20,13 @@ Add red dispenser and release button
 
 Let Board component take board as prop
 
-Introduce a Controller component
+Introduce a Controller component*
 
 Let Controller keep board state
 
 Interaction with DB shall go through Controller component.
 
-Add DB model for TumblerBoard + functions to serialize/deserialize TumblerBoard.
+Add DB model for TumblerBoard + functions to serialize/deserialize TumblerBoard.*
 
 Add board storage interface. Implementation: DB client
 
@@ -36,4 +36,6 @@ change favicon (to tumble dry icon?)
 
 animation for lost ball error (explosion?)
 
-validate board data before writing to DB
+validate board data before writing to DB*
+
+update board on load*

@@ -15,7 +15,7 @@ export class TumblerBoard {
     columns: number;
     rows: number;
 
-    constructor(columns: number, rows: number) {
+    constructor(columns: number, rows: number, model?: BoardModel) {
 
         this.columns = columns;
         this.rows = rows;
@@ -45,6 +45,10 @@ export class TumblerBoard {
 
         this.blueDispenser.exit = this.getPart(this.getBlueDispenserColumn(), 0)!.leftEntrance;
         this.redDispenser.exit = this.getPart(this.getRedDispenserColumn(), 0)!.rightEntrance;
+
+        if (!!model) {
+            this.init(model);
+        }
     }
 
     private getEmptyBoardPartType = (column: number, row: number): TumblerPartType => {
@@ -154,8 +158,11 @@ export class TumblerBoard {
         }
 
         let newPart = TumblerPartFactory.createPart(partType, leftExit, rightExit, facingLeft);
-        this.setExitNW(newPart.leftEntrance, column, row);
-        this.setExitNE(newPart.rightEntrance, column, row);
+
+        if (partType !== TumblerPartType.NoPart) {
+            this.setExitNW(newPart.leftEntrance, column, row);
+            this.setExitNE(newPart.rightEntrance, column, row);
+        }
 
         ////
         let gearNeighbor = this.getPart(column, row - 1);
@@ -201,6 +208,9 @@ export class TumblerBoard {
     init = (model: BoardModel) => {
         this.blueDispenser.setBalls(model.blueBallsInDispenser);
         this.redDispenser.setBalls(model.redBallsInDispenser);
+
+        this.blueCollector = new BallCollector(this.blueDispenser);
+        this.redCollector = new BallCollector(this.redDispenser);
 
         model.parts.forEach((row, rowIndex) => row.forEach((part, colIndex) => {
             this.setPart(part.partType, colIndex, rowIndex, part.facingLeft);

@@ -305,9 +305,9 @@ app.get('/api/loadboard', verifyTokenInHeader, async (req, res) => {
   let retval = null;
 
   let board = await loadBoard(user);
-  if (!!board) {
+  if (!!board?.inner) {
     status = 200;
-    retval = board;
+    retval = board.inner;
   }
   
   console.log('load board 2');

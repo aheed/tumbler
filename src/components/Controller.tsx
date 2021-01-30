@@ -81,6 +81,34 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({ token, controllerProp
             });
     }
 
+    const load = (): BoardModel | null => {
+        const url = 'http://localhost:5000/api/loadboard';
+        const options = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        let ret = null;
+
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setResponse('board loaded');
+                ret = data;
+            })
+            .catch(error => {
+                console.error(error);
+                setResponse('error!');
+            });
+
+        return ret;
+    }
+
     const onSaveClicked = () => {
         console.log(`Save button clicked`);
         let boardModel = board.getModel();
@@ -89,12 +117,18 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({ token, controllerProp
         // todo:
         // Check login status
 
-        // Call backend
         save(boardModel);
     }
 
     const onLoadClicked = () => {
         console.log(`Load button clicked`);
+
+        // todo:
+        // Check login status
+
+        let newBoard = load();
+
+        // todo: update board state
     }
 
     return (

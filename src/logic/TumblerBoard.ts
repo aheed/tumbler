@@ -51,7 +51,7 @@ export class TumblerBoard {
         }
     }
 
-    private getEmptyBoardPartType = (column: number, row: number): TumblerPartType => {
+    getEmptyBoardPartType = (column: number, row: number): TumblerPartType => {
 
         let centerIndex = Math.floor(this.columns/2);
         let res = (column + row) % 2 === 0 ? TumblerPartType.EmptyGearPeg : TumblerPartType.EmptyPartPeg;
@@ -220,5 +220,8 @@ export class TumblerBoard {
         this.redDispenser.exit = this.getPart(this.getRedDispenserColumn(), 0)!.rightEntrance;
     }
 
-    // todo: removePart = ...  Reuse getEmptyBoardPartType
+    removePart = (column: number, row: number) => {
+        let targetType = this.getEmptyBoardPartType(column, row);
+        this.setPart(targetType, column, row);
+    }
 }

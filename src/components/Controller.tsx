@@ -6,6 +6,7 @@ import { TumblerPart } from "../logic/TumblerPart";
 import { TumblerPartType } from "../logic/TumblerTypes";
 import { UserTokenContext } from "../services/UserTokenContext";
 import { Board } from "./Board";
+import { ToolBar } from "./ToolBar";
 
 interface ControllerProps {
   text: string;
@@ -54,34 +55,59 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
 
   const [board, setBoard] = useState(getInitialBoard());
   const [boardVersion, setBoardversion] = useState(0);
+  const [tool, setTool] = useState(EditorToolType.Erase);
 
   const getCurrentEditorTool = (): EditorToolType => {
-    return EditorToolType.Ramp; //TEMP!!!!!
+    return tool;
+  };
+
+  const onToolSelected = (selectedTool: EditorToolType) => {
+    console.log("got new tool", selectedTool);
+    setTool(selectedTool);
+  };
+
+  const isPartFlippable = (partType: TumblerPartType): Boolean => {
+    return (
+      partType === TumblerPartType.Bit ||
+      partType === TumblerPartType.Ramp ||
+      partType === TumblerPartType.GearBit ||
+      partType === TumblerPartType.Gear
+    );
   };
 
   const onClick = (colIndex: number, rowIndex: number) => {
     console.log(`board got click at (${colIndex}, ${rowIndex})`);
+
     let targetPartType = getPartTypeByTool(getCurrentEditorTool());
     let currentPart: TumblerPart | null = board.getPart(colIndex, rowIndex);
     let facingLeft = false;
 
-    let pegType = board.getEmptyBoardPartType(colIndex, rowIndex);
-    if (pegType === TumblerPartType.NoPart) {
-      return;
-    } else if (pegType === TumblerPartType.EmptyPartPeg) {
-      if (targetPartType === currentPart?.partType) {
-        if (!currentPart.facingLeft) {
-          facingLeft = true;
-        } else {
+    if (!!currentPart && getCurrentEditorTool() === EditorToolType.Flip) {
+      targetPartType = currentPart.partType;
+      facingLeft = !currentPart.facingLeft;
+    } else {
+      let pegType = board.getEmptyBoardPartType(colIndex, rowIndex);
+      if (pegType === TumblerPartType.NoPart) {
+        return;
+      } else if (pegType === TumblerPartType.EmptyPartPeg) {
+        if (targetPartType === currentPart?.partType) {
+          if (!isPartFlippable(targetPartType)) {
+            targetPartType = null;
+          } else {
+            if (!currentPart.facingLeft) {
+              facingLeft = true;
+            } else {
+              targetPartType = null;
+            }
+          }
+        }
+      } else if (pegType === TumblerPartType.EmptyGearPeg) {
+        if (currentPart?.partType === TumblerPartType.Gear) {
           targetPartType = null;
+        } else {
+          targetPartType = TumblerPartType.Gear;
         }
       }
-    } else if (pegType === TumblerPartType.EmptyGearPeg) {
-        if (currentPart?.partType === TumblerPartType.Gear) {
-            targetPartType = null;
-        } else {
-            targetPartType = TumblerPartType.Gear;
-        }
     }
 
     if (targetPartType) {
@@ -182,6 +208,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
         board={board}
         onClickCallback={onClick}
       ></Board>
+      <ToolBar selectedTool={tool} onToolSelected={onToolSelected}></ToolBar>
     </>
   );
 };

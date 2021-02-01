@@ -32,6 +32,9 @@ export const getPartTypeByTool = (
     case EditorToolType.Interceptor:
       return TumblerPartType.Interceptor;
 
+    case EditorToolType.Flip:
+      return null;
+
     default:
       throw new Error("Should not happen");
   }

@@ -24,6 +24,7 @@ export class TumblerGearPartBase extends TumblerPart {
         }
 
         this.gearSet = set;
+        this.facingLeft = set;
         this.updateGearPosition();
     }
 }

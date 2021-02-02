@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { TumblerPart } from '../logic/TumblerPart';
+import { TumblerEvent } from '../logic/TumblerTypes';
 
-export const EmptyPartInteractor : React.FC = () => {
+interface EmptyPartProps {
+    part: TumblerPart
+}
+
+export const EmptyPartInteractor : React.FC<EmptyPartProps> = ({part}: EmptyPartProps) => {
+
+    useEffect(() => {
+        const onObserveEvent = async (evt: TumblerEvent) => {
+            console.log(`empty part event: ${TumblerEvent[evt]}`);
+        }
+
+        part.addObserver({reportEvent: onObserveEvent})
+    }, [part]);
+
     return (
         <>
         </>
@@ -13,14 +28,20 @@ export const NoPart : React.FC = () => {
     );
 }
 
-export const EmptyPart : React.FC = () => {
+export const EmptyPart : React.FC<EmptyPartProps> = ({part}: EmptyPartProps) => {
     return (
+        <>
         <img src='./emptypart.png' alt='empty'></img>
+        <EmptyPartInteractor part={part}></EmptyPartInteractor>
+        </>
     );
 }
 
-export const EmptyGearPart : React.FC = () => {
+export const EmptyGearPart : React.FC<EmptyPartProps> = ({part}: EmptyPartProps) => {
     return (
+        <>
         <img src='./emptygearpart.png' alt='empty'></img>
+        <EmptyPartInteractor part={part}></EmptyPartInteractor>
+        </>
     );
 }

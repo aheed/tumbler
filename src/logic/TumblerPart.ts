@@ -46,7 +46,11 @@ export class EmptyTumblerPart extends TumblerPart {
     constructor(partType: TumblerPartType, leftExit: IBallReceiver, rightExit: IBallReceiver) {
         super(partType, false, leftExit, rightExit);
         this.leftEntrance = this.rightEntrance = {
-            putBall: async (c) => c === TumblerBallColor.Blue ? TumblerResult.BlueBallDropped : TumblerResult.RedBallDropped
+            putBall: async (c) => {
+                await this.reportEvent(TumblerEvent.BallDropped);
+                return c === TumblerBallColor.Blue ? TumblerResult.BlueBallDropped : TumblerResult.RedBallDropped
+            }
+
         };
     }
 }

@@ -45,9 +45,9 @@ export const Board : React.FC<BoardProps> = ({test, board, onClickCallback}) => 
                 case TumblerPartType.NoPart:
                     return <NoPart></NoPart>;
                 case TumblerPartType.EmptyPartPeg:
-                    return <EmptyPart></EmptyPart>;        
+                    return <EmptyPart part={part}></EmptyPart>;        
                 case TumblerPartType.EmptyGearPeg:
-                    return <EmptyGearPart></EmptyGearPart>;
+                    return <EmptyGearPart part={part}></EmptyGearPart>;
                 case TumblerPartType.Ramp:
                     return <Ramp ramp={part as TumblerRamp}></Ramp>;
                 case TumblerPartType.Bit:
@@ -74,7 +74,9 @@ export const Board : React.FC<BoardProps> = ({test, board, onClickCallback}) => 
         <div>it's a board alright</div>
         <div>{test}</div>
         <Dispenser dispenser={board.blueDispenser} ></Dispenser>
+        <Dispenser dispenser={board.redDispenser} ></Dispenser>
         {renderPartGrid()}
         <Trigger receiver={board.blueCollector}></Trigger>
+        <Trigger receiver={board.redCollector}></Trigger>
     </>);
 }

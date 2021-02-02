@@ -18,19 +18,19 @@ Tune the .png files. Use transparent background and use separate images for part
 
 Add red dispenser and release button
 
-Let Board component take board as prop
+Let Board component take board as prop*
 
 Introduce a Controller component*
 
-Let Controller keep board state
+Let Controller keep board state*
 
-Interaction with DB shall go through Controller component.
+Interaction with DB shall go through Controller component.*
 
 Add DB model for TumblerBoard + functions to serialize/deserialize TumblerBoard.*
 
 Add board storage interface. Implementation: DB client
 
-transparent background for crossover and interceptor parts
+transparent background for crossover and interceptor parts*
 
 change favicon (to tumble dry icon?)
 

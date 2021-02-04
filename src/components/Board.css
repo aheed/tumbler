@@ -4,4 +4,5 @@
     grid-template-rows: repeat(11, 70px);
     justify-items: center;
     align-items: center;
+    user-select: none;
 }

@@ -37,8 +37,10 @@ export const Dispenser : React.FC<DispenserProps> = ({dispenser}) => {
 
     return (
         <>
-        <button onClick={onClick}>Add ball</button>
-        <div>{nofBalls}</div>
+        <div className='dispenser'>
+            <button onClick={onClick}>Add ball</button>
+            <div>{nofBalls}</div>
+        </div>
         </>
     );
 }

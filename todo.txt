@@ -39,3 +39,5 @@ animation for lost ball error (explosion?)
 validate board data before writing to DB*
 
 update board on load*
+
+add ball sink

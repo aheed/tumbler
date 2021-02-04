@@ -30,8 +30,10 @@ export const Board : React.FC<BoardProps> = ({test, board, onClickCallback}) => 
     
 
     const renderPartGrid = () => {
-        return <div className='part-grid'>
-            {renderParts()}
+        return <div className='part-grid-outer'>
+            <div className='part-grid'>
+                {renderParts()}
+            </div>
         </div>
     }
 
@@ -71,12 +73,18 @@ export const Board : React.FC<BoardProps> = ({test, board, onClickCallback}) => 
 
     return (
     <>
-        <div>it's a board alright</div>
-        <div>{test}</div>
-        <Dispenser dispenser={board.blueDispenser} ></Dispenser>
-        <Dispenser dispenser={board.redDispenser} ></Dispenser>
-        {renderPartGrid()}
-        <Trigger receiver={board.blueCollector}></Trigger>
-        <Trigger receiver={board.redCollector}></Trigger>
+        <div className='board-outer'>
+            <div>it's a board alright</div>
+            <div>{test}</div>
+            <div className='dispenser-bar'>
+                <Dispenser dispenser={board.blueDispenser} ></Dispenser>
+                <Dispenser dispenser={board.redDispenser} ></Dispenser>
+            </div>
+            {renderPartGrid()}
+            <div className='trigger-bar'>
+                <Trigger receiver={board.blueCollector}></Trigger>
+                <Trigger receiver={board.redCollector}></Trigger>
+            </div>
+        </div>
     </>);
 }

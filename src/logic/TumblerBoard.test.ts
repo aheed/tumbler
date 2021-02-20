@@ -1,6 +1,5 @@
 import React from 'react';
-import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerEvent, TumblerPartType, TumblerResult } from "./TumblerTypes";
-import { TumblerCrossover, TumblerRamp } from './TumblerPart';
+import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerPartType, TumblerResult } from "./TumblerTypes";
 import { TumblerBoard } from './TumblerBoard';
 
 const boardNofColumns = 11;

@@ -1,5 +1,6 @@
+import { TumblerEvent, TumblerEventType } from "./TumblerEvent";
 import { TumblerPart } from "./TumblerPart";
-import { IBallReceiver, TumblerBallColor, TumblerEvent, TumblerPartType, TumblerResult } from "./TumblerTypes";
+import { IBallReceiver, TumblerBallColor, TumblerPartType, TumblerResult } from "./TumblerTypes";
 
 export class TumblerBit extends TumblerPart {
     set: boolean;
@@ -10,7 +11,8 @@ export class TumblerBit extends TumblerPart {
 
         this.leftEntrance = this.rightEntrance = {
             putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {
-                let evt = this.set ? TumblerEvent.BitReset : TumblerEvent.BitSet;
+                let evtType = this.set ? TumblerEventType.Reset : TumblerEventType.Set;
+                let evt = new TumblerEvent(evtType, TumblerPartType.Bit);
                 let currentExit = this.set ? this.leftExit : this.rightExit;
                 this.set = !this.set;
                 await this.reportEvent(evt);

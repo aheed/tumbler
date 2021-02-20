@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
+import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerGearBit } from "../logic/TumblerGearBit";
-import { TumblerEvent } from "../logic/TumblerTypes";
 import './GearBit.css';
 
 interface GearBitProps {
@@ -22,7 +22,7 @@ export const GearBit : React.FC<GearBitProps> = ({bit}) => {
         }
 
         const onObserveEvent = async (evt: TumblerEvent) => {
-            console.log(`gearbit event: ${TumblerEvent[evt]}`);
+            console.log(`gearbit event: ${TumblerEventType[evt.eventType]}`);
             
             updateBitState();    
 

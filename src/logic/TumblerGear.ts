@@ -1,5 +1,6 @@
+import { TumblerEvent, TumblerEventType } from "./TumblerEvent";
 import { TumblerGearPartBase } from "./TumblerGearPartBase";
-import { IBallReceiver, TumblerEvent, TumblerPartType } from "./TumblerTypes";
+import { IBallReceiver, TumblerPartType } from "./TumblerTypes";
 
 export class TumblerGear extends TumblerGearPartBase {
 
@@ -12,7 +13,8 @@ export class TumblerGear extends TumblerGearPartBase {
     async setGearPosition(set: boolean) {
         super.setGearPosition(set);
 
-        let evt = set ? TumblerEvent.GearbitSet : TumblerEvent.GearbitReset;
+        let evtType = set ? TumblerEventType.Set : TumblerEventType.Reset;
+        let evt = new TumblerEvent(evtType, TumblerPartType.Gear);
         return this.reportEvent(evt);
     }
 }

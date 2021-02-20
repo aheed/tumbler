@@ -19,7 +19,7 @@
     transform: rotateZ(-90deg);
 }
 
-@keyframes ball-movement {
+@keyframes ball-movement-across {
     0% {
       transform: translate(55px, -17px);
     }
@@ -40,37 +40,44 @@
     }
 }
 
-.ball {
-    position: absolute;
-    opacity: 0;
-    z-index: 2;
-}
-
-.ball.in-transit {
-    opacity: 1;
-    animation: ball-movement 400ms 1 linear;
-    animation-fill-mode: forwards;
-}
-
-
-/*TEMP!!!!*/
-
-/*
-@keyframes dbg {
+@keyframes ball-movement-down {
     0% {
-      transform: rotateZ(0deg);
+      transform: translate(5px, -17px);
+    }
+    5% {
+        transform: translate(2px, -14px);
+      }
+    25% {
+        transform: translate(0px, -2px);
+    }
+    50% {
+        transform: translate(-3px, 12px);
     }    
+    95% {
+        transform: translate(-10px, 27px);
+    }
     100% {
-        transform: rotateZ(-90deg);
+        transform: translate(-15px, 48px);
     }
 }
 
 .ball {
-    opacity: 1;
-    animation: ball-movement 900ms 1 linear;
-    animation-iteration-count: infinite;
+    position: absolute;
+    opacity: 0;
+    z-index: 2;
+    animation-fill-mode: forwards;
 }
 
-.part.ramp {
-    animation: dbg 900ms infinite linear;
+/*.ball.in-transit {
+    opacity: 1;
 }*/
+
+.ball.in-transit.transit-across {
+    animation: ball-movement-across 400ms 1 linear;
+    opacity: 1;
+}
+
+.ball.in-transit.transit-down {
+    animation: ball-movement-down 400ms 1 linear;
+    opacity: 1;
+}

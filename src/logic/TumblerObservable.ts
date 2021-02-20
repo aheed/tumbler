@@ -1,4 +1,5 @@
-import { ITumblerPartObserver, TumblerEvent } from "./TumblerTypes";
+import { TumblerEvent } from "./TumblerEvent";
+import { ITumblerPartObserver } from "./TumblerTypes";
 
 
 export interface ITumblerObservable {

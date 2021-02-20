@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
+import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerGear } from "../logic/TumblerGear";
-import { TumblerEvent } from "../logic/TumblerTypes";
 import './Gear.css';
 
 interface GearProps {
@@ -23,7 +23,7 @@ export const Gear : React.FC<GearProps> = ({gear}) => {
         }
 
         const onObserveEvent = async (evt: TumblerEvent) => {
-            console.log(`gear event: ${TumblerEvent[evt]}`);
+            console.log(`gear event: ${TumblerEventType[evt.eventType]}`);
             
             updateBitState();
 

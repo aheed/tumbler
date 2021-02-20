@@ -1,6 +1,8 @@
 import React from 'react';
-import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerEvent, TumblerResult } from "./TumblerTypes";
-import { TumblerCrossover, TumblerRamp } from './TumblerPart';
+import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerPartType, TumblerResult } from "./TumblerTypes";
+import { TumblerEvent, TumblerEventType } from './TumblerEvent';
+import { TumblerRamp } from './TumblerRamp';
+import { TumblerCrossover } from './TumblerCrossover';
 
 
 class BallReceiverSpy implements IBallReceiver {
@@ -15,11 +17,11 @@ class BallReceiverSpy implements IBallReceiver {
 }
 
 class ObserverSpy implements ITumblerPartObserver {
-    lastObservedEvent: TumblerEvent = TumblerEvent.None;
+    lastObservedEvent?: TumblerEvent;
 
     reportEvent = async (evt: TumblerEvent) => {
         this.lastObservedEvent = evt;
-        console.log(TumblerEvent[evt]);
+        console.log(TumblerEventType[evt.eventType]);
     }
 }
 
@@ -53,7 +55,7 @@ test('ramp faces right, blue ball inserted, blue ball comes out right', async ()
     expect(right.receivedBalls).toBe(1);
 });
 
-test('ramp faces right, blue ball inserted, RampRight event reported', async () => {
+test('ramp faces right, blue ball inserted, Ramp Left-to-Right event reported', async () => {
     // Arrange
     let left = new BallReceiverSpy();
     let right = new BallReceiverSpy();
@@ -65,7 +67,28 @@ test('ramp faces right, blue ball inserted, RampRight event reported', async () 
     let res = await ramp.leftEntrance.putBall(TumblerBallColor.Blue);
 
     // Evaluate
-    expect(obsSpy.lastObservedEvent).toBe(TumblerEvent.RampRight);
+    expect(obsSpy.lastObservedEvent?.eventType).toBe(TumblerEventType.BallAtPart);
+    expect(obsSpy.lastObservedEvent?.partType).toBe(TumblerPartType.Ramp);
+    expect(obsSpy.lastObservedEvent?.enterLeft).toBe(true);
+    expect(obsSpy.lastObservedEvent?.exitLeft).toBe(false);
+});
+
+test('ramp faces right, blue ball inserted, Ramp Right-to-Right event reported', async () => {
+    // Arrange
+    let left = new BallReceiverSpy();
+    let right = new BallReceiverSpy();
+    let ramp = new TumblerRamp(left, right, false);
+    let obsSpy = new ObserverSpy();
+    ramp.addObserver(obsSpy);
+
+    // Act
+    let res = await ramp.rightEntrance.putBall(TumblerBallColor.Blue);
+
+    // Evaluate
+    expect(obsSpy.lastObservedEvent?.eventType).toBe(TumblerEventType.BallAtPart);
+    expect(obsSpy.lastObservedEvent?.partType).toBe(TumblerPartType.Ramp);
+    expect(obsSpy.lastObservedEvent?.enterLeft).toBe(false);
+    expect(obsSpy.lastObservedEvent?.exitLeft).toBe(false);
 });
 
 test('crossover, blue ball inserted right, blue ball comes out left', async () => {

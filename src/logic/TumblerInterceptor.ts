@@ -1,5 +1,6 @@
+import { TumblerEvent, TumblerEventType } from "./TumblerEvent";
 import { EmptyReceiver, TumblerPart } from "./TumblerPart";
-import { TumblerBallColor, TumblerEvent, TumblerPartType, TumblerResult } from "./TumblerTypes";
+import { TumblerBallColor, TumblerPartType, TumblerResult } from "./TumblerTypes";
 
 export class TumblerInterceptor extends TumblerPart {
 
@@ -8,7 +9,7 @@ export class TumblerInterceptor extends TumblerPart {
 
         this.leftEntrance = this.rightEntrance = {
             putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {
-                await this.reportEvent(TumblerEvent.Interception);
+                await this.reportEvent(new TumblerEvent(TumblerEventType.BallAtPart, TumblerPartType.Interceptor));
                 return color === TumblerBallColor.Blue ? TumblerResult.BlueBallIntercepted : TumblerResult.RedBallIntercepted;
             }
         }

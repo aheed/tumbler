@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { TumblerBit } from "../logic/TumblerBit";
-import { TumblerEvent } from "../logic/TumblerTypes";
+import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import './Bit.css';
 
 interface BitProps {
@@ -22,7 +22,7 @@ export const Bit : React.FC<BitProps> = ({bit}) => {
         }
 
         const onObserveEvent = async (evt: TumblerEvent) => {
-            console.log(`bit event: ${TumblerEvent[evt]}`);
+            console.log(`bit event: ${TumblerEventType[evt.eventType]}`);
             
             updateBitState();
 

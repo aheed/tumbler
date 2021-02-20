@@ -1,5 +1,6 @@
+import { TumblerEvent, TumblerEventType } from "./TumblerEvent";
 import { ITumblerObservable, TumblerObservable } from "./TumblerObservable";
-import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerEvent, TumblerResult } from "./TumblerTypes";
+import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerPartType, TumblerResult } from "./TumblerTypes";
 
 export interface IBallReleaser {
     release: () => Promise<TumblerResult>;
@@ -26,7 +27,7 @@ export class BallDispenser implements IBallReleaser, ITumblerObservable {
 
     addBalls = (balls: number) => {
         this.balls += balls;
-        this.reportEvent(TumblerEvent.BallAddedToDispenser);
+        this.reportEvent(new TumblerEvent(TumblerEventType.BallAddedToDispenser, TumblerPartType.Dispenser));
     }
 
     setBalls = (balls: number) => {
@@ -35,14 +36,14 @@ export class BallDispenser implements IBallReleaser, ITumblerObservable {
 
     release = async (): Promise<TumblerResult> => {
         if (this.balls < 1) {
-            this.reportEvent(TumblerEvent.DispenserEmpty);
+            this.reportEvent(new TumblerEvent(TumblerEventType.DispenserEmpty, TumblerPartType.Dispenser));
             return this.color === TumblerBallColor.Blue ?
                 TumblerResult.BlueDispenserEmpty :
                 TumblerResult.RedDispenserEmpty;
         }
         
         --this.balls;
-        this.reportEvent(TumblerEvent.BallDispensed);
+        this.reportEvent(new TumblerEvent(TumblerEventType.BallDispensed, TumblerPartType.Dispenser));
         return await this.exit.putBall(this.color);
     }
 }

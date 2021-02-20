@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BallDispenser } from '../logic/BallDispenser';
-import { TumblerEvent } from '../logic/TumblerTypes';
+import { TumblerEvent, TumblerEventType } from '../logic/TumblerEvent';
 
 
 interface DispenserProps {
@@ -17,15 +17,14 @@ export const Dispenser : React.FC<DispenserProps> = ({dispenser}) => {
 
     useEffect(() => {
         const onObserveEvent = async (evt: TumblerEvent) => {
-            console.log(`dispenser event: ${TumblerEvent[evt]}`);
+            console.log(`dispenser event: ${TumblerEventType[evt.eventType]}`);
             console.log(`balls: ${dispenser.getBalls()}`);
             setNofBalls(dispenser.getBalls());
 
-            if (evt === TumblerEvent.BallDispensed) {
+            if (evt.eventType === TumblerEventType.BallDispensed) {
                 await new Promise(r => setTimeout(r, 100));
             }
-            else if (evt === TumblerEvent.BallAddedToDispenser) {
-
+            else if (evt.eventType === TumblerEventType.BallAddedToDispenser) {
             }            
             
             return;

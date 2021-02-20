@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
+import { TumblerEvent, TumblerEventType } from '../logic/TumblerEvent';
 import { TumblerPart } from '../logic/TumblerPart';
-import { TumblerEvent } from '../logic/TumblerTypes';
 
 interface EmptyPartProps {
     part: TumblerPart
@@ -10,7 +10,7 @@ export const EmptyPartInteractor : React.FC<EmptyPartProps> = ({part}: EmptyPart
 
     useEffect(() => {
         const onObserveEvent = async (evt: TumblerEvent) => {
-            console.log(`empty part event: ${TumblerEvent[evt]}`);
+            console.log(`empty part event: ${TumblerEventType[evt.eventType]}`);
         }
 
         part.addObserver({reportEvent: onObserveEvent})

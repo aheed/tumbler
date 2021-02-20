@@ -1,8 +1,10 @@
 import { TumblerBit } from "./TumblerBit";
+import { TumblerCrossover } from "./TumblerCrossover";
 import { TumblerGear } from "./TumblerGear";
 import { TumblerGearBit } from "./TumblerGearBit";
 import { TumblerInterceptor } from "./TumblerInterceptor";
-import { EmptyTumblerPart, TumblerCrossover, TumblerPart, TumblerRamp } from "./TumblerPart";
+import { EmptyTumblerPart, TumblerPart } from "./TumblerPart";
+import { TumblerRamp } from "./TumblerRamp";
 import { IBallReceiver, TumblerPartType } from "./TumblerTypes";
 
 

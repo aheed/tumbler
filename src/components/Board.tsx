@@ -1,6 +1,6 @@
 import React from 'react';
 import { TumblerBoard } from '../logic/TumblerBoard';
-import { TumblerCrossover, TumblerPart, TumblerRamp } from '../logic/TumblerPart';
+import { TumblerPart } from '../logic/TumblerPart';
 import { TumblerPartType } from '../logic/TumblerTypes';
 import { EmptyGearPart, EmptyPart, NoPart } from './EmptyPart';
 import { Ramp } from './Ramp';
@@ -17,6 +17,8 @@ import { GearBit } from './GearBit';
 import { TumblerGearBit } from '../logic/TumblerGearBit';
 import { TumblerInterceptor } from '../logic/TumblerInterceptor';
 import { Interceptor } from './Interceptor';
+import { TumblerRamp } from '../logic/TumblerRamp';
+import { TumblerCrossover } from '../logic/TumblerCrossover';
 
 
 interface BoardProps {

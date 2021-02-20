@@ -16,7 +16,7 @@ Tighten the grid*
 
 Tune the .png files. Use transparent background and use separate images for part pegs in the background.*
 
-Add red dispenser and release button
+Add red dispenser and release button*
 
 Let Board component take board as prop*
 
@@ -32,7 +32,7 @@ Add board storage interface. Implementation: DB client
 
 transparent background for crossover and interceptor parts*
 
-change favicon (to tumble dry icon?)
+change favicon (to tumble dry icon?)*
 
 animation for lost ball error (explosion?)
 

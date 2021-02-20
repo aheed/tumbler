@@ -1,6 +1,6 @@
 import { useEffect } from "react";
+import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerInterceptor } from "../logic/TumblerInterceptor";
-import { TumblerEvent } from "../logic/TumblerTypes";
 
 interface InterceptorProps {
     interceptor: TumblerInterceptor,
@@ -10,7 +10,7 @@ export const Interceptor : React.FC<InterceptorProps> = ({interceptor}) => {
 
     useEffect(() => {
         const onObserveEvent = async (evt: TumblerEvent) => {
-            console.log(`interceptor event: ${TumblerEvent[evt]}`);
+            console.log(`interceptor event: ${TumblerEventType[evt.eventType]}`);
 
             await new Promise(r => setTimeout(r, 100));
             

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { TumblerRamp } from "../logic/TumblerPart";
-import { TumblerEvent } from "../logic/TumblerTypes";
+import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
+import { TumblerRamp } from "../logic/TumblerRamp";
 import './Ramp.css';
 
 interface RampProps {
@@ -11,18 +11,18 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
 
     useEffect(() => {
         const onObserveEvent = async (evt: TumblerEvent) => {
-            console.log(`ramp event: ${TumblerEvent[evt]}`);
+            console.log(`ramp event: ${TumblerEventType[evt.eventType]}`);
             
             if (imgRef.current) {
                 imgRef.current.classList.add('part-tilt');
                 
             }
 
-            if (ballRef.current) {
-                ballRef.current.classList.add('in-transit');
-            }
+            let transitClass = evt.enterLeft === evt.exitLeft ? 'transit-down' : 'transit-across';
+            ballRef.current?.classList.add(transitClass);
+            ballRef.current?.classList.add('in-transit');
 
-            await new Promise(r => setTimeout(r, 500));
+            await new Promise(r => setTimeout(r, 350));
 
             if (imgRef.current) {
                 imgRef.current.classList.remove('part-tilt');
@@ -30,6 +30,8 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
 
             if (ballRef.current) {
                 ballRef.current.classList.remove('in-transit');
+                ballRef.current.classList.remove('transit-down');
+                ballRef.current.classList.remove('transit-across');
             }
 
             return;

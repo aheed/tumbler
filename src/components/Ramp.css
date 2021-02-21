@@ -19,7 +19,7 @@
     transform: rotateZ(-90deg);
 }
 
-@keyframes ball-movement-across {
+@keyframes ramp-ball-movement-across {
     0% {
       transform: translate(55px, -17px);
     }
@@ -40,7 +40,7 @@
     }
 }
 
-@keyframes ball-movement-down {
+@keyframes ramp-ball-movement-down {
     0% {
       transform: translate(5px, -17px);
     }
@@ -77,11 +77,11 @@
 }
 
 .ramp-outer .ball.in-transit.transit-across {
-    animation: ball-movement-across 400ms 1 linear;
+    animation: ramp-ball-movement-across 400ms 1 linear;
     opacity: 1;
 }
 
 .ramp-outer .ball.in-transit.transit-down {
-    animation: ball-movement-down 400ms 1 linear;
+    animation: ramp-ball-movement-down 400ms 1 linear;
     opacity: 1;
 }

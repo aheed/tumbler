@@ -1,4 +1,4 @@
-/*.bit {
+.bit {
     transition-property: all;
     transition-duration: 0.4s;
     transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
@@ -15,7 +15,7 @@
     transform: rotateZ(90deg);
 }
 
-@keyframes ball-movement-down {
+@keyframes bit-ball-movement-down {
     0% {
       transform: translate(5px, -17px);
     }    
@@ -24,9 +24,15 @@
     }
 }
 
-@keyframes ball-movement-across {
+@keyframes bit-ball-movement-across {
     0% {
       transform: translate(5px, -17px);
+    }
+    5% {
+        transform: translate(8px, -14px);
+    }
+    30% {
+        transform: translate(35px, -14px);
     }
     100% {
         transform: translate(50px, 48px);
@@ -36,6 +42,7 @@
 .bit-outer .ball-outer {
     position: absolute;
     display: flex;
+    z-index: 2;
 }
 
 .bit-outer .ball-outer.reverse {
@@ -56,13 +63,12 @@
     fill: red;
 }
 
-.bit-outer .ball-outer.in-transit-down .ball {
-    animation: ball-movement-down 400ms 1 linear;
+.bit-outer .ball-outer.transit-down .ball {
+    animation: bit-ball-movement-down 400ms 1 linear;
     opacity: 1;
 }
 
-.bit-outer .ball-outer.in-transit-across .ball {
-    animation: ball-movement-across 400ms 1 linear;
+.bit-outer .ball-outer.transit-across .ball {
+    animation: bit-ball-movement-across 400ms 1 linear;
     opacity: 1;
 }
-*/

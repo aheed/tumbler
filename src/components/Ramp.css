@@ -1,4 +1,4 @@
-.part {
+.ramp {
     transition-property: all;
     transition-duration: 0.4s;
     transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
@@ -61,31 +61,27 @@
     }
 }
 
-.ball {
+.ramp-outer .ball {
     position: absolute;
     opacity: 0;
     z-index: 2;
     animation-fill-mode: forwards;
 }
 
-.ball.ball-blue > circle {
+.ramp-outer .ball.ball-blue > circle {
     fill: blue;
 }
 
-.ball.ball-red > circle {
+.ramp-outer .ball.ball-red > circle {
     fill: red;
 }
 
-/*.ball.in-transit {
-    opacity: 1;
-}*/
-
-.ball.in-transit.transit-across {
+.ramp-outer .ball.in-transit.transit-across {
     animation: ball-movement-across 400ms 1 linear;
     opacity: 1;
 }
 
-.ball.in-transit.transit-down {
+.ramp-outer .ball.in-transit.transit-down {
     animation: ball-movement-down 400ms 1 linear;
     opacity: 1;
 }

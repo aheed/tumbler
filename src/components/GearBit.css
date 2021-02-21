@@ -23,3 +23,62 @@
 .gearbit.gearbit-tilt {
     transform: rotateZ(90deg);
 }
+
+@keyframes gearbit-ball-movement-down {
+    0% {
+        transform: translate(5px, -17px);
+    }    
+    100% {
+        transform: translate(-15px, 48px);
+    }
+}
+
+@keyframes gearbit-ball-movement-across {    
+    0% {
+        transform: translate(5px, -17px);
+    }
+    5% {
+        transform: translate(8px, -14px);
+    }
+    30% {
+        transform: translate(35px, -14px);
+    }
+    100% {
+        transform: translate(50px, 48px);
+    }
+}
+
+.gearbit-outer .ball-outer {
+    position: absolute;
+    display: flex;
+    z-index: 2;
+    top: -40px;
+    left: -40px;
+}
+
+.gearbit-outer .ball-outer.reverse {
+    transform: scaleX(-1);
+}
+
+.gearbit-outer .ball {
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.gearbit-outer .ball-outer.ball-blue .ball > circle {
+    fill: blue;
+}
+
+.gearbit-outer .ball-outer.ball-red .ball > circle {
+    fill: red;
+}
+
+.gearbit-outer .ball-outer.transit-down .ball {
+    animation: gearbit-ball-movement-down 400ms 1 linear;
+    opacity: 1;
+}
+
+.gearbit-outer .ball-outer.transit-across .ball {
+    animation: gearbit-ball-movement-across 400ms 1 linear;
+    opacity: 1;
+}

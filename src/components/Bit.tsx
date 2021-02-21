@@ -28,7 +28,6 @@ export const Bit : React.FC<BitProps> = ({bit}) => {
             ballRef.current?.classList.add(evt.ballColor === TumblerBallColor.Blue ? 'ball-blue' : 'ball-red');
             let transitClass = evt.enterLeft === evt.exitLeft ? 'transit-down' : 'transit-across';
             ballRef.current?.classList.add(transitClass);
-            //ballRef.current?.classList.add('in-transit');
             if (!evt.enterLeft) {
                 ballRef.current?.classList.add('reverse');
             }

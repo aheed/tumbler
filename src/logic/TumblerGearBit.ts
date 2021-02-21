@@ -7,13 +7,21 @@ export class TumblerGearBit extends TumblerGearPartBase {
     constructor(leftExit: IBallReceiver, rightExit: IBallReceiver, facingLeft: boolean) {
         super(TumblerPartType.GearBit, leftExit, rightExit, facingLeft);
 
-        this.leftEntrance = this.rightEntrance = {
-            putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {
+        const putBallHandler = (enterLeft: boolean) => async (color : TumblerBallColor): Promise<TumblerResult> => {
                 
-                let currentExit = this.gearSet ? this.leftExit : this.rightExit;
-                await this.setGearPosition(!this.gearSet);
-                return currentExit.putBall(color);
-            }
+            let currentExit = this.gearSet ? this.leftExit : this.rightExit;
+            this.reportEvent(new TumblerEvent(TumblerEventType.BallAtPart, TumblerPartType.GearBit, color, enterLeft, this.gearSet));
+            await this.setGearPosition(!this.gearSet);
+            
+            return currentExit.putBall(color);
+        }
+
+        this.leftEntrance = {
+            putBall: putBallHandler(true)
+        }
+
+        this.rightEntrance = {
+            putBall: putBallHandler(false)
         }
 
         this.setGearPosition(facingLeft);

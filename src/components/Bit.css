@@ -51,7 +51,6 @@
 
 .bit-outer .ball {
     opacity: 0;
-    z-index: 2;
     animation-fill-mode: forwards;
 }
 

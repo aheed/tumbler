@@ -68,6 +68,14 @@
     animation-fill-mode: forwards;
 }
 
+.ball.ball-blue > circle {
+    fill: blue;
+}
+
+.ball.ball-red > circle {
+    fill: red;
+}
+
 /*.ball.in-transit {
     opacity: 1;
 }*/

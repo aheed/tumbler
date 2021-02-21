@@ -48,7 +48,7 @@ export class EmptyTumblerPart extends TumblerPart {
         super(partType, false, leftExit, rightExit);
 
         const putBallHandler = (enterLeft: boolean) => async (c: TumblerBallColor) => {
-            await this.reportEvent(new TumblerEvent(TumblerEventType.BallDropped, TumblerPartType.NoPart, enterLeft));
+            await this.reportEvent(new TumblerEvent(TumblerEventType.BallDropped, TumblerPartType.NoPart, c, enterLeft));
             return c === TumblerBallColor.Blue ? TumblerResult.BlueBallDropped : TumblerResult.RedBallDropped
         }
 

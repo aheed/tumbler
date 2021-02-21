@@ -8,7 +8,7 @@ export class TumblerRamp extends TumblerPart {
         super(TumblerPartType.Ramp, facingLeft, leftExit, rightExit);
 
         const putBallHandler = (enterLeft: boolean) => async (color : TumblerBallColor): Promise<TumblerResult> => {
-            let evt = new TumblerEvent(TumblerEventType.BallAtPart, TumblerPartType.Ramp, enterLeft, this.facingLeft);
+            let evt = new TumblerEvent(TumblerEventType.BallAtPart, TumblerPartType.Ramp, color, enterLeft, this.facingLeft);
             await this.reportEvent(evt);
             let currentExit = this.facingLeft ? this.leftExit : this.rightExit;
             return currentExit.putBall(color);

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerRamp } from "../logic/TumblerRamp";
+import { TumblerBallColor } from "../logic/TumblerTypes";
 import './Ramp.css';
 
 interface RampProps {
@@ -13,10 +14,9 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
         const onObserveEvent = async (evt: TumblerEvent) => {
             console.log(`ramp event: ${TumblerEventType[evt.eventType]}`);
             
-            if (imgRef.current) {
-                imgRef.current.classList.add('part-tilt');
-                
-            }
+            imgRef.current?.classList.add('part-tilt');
+
+            ballRef.current?.classList.add(evt.ballColor === TumblerBallColor.Blue ? 'ball-blue' : 'ball-red');
 
             let transitClass = evt.enterLeft === evt.exitLeft ? 'transit-down' : 'transit-across';
             ballRef.current?.classList.add(transitClass);
@@ -24,15 +24,11 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
 
             await new Promise(r => setTimeout(r, 350));
 
-            if (imgRef.current) {
-                imgRef.current.classList.remove('part-tilt');
-            }
+            imgRef.current?.classList.remove('part-tilt');
 
-            if (ballRef.current) {
-                ballRef.current.classList.remove('in-transit');
-                ballRef.current.classList.remove('transit-down');
-                ballRef.current.classList.remove('transit-across');
-            }
+            ballRef.current?.classList.remove('in-transit');
+            ballRef.current?.classList.remove('transit-down');
+            ballRef.current?.classList.remove('transit-across');
 
             return;
         }
@@ -46,7 +42,7 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
     return (
         <div className={`ramp-outer ${!ramp.facingLeft ? 'reverse' : ''}`}>
             <svg className='ball' height="100" width="100" ref={ballRef}>
-                <circle cx="15" cy="15" r="7" stroke="black" strokeWidth="1" fill="red" />
+                <circle className='ball-circle' cx="15" cy="15" r="7" stroke="black" strokeWidth="1" fill="red" />
             </svg>
             <img className={`ramp part`} src='./emptypart.png' alt='empty'></img>
             <img className={`ramp part`} src='./ramp.png' alt='ramp' ref={imgRef}></img>

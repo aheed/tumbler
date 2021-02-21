@@ -7,7 +7,7 @@ export class TumblerCrossover extends TumblerPart {
         super(TumblerPartType.Crossover, false, leftExit, rightExit);
 
         const putBallHandler = (enterLeft: boolean) => async (color : TumblerBallColor): Promise<TumblerResult> => {
-            await this.reportEvent(new TumblerEvent(TumblerEventType.BallAtPart, TumblerPartType.Crossover, enterLeft, !enterLeft));
+            await this.reportEvent(new TumblerEvent(TumblerEventType.BallAtPart, TumblerPartType.Crossover, color, enterLeft, !enterLeft));
             let destination = enterLeft ? this.rightExit : this.leftExit;
             return await destination.putBall(color);
         }

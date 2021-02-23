@@ -9,7 +9,7 @@ import { Board } from "./Board";
 import { ToolBar } from "./ToolBar";
 
 interface ControllerProps {
-  text: string;
+  host: string;
   columns: number;
   rows: number;
 }
@@ -23,7 +23,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
   token,
   controllerProps,
 }) => {
-  let { text, columns, rows } = controllerProps;
+  let { columns, rows } = controllerProps;
 
   const [response, setResponse] = useState("");
 
@@ -120,7 +120,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
   };
 
   const save = (boardModel: BoardModel) => {
-    const url = "http://localhost:5000/api/saveboard";
+    const url = controllerProps.host + "/api/saveboard";
     const options = {
       method: "POST",
       headers: {
@@ -144,7 +144,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
   };
 
   const load = (): BoardModel | null => {
-    const url = "http://localhost:5000/api/loadboard";
+    const url = controllerProps.host + "/api/loadboard";
     const options = {
       method: "GET",
       headers: {
@@ -201,7 +201,6 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
     <>
       <button onClick={onSaveClicked}>Save</button>
       <button onClick={onLoadClicked}>Load</button>
-      <div>{text}</div>
       <div>{response}</div>
       <Board
         test="Controlled Board"

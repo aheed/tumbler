@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Client } from './components/Client';
 import { UserInfo } from './components/UserInfo';
 import { UserTokenContext } from './services/UserTokenContext';
 import { Controller } from './components/Controller';
@@ -27,8 +26,7 @@ function App() {
         <div>hello</div>
       </div>
       <UserInfo></UserInfo>
-      <Client></Client>
-      <Controller text='zerooc' columns={11} rows={11}></Controller>
+      <Controller host='http://localhost:5000' columns={11} rows={11}></Controller>
     </UserTokenContext.Provider>
     </>
   );

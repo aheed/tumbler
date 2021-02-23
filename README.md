@@ -57,3 +57,35 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
+## Deployment
+Place .env on the server root directory. It should look like this:
+DB_CONN=<MongoDB connection string>
+
+Place privkey.pem and fullchain.pem on the server root directory. These files are created by certbot. 
+
+To create cert files:
+sudo certbot certonly --standalone
+
+To renew expired cert files:
+sudo certbot renew --force-renewal to recreate expired files.
+
+To install certbot:
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+
+To deploy:
+docker-compose build
+docker-compose up -d
+
+### Alternative ways to use docker
+---
+docker build -f backend.Dockerfile -t backend .
+winpty docker run -d --rm -p 5000:5000 --env-file .env --name running_backend backend
+
+--
+docker build -f nginx_dbg.Dockerfile -t frontend .
+winpty docker run -d --rm -p 3000:80 --name running_frontend frontend
+
+--
+docker build -f Dockerfile -t frontend .
+docker run -d --rm -p 80:80 -p 443:443 --name running_frontend frontend

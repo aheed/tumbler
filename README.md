@@ -57,8 +57,14 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
+## Running backend + frontend locally
+For running backend+frontend locally:
+Place .env file in the repo root dir. It should look like this:
+DB_CONN=<MongoDB connection string>
+REACT_APP_BACKEND_URL=http://localhost:5000
+
 ## Deployment
-Place .env on the server root directory. It should look like this:
+Place .env in the repo root dir on the server. It should look like this:
 DB_CONN=<MongoDB connection string>
 
 Place privkey.pem and fullchain.pem on the server root directory. These files are created by certbot. 

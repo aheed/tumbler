@@ -19,6 +19,16 @@ function App() {
     setToken: setUserToken
   });
 
+  const getBackendUrl = (): string => {
+    let ret: string | undefined = process.env.REACT_APP_BACKEND_URL;
+
+    if (!ret) {
+      ret = window.location.origin;
+    }
+
+    return ret;
+  }
+
   return (
     <>
     <UserTokenContext.Provider value={userTokenState}>
@@ -26,7 +36,7 @@ function App() {
         <div>hello</div>
       </div>
       <UserInfo></UserInfo>
-      <Controller host='http://localhost:5000' columns={11} rows={11}></Controller>
+      <Controller host={getBackendUrl()} columns={11} rows={11}></Controller>
     </UserTokenContext.Provider>
     </>
   );

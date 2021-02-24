@@ -22,12 +22,11 @@ import { TumblerCrossover } from '../logic/TumblerCrossover';
 
 
 interface BoardProps {
-    test: string,
     board: TumblerBoard,
     onClickCallback: (colIndex: number, rowIndex: number) => void
 }
 
-export const Board : React.FC<BoardProps> = ({test, board, onClickCallback}) => {
+export const Board : React.FC<BoardProps> = ({board, onClickCallback}) => {
 
     
 
@@ -76,16 +75,14 @@ export const Board : React.FC<BoardProps> = ({test, board, onClickCallback}) => 
     return (
     <>
         <div className='board-outer'>
-            <div>it's a board alright</div>
-            <div>{test}</div>
             <div className='dispenser-bar'>
-                <Dispenser dispenser={board.blueDispenser} ></Dispenser>
-                <Dispenser dispenser={board.redDispenser} ></Dispenser>
+                <Dispenser dispenser={board.blueDispenser} addButtonText='Add blue ball' ></Dispenser>
+                <Dispenser dispenser={board.redDispenser} addButtonText='Add red ball'></Dispenser>
             </div>
             {renderPartGrid()}
             <div className='trigger-bar'>
-                <Trigger receiver={board.blueCollector}></Trigger>
-                <Trigger receiver={board.redCollector}></Trigger>
+                <Trigger receiver={board.blueCollector} releaseButtonText='Release blue ball'></Trigger>
+                <Trigger receiver={board.redCollector} releaseButtonText='Release red ball'></Trigger>
             </div>
         </div>
     </>);

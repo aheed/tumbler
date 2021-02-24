@@ -41,3 +41,9 @@ validate board data before writing to DB*
 update board on load*
 
 add ball sink
+
+make the urls configurable in Controller.tsx and Client.tsx*
+
+stop using the external url in default.conf*
+
+clean up backend: remove unused path and remove startup test code

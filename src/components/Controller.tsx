@@ -203,7 +203,6 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
       <button onClick={onLoadClicked}>Load</button>
       <div>{response}</div>
       <Board
-        test="Controlled Board"
         board={board}
         onClickCallback={onClick}
       ></Board>

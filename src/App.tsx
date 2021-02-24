@@ -33,7 +33,7 @@ function App() {
     <>
     <UserTokenContext.Provider value={userTokenState}>
       <div className="App">
-        <div>hello</div>
+        <div>This site is a work in progress</div>
       </div>
       <UserInfo></UserInfo>
       <Controller host={getBackendUrl()} columns={11} rows={11}></Controller>

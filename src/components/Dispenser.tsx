@@ -5,9 +5,10 @@ import { TumblerEvent, TumblerEventType } from '../logic/TumblerEvent';
 
 interface DispenserProps {
     dispenser: BallDispenser
+    addButtonText: string
 }
 
-export const Dispenser : React.FC<DispenserProps> = ({dispenser}) => {
+export const Dispenser : React.FC<DispenserProps> = ({dispenser, addButtonText}) => {
 
     const [nofBalls, setNofBalls] = useState(dispenser.getBalls());
 
@@ -37,7 +38,7 @@ export const Dispenser : React.FC<DispenserProps> = ({dispenser}) => {
     return (
         <>
         <div className='dispenser'>
-            <button onClick={onClick}>Add ball</button>
+            <button onClick={onClick}>{addButtonText}</button>
             <div>{nofBalls}</div>
         </div>
         </>

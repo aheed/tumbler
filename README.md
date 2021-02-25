@@ -95,3 +95,29 @@ winpty docker run -d --rm -p 3000:80 --name running_frontend frontend
 --
 docker build -f Dockerfile -t frontend .
 docker run -d --rm -p 80:80 -p 443:443 --name running_frontend frontend
+
+## Admin
+
+### TLS certificate
+See above above about certbot
+<https://letsencrypt.org/>
+
+### domain
+<https://www.dotspin.se/>
+
+<https://www.one.com/>
+Login with email and password to manage
+
+### MongoDb Atlas
+<https://cloud.mongodb.com/>
+Log in with Google to manage the DB.
+DB name: dev
+
+### Google sign-in 
+<https://console.cloud.google.com/>
+Project name: tumbler
+
+At the moment the app is in Testing status. Only registered test users can log in.
+APIs & Services > OAuth Consent screen > Test users
+
+More info: <https://developers.google.com/identity/sign-in/web/sign-in>

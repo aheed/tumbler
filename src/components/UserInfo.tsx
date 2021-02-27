@@ -9,7 +9,7 @@ interface UserInfoInnerProps {
 
 const UserInfoInner : React.FC<UserInfoInnerProps> = ({userState, setUserState}) => {
     const [initialized, setInitialized] = useState(false);
-    const [signedIn, setSignedIn] = useState(false);
+    const [signedIn, setSignedIn] = useState(userState.userLoggedIn);
 
     // @ts-ignore
     const isSignedIn = (): boolean => initialized && window.gapi.auth2.getAuthInstance().isSignedIn.get();
@@ -115,8 +115,11 @@ const UserInfoInner : React.FC<UserInfoInnerProps> = ({userState, setUserState})
     const MemoizedTryInitGoogleSignIn = useCallback(TryInitGoogleSignIn, [TryInitGoogleSignIn, InitGoogleSignIn]);
 
     useEffect(() => {
-        MemoizedTryInitGoogleSignIn();    
-    },[MemoizedTryInitGoogleSignIn])
+        if (!userState.userLoggedIn) {
+            MemoizedTryInitGoogleSignIn();
+        }
+
+    },[MemoizedTryInitGoogleSignIn, userState.userLoggedIn])
 
     
   const renderSignedOut = () => (

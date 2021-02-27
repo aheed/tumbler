@@ -4,7 +4,7 @@ import { BoardModel } from "../logic/model/BoardModel";
 import { TumblerBoard } from "../logic/TumblerBoard";
 import { TumblerPart } from "../logic/TumblerPart";
 import { TumblerPartType } from "../logic/TumblerTypes";
-import { AppContext } from '../services/AppContext';
+import { AppContext, AppStatus } from '../services/AppContext';
 import { Board } from "./Board";
 import { ToolBar } from "./ToolBar";
 
@@ -16,11 +16,13 @@ interface ControllerProps {
 
 interface ControllerInnerProps {
   token: string;
+  loadEnabled: boolean;
   controllerProps: ControllerProps;
 }
 
 const ControllerInner: React.FC<ControllerInnerProps> = ({
   token,
+  loadEnabled,
   controllerProps,
 }) => {
   let { columns, rows } = controllerProps;
@@ -200,7 +202,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
   return (
     <>
       <button onClick={onSaveClicked}>Save</button>
-      <button onClick={onLoadClicked}>Load</button>
+      <button onClick={onLoadClicked} disabled={!loadEnabled}>Load</button>
       <div>{response}</div>
       <Board
         board={board}
@@ -217,6 +219,7 @@ export const Controller = (props: ControllerProps) => {
     {(appState) => (
         <ControllerInner
           token={appState.userState.token}
+          loadEnabled={appState.appStatus === AppStatus.Idle}
           controllerProps={props}
         ></ControllerInner>
     )}

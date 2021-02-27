@@ -1,13 +1,20 @@
 import { IBallReleaser } from "./BallDispenser";
-import { IBallReceiver, TumblerBallColor, TumblerResult } from "./TumblerTypes";
+import { TumblerEvent, TumblerEventType } from "./TumblerEvent";
+import { ITumblerObservable, TumblerObservable } from "./TumblerObservable";
+import { IBallReceiver, IReleaseButton, ITumblerPartObserver, TumblerBallColor, TumblerPartType, TumblerResult } from "./TumblerTypes";
 
 
-export class BallCollector implements IBallReceiver {
-    ballReleaser?: IBallReleaser;
+export class BallCollector implements IBallReceiver, ITumblerObservable, IReleaseButton {
+    ballReleaser?: IBallReleaser;    
+    private observableImplementation: TumblerObservable;
+    
 
     constructor(ballReleaser?: IBallReleaser) {
         this.ballReleaser = ballReleaser;
+        this.observableImplementation = new TumblerObservable();
     }
+
+    public addObserver = (obs: ITumblerPartObserver) => this.observableImplementation.addObserver(obs);
 
     setReleaseer = (ballReleaser: IBallReleaser) => {
         this.ballReleaser = ballReleaser;
@@ -17,7 +24,8 @@ export class BallCollector implements IBallReceiver {
         return this.release();
     }
 
-    pressStartButton = async () : Promise<TumblerResult> => {
+    buttonPressed = async () : Promise<TumblerResult> => {
+        await this.observableImplementation.reportEvent(new TumblerEvent(TumblerEventType.BallReleased, TumblerPartType.Collector));
         return this.release();
     }
 

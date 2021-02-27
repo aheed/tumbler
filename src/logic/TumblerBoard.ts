@@ -9,8 +9,8 @@ import { IBallReceiver, TumblerBallColor, TumblerPartType } from "./TumblerTypes
 export class TumblerBoard {
     blueDispenser: BallDispenser;
     redDispenser: BallDispenser;
-    blueCollector: IBallReceiver;
-    redCollector: IBallReceiver;
+    blueCollector: BallCollector;
+    redCollector: BallCollector;
     parts: TumblerPart[][];
     columns: number;
     rows: number;
@@ -121,8 +121,8 @@ export class TumblerBoard {
     }
 
     setPart = (partType: TumblerPartType, column: number, row: number, facingLeft?: boolean) => {
-        let leftExit = new EmptyReceiver();
-        let rightExit = new EmptyReceiver();
+        let leftExit: IBallReceiver = new EmptyReceiver();
+        let rightExit: IBallReceiver = new EmptyReceiver();
 
         let ballReceiverPart = this.getPart(column - 1, row + 1);
         if (!!ballReceiverPart) {

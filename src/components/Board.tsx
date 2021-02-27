@@ -81,8 +81,8 @@ export const Board : React.FC<BoardProps> = ({board, onClickCallback}) => {
             </div>
             {renderPartGrid()}
             <div className='trigger-bar'>
-                <Trigger receiver={board.blueCollector} releaseButtonText='Release blue ball'></Trigger>
-                <Trigger receiver={board.redCollector} releaseButtonText='Release red ball'></Trigger>
+                <Trigger observableButton={board.blueCollector} releaseButton={board.blueCollector} releaseButtonText='Release blue ball'></Trigger>
+                <Trigger observableButton={board.redCollector} releaseButton={board.redCollector} releaseButtonText='Release red ball'></Trigger>
             </div>
         </div>
     </>);

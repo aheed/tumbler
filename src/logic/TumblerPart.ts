@@ -1,10 +1,10 @@
 import { TumblerEvent, TumblerEventType } from "./TumblerEvent";
 import { IGearInteractor, NullGearInteractor } from "./TumblerGearPart";
-import { TumblerObservable } from "./TumblerObservable";
+import { ITumblerObservable, TumblerObservable } from "./TumblerObservable";
 import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerPartType, TumblerResult } from "./TumblerTypes";
 
 
-export abstract class TumblerPart implements IGearInteractor {
+export abstract class TumblerPart implements IGearInteractor, ITumblerObservable {
     public leftEntrance: IBallReceiver;
     public rightEntrance: IBallReceiver;
     public leftExit: IBallReceiver;

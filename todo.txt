@@ -54,3 +54,4 @@ Disable ball release while executing
 
 Add visible intercepted ball to Interceptor component. Remove on new execution start.
 
+change name of ITumblerPartObserver, exclude Part

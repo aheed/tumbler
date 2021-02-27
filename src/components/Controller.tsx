@@ -27,7 +27,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
 }) => {
   let { columns, rows } = controllerProps;
 
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState("Welcome!");
 
   const getInitialBoard = () => {
     let ret = new TumblerBoard(columns, rows);

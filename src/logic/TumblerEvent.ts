@@ -8,6 +8,7 @@ export enum TumblerEventType {
     BallDispensed,
     BallAddedToDispenser,
     BallCollected,
+    BallReleased,
     BallDropped,
     None
 }

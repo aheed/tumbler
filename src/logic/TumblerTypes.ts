@@ -38,3 +38,7 @@ export interface IBallReceiver {
 export interface ITumblerPartObserver {
     reportEvent: (evt: TumblerEvent) => Promise<void>
 }
+
+export interface IReleaseButton {
+    buttonPressed: () => Promise<TumblerResult>
+}

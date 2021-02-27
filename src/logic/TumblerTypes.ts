@@ -28,7 +28,8 @@ export enum TumblerResult {
     RedDispenserEmpty,
     BlueBallDropped,
     RedBallDropped,
-    Error
+    Error,
+    NoResult
 }
 
 export interface IBallReceiver {

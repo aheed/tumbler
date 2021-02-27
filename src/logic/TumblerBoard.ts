@@ -1,5 +1,6 @@
 import { BallCollector } from "./BallCollector";
 import { BallDispenser } from "./BallDispenser";
+import { BallSink } from "./BallSink";
 import { BoardModel } from "./model/BoardModel";
 import { PartModel } from "./model/PartModel";
 import { EmptyReceiver, TumblerPart } from "./TumblerPart";
@@ -35,8 +36,9 @@ export class TumblerBoard {
         this.blueDispenser = new BallDispenser(TumblerBallColor.Blue, new EmptyReceiver());
         this.redDispenser = new BallDispenser(TumblerBallColor.Red, new EmptyReceiver());
 
-        this.blueCollector = new BallCollector(this.blueDispenser);
-        this.redCollector = new BallCollector(this.redDispenser);
+        let sink = new BallSink();
+        this.blueCollector = new BallCollector(this.blueDispenser, sink);
+        this.redCollector = new BallCollector(this.redDispenser, sink);
 
         // Populate the array with appropriate part types
         this.parts.forEach((row, rowIndex) => 
@@ -209,8 +211,9 @@ export class TumblerBoard {
         this.blueDispenser.setBalls(model.blueBallsInDispenser);
         this.redDispenser.setBalls(model.redBallsInDispenser);
 
-        this.blueCollector = new BallCollector(this.blueDispenser);
-        this.redCollector = new BallCollector(this.redDispenser);
+        let sink = new BallSink();
+        this.blueCollector = new BallCollector(this.blueDispenser, sink);
+        this.redCollector = new BallCollector(this.redDispenser, sink);
 
         model.parts.forEach((row, rowIndex) => row.forEach((part, colIndex) => {
             this.setPart(part.partType, colIndex, rowIndex, part.facingLeft);

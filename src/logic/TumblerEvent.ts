@@ -10,6 +10,7 @@ export enum TumblerEventType {
     BallCollected,
     BallReleased,
     BallDropped,
+    BallSinkUpdated,
     None
 }
 

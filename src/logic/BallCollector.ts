@@ -5,12 +5,14 @@ import { IBallReceiver, IReleaseButton, ITumblerPartObserver, TumblerBallColor, 
 
 
 export class BallCollector implements IBallReceiver, ITumblerObservable, IReleaseButton {
-    ballReleaser?: IBallReleaser;    
+    ballReleaser: IBallReleaser;
+    ballSinkReceiver: IBallReceiver;
     private observableImplementation: TumblerObservable;
     
 
-    constructor(ballReleaser?: IBallReleaser) {
+    constructor(ballReleaser: IBallReleaser, ballSinkReceiver: IBallReceiver) {
         this.ballReleaser = ballReleaser;
+        this.ballSinkReceiver = ballSinkReceiver;
         this.observableImplementation = new TumblerObservable();
     }
 

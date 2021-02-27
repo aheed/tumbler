@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { UserTokenContext } from '../services/UserTokenContext';
+import { AppContext, UserState } from '../services/AppContext';
 
 interface UserInfoInnerProps {
-    setToken: (token: string) => void
+    userState: UserState,
+    setUserState: (userState: UserState) => void
 }
 
 
-const UserInfoInner : React.FC<UserInfoInnerProps> = ({setToken}) => {
+const UserInfoInner : React.FC<UserInfoInnerProps> = ({userState, setUserState}) => {
     const [initialized, setInitialized] = useState(false);
     const [signedIn, setSignedIn] = useState(false);
 
@@ -20,7 +21,10 @@ const UserInfoInner : React.FC<UserInfoInnerProps> = ({setToken}) => {
             // @ts-ignore
             let gUser = window.gapi.auth2.getAuthInstance().currentUser.get();
             let currentToken = gUser.getAuthResponse().id_token;
-            setToken(currentToken);
+            setUserState({
+                userLoggedIn: true,
+                token: currentToken
+            })
         }
 
         setSignedIn(si);
@@ -34,7 +38,10 @@ const UserInfoInner : React.FC<UserInfoInnerProps> = ({setToken}) => {
         console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
         var id_token = googleUser.getAuthResponse().id_token;
         console.log('id_token: ' + id_token);
-        setToken(id_token);
+        setUserState({
+            userLoggedIn: true,
+            token: id_token
+        })
     
         console.log('cool!');
         updateSignedIn();
@@ -52,7 +59,10 @@ const UserInfoInner : React.FC<UserInfoInnerProps> = ({setToken}) => {
         console.log(auth2?.isSignedIn.get());
         auth2?.signOut().then(function () {
           console.log('User signed out.');
-          setToken('');
+          setUserState({
+            userLoggedIn: false,
+            token: ''
+            })
           updateSignedIn();
         });
     }
@@ -137,11 +147,11 @@ const UserInfoInner : React.FC<UserInfoInnerProps> = ({setToken}) => {
 
 export const UserInfo = () => {
     return (
-        <UserTokenContext.Consumer>
-        {({token, setToken}) => (
-            <UserInfoInner setToken={setToken}></UserInfoInner>
+        <AppContext.Consumer>
+        {(appState) => (
+            <UserInfoInner userState={appState.userState} setUserState={appState.setUserState}></UserInfoInner>
         )}
-        </UserTokenContext.Consumer>
+        </AppContext.Consumer>
       );
 }
 

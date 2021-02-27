@@ -4,7 +4,7 @@ import { BoardModel } from "../logic/model/BoardModel";
 import { TumblerBoard } from "../logic/TumblerBoard";
 import { TumblerPart } from "../logic/TumblerPart";
 import { TumblerPartType } from "../logic/TumblerTypes";
-import { UserTokenContext } from "../services/UserTokenContext";
+import { AppContext } from '../services/AppContext';
 import { Board } from "./Board";
 import { ToolBar } from "./ToolBar";
 
@@ -213,13 +213,13 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
 
 export const Controller = (props: ControllerProps) => {
   return (
-    <UserTokenContext.Consumer>
-      {({ token, setToken }) => (
+    <AppContext.Consumer>
+    {(appState) => (
         <ControllerInner
-          token={token}
+          token={appState.userState.token}
           controllerProps={props}
         ></ControllerInner>
-      )}
-    </UserTokenContext.Consumer>
+    )}
+    </AppContext.Consumer>
   );
 };

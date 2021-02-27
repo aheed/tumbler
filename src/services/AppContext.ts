@@ -5,17 +5,25 @@ export enum AppStatus {
     Executing
 }
 
+export interface UserState {
+    userLoggedIn: boolean,
+    token: string
+}
+
 export interface AppState {
     appStatus: AppStatus,
-    userLoggedIn: boolean,
+    userState: UserState,    
     setAppStatus: (appStatus: AppStatus) => void,
-    setUserLoggedIn: (userLoggedIn: boolean) => void,
+    setUserState: (userState: UserState) => void,
 }
 
 export const AppContext = React.createContext<AppState>({
     appStatus: AppStatus.Idle,
-    userLoggedIn: false,
+    userState: {
+        userLoggedIn: false,
+        token: ''
+    },
     setAppStatus: (appStatus: AppStatus) => {},
-    setUserLoggedIn: (userLoggedIn: boolean) => {}
+    setUserState: (userState: UserState) => {}
 });
 

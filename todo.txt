@@ -34,16 +34,23 @@ transparent background for crossover and interceptor parts*
 
 change favicon (to tumble dry icon?)*
 
-animation for lost ball error (explosion?)
+animation for lost ball error (explosion?)*
 
 validate board data before writing to DB*
 
 update board on load*
 
-add ball sink
+add ball sink. Clear on new execution.
 
 make the urls configurable in Controller.tsx and Client.tsx*
 
 stop using the external url in default.conf*
 
 clean up backend: remove unused path and remove startup test code
+
+lift up signed-in state from UserInfo component
+
+Disable ball release while executing
+
+Add visible intercepted ball to Interceptor component. Remove on new execution start.
+

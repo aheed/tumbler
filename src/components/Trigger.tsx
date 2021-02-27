@@ -21,10 +21,6 @@ export const TriggerInner : React.FC<TriggerInnerProps> = ({observableButton, re
     useEffect(() => {
         const onObserveEvent = async (evt: TumblerEvent) => {
             console.log(`trigger event: ${TumblerEventType[evt.eventType]}`);
-            
-            //TBD            
-
-            return;
         }
         
         observableButton.addObserver({reportEvent: onObserveEvent})

@@ -22,7 +22,8 @@ export class BallCollector implements IBallReceiver, ITumblerObservable, IReleas
         this.ballReleaser = ballReleaser;
     }
 
-    putBall = async (_ : TumblerBallColor) : Promise<TumblerResult> => {
+    putBall = async (color : TumblerBallColor) : Promise<TumblerResult> => {
+        await this.ballSinkReceiver.putBall(color);
         return this.release();
     }
 
@@ -34,7 +35,7 @@ export class BallCollector implements IBallReceiver, ITumblerObservable, IReleas
     private release = async () : Promise<TumblerResult> => {
         if (!this.ballReleaser) {
             return TumblerResult.Error;
-        }
+        }        
         return await this.ballReleaser.release();
     }
 }

@@ -2,11 +2,11 @@ import { TumblerEvent, TumblerEventType } from "./TumblerEvent";
 import { ITumblerObservable, TumblerObservable } from "./TumblerObservable";
 import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerPartType, TumblerResult } from "./TumblerTypes";
 
-export interface IBallSink {
+export interface IBallSink extends ITumblerObservable {
     getBalls: () => TumblerBallColor[];
 }
 
-export class BallSink implements IBallReceiver, ITumblerObservable, IBallSink {
+export class BallSink implements IBallReceiver, IBallSink {
     
     private observableImplementation: TumblerObservable;
     private balls: TumblerBallColor[];

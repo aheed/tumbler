@@ -1,0 +1,13 @@
+.empty-part-anim {
+    opacity: 0%;
+    position: absolute;
+    top: 8px;
+    left: 0;
+    transition-property: opacity;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
+}
+
+.empty-part-anim.animation {
+    opacity: 100%;
+}

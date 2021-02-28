@@ -28,3 +28,11 @@
     min-width: 500px;
     max-width: 500px;
 }
+
+.sink-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 600px;
+    max-width: 600px;
+}

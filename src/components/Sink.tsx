@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { IBallSink } from "../logic/BallSink";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerBallColor } from "../logic/TumblerTypes";
+import './Sink.css';
 
 
 interface SinkProps {
@@ -13,13 +14,17 @@ export const Sink : React.FC<SinkProps> = ({observableSink}) => {
     const [balls, setBalls] = useState<TumblerBallColor[]>([]);
 
     useEffect(() => {
+
+        const updateBalls = () => setBalls([...observableSink.getBalls()]);
+
         const onObserveEvent = async (evt: TumblerEvent) => {
             console.log(`sink event: ${TumblerEventType[evt.eventType]}`);
-            setBalls(observableSink.getBalls());
+            updateBalls();
             return;
         }
 
         observableSink.addObserver({reportEvent: onObserveEvent})
+        updateBalls();
     }, [observableSink]);
 
     const renderBalls = () => {

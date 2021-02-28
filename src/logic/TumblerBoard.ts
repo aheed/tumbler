@@ -38,8 +38,8 @@ export class TumblerBoard {
         this.redDispenser = new BallDispenser(TumblerBallColor.Red, new EmptyReceiver());
 
         this.sink = new BallSink();
-        this.blueCollector = new BallCollector(this.blueDispenser, this.sink);
-        this.redCollector = new BallCollector(this.redDispenser, this.sink);
+        this.blueCollector = new BallCollector(this.blueDispenser, this.sink, this.sink);
+        this.redCollector = new BallCollector(this.redDispenser, this.sink, this.sink);
 
         // Populate the array with appropriate part types
         this.parts.forEach((row, rowIndex) => 
@@ -213,8 +213,8 @@ export class TumblerBoard {
         this.redDispenser.setBalls(model.redBallsInDispenser);
 
         this.sink = new BallSink();
-        this.blueCollector = new BallCollector(this.blueDispenser, this.sink);
-        this.redCollector = new BallCollector(this.redDispenser, this.sink);
+        this.blueCollector = new BallCollector(this.blueDispenser, this.sink, this.sink);
+        this.redCollector = new BallCollector(this.redDispenser, this.sink, this.sink);
 
         model.parts.forEach((row, rowIndex) => row.forEach((part, colIndex) => {
             this.setPart(part.partType, colIndex, rowIndex, part.facingLeft);
@@ -222,6 +222,8 @@ export class TumblerBoard {
 
         this.blueDispenser.exit = this.getPart(this.getBlueDispenserColumn(), 0)!.leftEntrance;
         this.redDispenser.exit = this.getPart(this.getRedDispenserColumn(), 0)!.rightEntrance;
+
+        this.sink.reset();
     }
 
     removePart = (column: number, row: number) => {

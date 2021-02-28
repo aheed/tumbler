@@ -4,16 +4,21 @@ import { IBallReceiver, ITumblerPartObserver, TumblerBallColor, TumblerPartType,
 
 export interface IBallSink extends ITumblerObservable {
     getBalls: () => TumblerBallColor[];
+    reset: () => Promise<void>;
 }
 
-export class BallSink implements IBallReceiver, IBallSink {
+export interface IBallSinkController {
+    reset: () => Promise<void>;
+}
+
+export class BallSink implements IBallReceiver, IBallSink, IBallSinkController {
     
     private observableImplementation: TumblerObservable;
-    private balls: TumblerBallColor[];
+    private balls: TumblerBallColor[] = [];
 
     constructor() {
         this.observableImplementation = new TumblerObservable();
-        this.balls = [];
+        this.reset();
     }
 
     public addObserver = (obs: ITumblerPartObserver) => this.observableImplementation.addObserver(obs);
@@ -25,4 +30,9 @@ export class BallSink implements IBallReceiver, IBallSink {
     }
 
     getBalls = (): TumblerBallColor[] => this.balls;
+
+    reset = async () => {
+        this.balls=[];
+        await this.observableImplementation.reportEvent(new TumblerEvent(TumblerEventType.BallSinkUpdated, TumblerPartType.NoPart));        
+    }
 }

@@ -85,7 +85,7 @@ export const Board : React.FC<BoardProps> = ({board, onClickCallback}) => {
                 <Trigger observableButton={board.blueCollector} releaseButton={board.blueCollector} releaseButtonText='Release blue ball'></Trigger>
                 <Trigger observableButton={board.redCollector} releaseButton={board.redCollector} releaseButtonText='Release red ball'></Trigger>
             </div>
-            <div className='trigger-bar'>
+            <div className='sink-bar'>
                 <Sink observableSink={board.sink}></Sink>
             </div>
         </div>

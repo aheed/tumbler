@@ -1,0 +1,6 @@
+.sink-outer {
+    flex-direction: row-reverse;
+    display: flex;
+    height: 40px;
+    align-items: center;
+}

@@ -24,6 +24,8 @@ export const Crossover : React.FC<CrossoverProps> = ({crossover}) => {
 
             ballRef.current?.classList.remove('transit-across');
             ballRef.current?.classList.remove('reverse');
+            ballRef.current?.classList.remove('ball-blue');
+            ballRef.current?.classList.remove('ball-red');
             
             return;
         }

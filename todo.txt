@@ -40,7 +40,7 @@ validate board data before writing to DB*
 
 update board on load*
 
-add ball sink. Clear on new execution.
+add ball sink. Clear on new execution.*
 
 make the urls configurable in Controller.tsx and Client.tsx*
 
@@ -48,11 +48,11 @@ stop using the external url in default.conf*
 
 clean up backend: remove unused path and remove startup test code
 
-lift up signed-in state from UserInfo component
+lift up signed-in state from UserInfo component*
 
-Disable ball release while executing
+Disable ball release while executing*
 
-Add visible intercepted ball to Interceptor component. Remove on new execution start.
+Add visible intercepted ball to Interceptor component. Remove on new execution start.*
 
 change name of ITumblerPartObserver, exclude Part
 

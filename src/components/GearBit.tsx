@@ -44,6 +44,8 @@ export const GearBit : React.FC<GearBitProps> = ({bit}) => {
                 ballRef.current?.classList.remove('transit-down');
                 ballRef.current?.classList.remove('transit-across');
                 ballRef.current?.classList.remove('reverse');
+                ballRef.current?.classList.remove('ball-blue');
+                ballRef.current?.classList.remove('ball-red');
             }
         }
 

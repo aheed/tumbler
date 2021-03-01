@@ -29,6 +29,8 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
             ballRef.current?.classList.remove('in-transit');
             ballRef.current?.classList.remove('transit-down');
             ballRef.current?.classList.remove('transit-across');
+            ballRef.current?.classList.remove('ball-blue');
+            ballRef.current?.classList.remove('ball-red');
 
             return;
         }

@@ -9,7 +9,7 @@ export class TumblerInterceptor extends TumblerPart {
 
         this.leftEntrance = this.rightEntrance = {
             putBall: async (color : TumblerBallColor): Promise<TumblerResult> => {
-                await this.reportEvent(new TumblerEvent(TumblerEventType.BallAtPart, TumblerPartType.Interceptor));
+                await this.reportEvent(new TumblerEvent(TumblerEventType.BallAtPart, TumblerPartType.Interceptor, color));
                 return color === TumblerBallColor.Blue ? TumblerResult.BlueBallIntercepted : TumblerResult.RedBallIntercepted;
             }
         }

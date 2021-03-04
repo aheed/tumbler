@@ -1,12 +1,13 @@
 .ramp {
     transition-property: all;
-    transition-duration: 0.4s;
+    transition-duration: var(--duration);
     transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
     transition-delay: 0s;
     position: absolute;
 }
 
 .ramp-outer {
+    --duration: calc(var(--anim-ms) * 1ms);
     width: 80px;
     height: 80px;
 }
@@ -77,12 +78,11 @@
 }
 
 .ramp-outer .ball.in-transit.transit-across {
-    animation: ramp-ball-movement-across 400ms 1 linear;
+    animation: ramp-ball-movement-across var(--duration) 1 linear;
     opacity: 1;
 }
 
 .ramp-outer .ball.in-transit.transit-down {
-    --duration: calc(var(--anim-ms) * 1ms);
     animation: ramp-ball-movement-down var(--duration) 1 linear;
     opacity: 1;
 }

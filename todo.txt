@@ -62,8 +62,7 @@ Remove the ball from any Interceptor on execution start.
 
 Pause/Stop execution.
 
-Variable speed.
-
-Implement removeObserver.
+Variable speed for all part components.
+  implemented for Ramp
 
 Skip-to-the-end button.

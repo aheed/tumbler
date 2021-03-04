@@ -57,3 +57,13 @@ Add visible intercepted ball to Interceptor component. Remove on new execution s
 change name of ITumblerPartObserver, exclude Part
 
 Fix ball sink display. Display right-to-left. Make the sink visible even with 0 balls.*
+
+Remove the ball from any Interceptor on execution start.
+
+Pause/Stop execution.
+
+Variable speed.
+
+Implement removeObserver.
+
+Skip-to-the-end button.

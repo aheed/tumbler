@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import { UserInfo } from './components/UserInfo';
 import { Controller } from './components/Controller';
@@ -33,6 +33,21 @@ function App() {
     setAppStatus: _setAppStatusState
   });
 
+  const _setDelayTimeState = useCallback((delayTime: number) => {
+
+    var r = document.querySelector(':root');
+    r?.setAttribute('style', `--anim-ms: ${delayTime};`);
+
+    setDelayTimeState({
+      delayTime: delayTime,
+      setDelayTime: _setDelayTimeState
+    })
+  }, []);
+
+  const [delayTimeState, setDelayTimeState] = useState({
+    delayTime: 100,
+    setDelayTime: _setDelayTimeState,
+  });
 
   const getBackendUrl = (): string => {
     let ret: string | undefined = process.env.REACT_APP_BACKEND_URL;
@@ -44,9 +59,16 @@ function App() {
     return ret;
   }
 
+  const initialDelayMs = 301;
+  const setInitialDelayTimeState = useCallback(() => _setDelayTimeState(initialDelayMs), [_setDelayTimeState]);
+
+  useEffect(() => {
+    setInitialDelayTimeState();
+  }, [setInitialDelayTimeState]);
+
   return (
     <>
-      <AppContext.Provider value={{...appStatusState, ...userState}}>
+      <AppContext.Provider value={{...appStatusState, ...userState, ...delayTimeState}}>
         <div className="App">
           <div>This site is a work in progress</div>
         </div>

@@ -12,9 +12,11 @@ export interface UserState {
 
 export interface AppState {
     appStatus: AppStatus,
-    userState: UserState,    
+    userState: UserState,
+    delayTime: number,
     setAppStatus: (appStatus: AppStatus) => void,
     setUserState: (userState: UserState) => void,
+    setDelayTime: (delayTime: number) => void,
 }
 
 export const AppContext = React.createContext<AppState>({
@@ -23,7 +25,9 @@ export const AppContext = React.createContext<AppState>({
         userLoggedIn: false,
         token: ''
     },
+    delayTime: 100,
     setAppStatus: (appStatus: AppStatus) => {},
-    setUserState: (userState: UserState) => {}
+    setUserState: (userState: UserState) => {},
+    setDelayTime: (delayTime: number) => {},
 });
 

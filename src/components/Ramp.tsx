@@ -2,13 +2,19 @@ import { useEffect, useRef } from "react";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerRamp } from "../logic/TumblerRamp";
 import { TumblerBallColor } from "../logic/TumblerTypes";
+import { AppContext } from "../services/AppContext";
 import './Ramp.css';
 
 interface RampProps {
     ramp: TumblerRamp,
 }
 
-export const Ramp : React.FC<RampProps> = ({ramp}) => {
+interface RampInnerProps extends RampProps {
+    ramp: TumblerRamp,
+    delayTime: number
+}
+
+export const RampInner : React.FC<RampInnerProps> = ({ramp, delayTime}) => {
 
     useEffect(() => {
         const onObserveEvent = async (evt: TumblerEvent) => {
@@ -22,6 +28,8 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
             ballRef.current?.classList.add(transitClass);
             ballRef.current?.classList.add('in-transit');
 
+            //const delay = delayTime + 100;
+            //await new Promise(r => setTimeout(r, delay));
             await new Promise(r => setTimeout(r, 350));
 
             imgRef.current?.classList.remove('part-tilt');
@@ -36,7 +44,7 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
         }
 
         ramp.addObserver({reportEvent: onObserveEvent})
-    }, [ramp]);
+    }, [ramp, delayTime]);
 
     let imgRef = useRef<HTMLImageElement>(null);
     let ballRef = useRef<SVGSVGElement>(null);
@@ -51,3 +59,16 @@ export const Ramp : React.FC<RampProps> = ({ramp}) => {
         </div>
     );
 }
+
+export const Ramp = (props: RampProps) => {
+    return (
+        <AppContext.Consumer>
+        {(appState) => (
+            <RampInner
+            ramp={props.ramp}
+            delayTime={appState.delayTime}
+            ></RampInner>
+        )}
+        </AppContext.Consumer>
+    );
+};

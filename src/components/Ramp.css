@@ -82,6 +82,7 @@
 }
 
 .ramp-outer .ball.in-transit.transit-down {
-    animation: ramp-ball-movement-down 400ms 1 linear;
+    --duration: calc(var(--anim-ms) * 1ms);
+    animation: ramp-ball-movement-down var(--duration) 1 linear;
     opacity: 1;
 }

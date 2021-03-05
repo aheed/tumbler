@@ -1,14 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TumblerBit } from "../logic/TumblerBit";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
-import { TumblerBallColor } from "../logic/TumblerTypes";
+import { ITumblerPartObserver, TumblerBallColor } from "../logic/TumblerTypes";
 import './Bit.css';
 
 interface BitProps {
     bit: TumblerBit,
+    delayTime: number
 }
 
-export const Bit : React.FC<BitProps> = ({bit}) => {
+export const Bit : React.FC<BitProps> = ({bit, delayTime}) => {
+
+    const [observer] = useState<ITumblerPartObserver>({reportEvent: async () => {}});
 
     useEffect(() => {
         const updateBitState = () => {
@@ -34,7 +37,9 @@ export const Bit : React.FC<BitProps> = ({bit}) => {
             
             updateBitState();
 
-            await new Promise(r => setTimeout(r, 350));
+            const delayDiff = 50;
+            const delay = delayTime <= delayDiff ? 0 : delayTime - delayDiff;
+            await new Promise(r => setTimeout(r, delay));
 
             ballRef.current?.classList.remove('in-transit');
             ballRef.current?.classList.remove('transit-down');
@@ -47,8 +52,13 @@ export const Bit : React.FC<BitProps> = ({bit}) => {
         }
 
         updateBitState();
-        bit.addObserver({reportEvent: onObserveEvent})
-    }, [bit]);
+        
+        observer.reportEvent = onObserveEvent;
+    }, [bit, delayTime, observer]);
+
+    useEffect(() => {
+        bit.addObserver(observer);
+    }, [bit, observer])
 
     let imgRef = useRef<HTMLImageElement>(null);
     let ballRef = useRef<HTMLDivElement>(null);

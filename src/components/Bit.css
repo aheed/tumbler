@@ -1,12 +1,13 @@
 .bit {
     transition-property: all;
-    transition-duration: 0.4s;
+    transition-duration: var(--duration);
     transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
     transition-delay: 0s;
     position: absolute;
 }
 
 .bit-outer {
+    --duration: calc(var(--anim-ms) * 1ms);
     width: 80px;
     height: 80px;
 }
@@ -63,11 +64,11 @@
 }
 
 .bit-outer .ball-outer.transit-down .ball {
-    animation: bit-ball-movement-down 400ms 1 linear;
+    animation: bit-ball-movement-down var(--duration) 1 linear;
     opacity: 1;
 }
 
 .bit-outer .ball-outer.transit-across .ball {
-    animation: bit-ball-movement-across 400ms 1 linear;
+    animation: bit-ball-movement-across var(--duration) 1 linear;
     opacity: 1;
 }

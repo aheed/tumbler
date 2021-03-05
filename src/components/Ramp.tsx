@@ -30,7 +30,8 @@ export const RampInner : React.FC<RampInnerProps> = ({ramp, delayTime}) => {
             ballRef.current?.classList.add(transitClass);
             ballRef.current?.classList.add('in-transit');
 
-            const delay = delayTime - 50;
+            const delayDiff = 50;
+            const delay = delayTime <= delayDiff ? 0 : delayTime - delayDiff;
             await new Promise(r => setTimeout(r, delay));
 
             imgRef.current?.classList.remove('part-tilt');

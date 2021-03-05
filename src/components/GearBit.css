@@ -1,6 +1,6 @@
 .gearbit {
     transition-property: all;
-    transition-duration: 0.4s;
+    transition-duration: var(--duration);
     transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
     transition-delay: 0s;
     position: absolute;
@@ -15,8 +15,7 @@
 }
 
 .gearbit-outer {
-    /*width: 84px;
-    height: 84px;*/
+    --duration: calc(var(--anim-ms) * 1ms);
     position: relative;
 }
 
@@ -74,11 +73,11 @@
 }
 
 .gearbit-outer .ball-outer.transit-down .ball {
-    animation: gearbit-ball-movement-down 400ms 1 linear;
+    animation: gearbit-ball-movement-down var(--duration) 1 linear;
     opacity: 1;
 }
 
 .gearbit-outer .ball-outer.transit-across .ball {
-    animation: gearbit-ball-movement-across 400ms 1 linear;
+    animation: gearbit-ball-movement-across var(--duration) 1 linear;
     opacity: 1;
 }

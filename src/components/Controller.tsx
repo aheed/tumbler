@@ -57,7 +57,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
 
   const [board, setBoard] = useState(getInitialBoard());
   const [boardVersion, setBoardversion] = useState(0);
-  const [tool, setTool] = useState(EditorToolType.Erase);
+  const [tool, setTool] = useState(EditorToolType.Flip);
 
   const getCurrentEditorTool = (): EditorToolType => {
     return tool;

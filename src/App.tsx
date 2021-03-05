@@ -59,7 +59,7 @@ function App() {
     return ret;
   }
 
-  const initialDelayMs = 2401;
+  const initialDelayMs = 501;
   const setInitialDelayTimeState = useCallback(() => _setDelayTimeState(initialDelayMs), [_setDelayTimeState]);
 
   useEffect(() => {

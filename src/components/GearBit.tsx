@@ -1,14 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerGearBit } from "../logic/TumblerGearBit";
-import { TumblerBallColor } from "../logic/TumblerTypes";
+import { ITumblerPartObserver, TumblerBallColor } from "../logic/TumblerTypes";
 import './GearBit.css';
 
 interface GearBitProps {
     bit: TumblerGearBit,
+    delayTime: number
 }
 
-export const GearBit : React.FC<GearBitProps> = ({bit}) => {
+export const GearBit : React.FC<GearBitProps> = ({bit, delayTime}) => {
+
+    const [observer] = useState<ITumblerPartObserver>({reportEvent: async () => {}});
 
     useEffect(() => {
         const updateBitState = () => {
@@ -27,7 +30,8 @@ export const GearBit : React.FC<GearBitProps> = ({bit}) => {
             
             if ( (evt.eventType === TumblerEventType.Set) || (evt.eventType === TumblerEventType.Reset) ) {
                 updateBitState();    
-                await new Promise(r => setTimeout(r, 500));
+                const delay = delayTime + 100;
+                await new Promise(r => setTimeout(r, delay));
             }
             else if (evt.eventType === TumblerEventType.BallAtPart) {
 
@@ -38,7 +42,9 @@ export const GearBit : React.FC<GearBitProps> = ({bit}) => {
                     ballRef.current?.classList.add('reverse');
                 }
 
-                await new Promise(r => setTimeout(r, 350));
+                const delayDiff = 50;
+                const delay = delayTime <= delayDiff ? 0 : delayTime - delayDiff;
+                await new Promise(r => setTimeout(r, delay));
 
                 ballRef.current?.classList.remove('in-transit');
                 ballRef.current?.classList.remove('transit-down');
@@ -51,8 +57,12 @@ export const GearBit : React.FC<GearBitProps> = ({bit}) => {
 
         updateBitState();
 
-        bit.addObserver({reportEvent: onObserveEvent})
-    }, [bit]);
+        observer.reportEvent = onObserveEvent;
+    }, [bit, delayTime, observer]);
+
+    useEffect(() => {
+        bit.addObserver(observer);
+    }, [bit, observer])
 
     let imgRef = useRef<HTMLImageElement>(null);
     let ballRef = useRef<HTMLDivElement>(null);

@@ -60,9 +60,9 @@ export const BoardInner: React.FC<BoardInnerProps> = ({ board, onClickCallback, 
         case TumblerPartType.Crossover:
           return <Crossover crossover={part as TumblerCrossover}></Crossover>;
         case TumblerPartType.GearBit:
-          return <GearBit bit={part as TumblerGearBit}></GearBit>;
+          return <GearBit bit={part as TumblerGearBit} delayTime={delayTime}></GearBit>;
         case TumblerPartType.Gear:
-          return <Gear gear={part as TumblerGear}></Gear>;
+          return <Gear gear={part as TumblerGear} delayTime={delayTime}></Gear>;
         case TumblerPartType.Interceptor:
           return <Interceptor interceptor={part as TumblerInterceptor}></Interceptor>;
         default:

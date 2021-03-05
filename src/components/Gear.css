@@ -1,6 +1,6 @@
 .gear {
     transition-property: all;
-    transition-duration: 0.4s;
+    transition-duration: var(--duration);
     transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
     transition-delay: 0s;
     transform: rotateZ(-22.5deg);
@@ -8,6 +8,7 @@
 }
 
 .gear-outer {
+    --duration: calc(var(--anim-ms) * 1ms);
     width: 82px;
     height: 82px;
 }

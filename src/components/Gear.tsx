@@ -1,14 +1,18 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerGear } from "../logic/TumblerGear";
+import { ITumblerPartObserver } from "../logic/TumblerTypes";
 import './Gear.css';
 
 interface GearProps {
     gear: TumblerGear,
+    delayTime: number
 }
 
-export const Gear : React.FC<GearProps> = ({gear}) => {
+export const Gear : React.FC<GearProps> = ({gear, delayTime}) => {
 
+    const [observer] = useState<ITumblerPartObserver>({reportEvent: async () => {}});
+    
     useEffect(() => {
 
         const updateBitState = () => {
@@ -27,14 +31,20 @@ export const Gear : React.FC<GearProps> = ({gear}) => {
             
             updateBitState();
 
-            await new Promise(r => setTimeout(r, 500));
+            const delay = delayTime + 100;
+            await new Promise(r => setTimeout(r, delay));
 
             return;
         }
 
         updateBitState();
-        gear.addObserver({reportEvent: onObserveEvent});
-    }, [gear]);
+
+        observer.reportEvent = onObserveEvent;
+    }, [gear, delayTime, observer]);
+
+    useEffect(() => {
+        gear.addObserver(observer);
+    }, [gear, observer])
 
     let imgRef = useRef<HTMLImageElement>(null);
 

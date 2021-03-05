@@ -15,6 +15,7 @@
 }
 
 .crossover-outer .ball-outer {
+    --duration: calc(var(--anim-ms) * 1ms);
     position: absolute;
     display: flex;
     z-index: 2;
@@ -38,6 +39,6 @@
 }
 
 .crossover-outer .ball-outer.transit-across .ball {
-    animation: crossover-ball-movement-across 400ms 1 linear;
+    animation: crossover-ball-movement-across var(--duration) 1 linear;
     opacity: 1;
 }

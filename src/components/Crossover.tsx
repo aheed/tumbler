@@ -1,14 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TumblerCrossover } from "../logic/TumblerCrossover";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
-import { TumblerBallColor } from "../logic/TumblerTypes";
+import { ITumblerPartObserver, TumblerBallColor } from "../logic/TumblerTypes";
 import './Crossover.css';
 
 interface CrossoverProps {
     crossover: TumblerCrossover,
+    delayTime: number
 }
 
-export const Crossover : React.FC<CrossoverProps> = ({crossover}) => {
+export const Crossover : React.FC<CrossoverProps> = ({crossover, delayTime}) => {
+
+    const [observer] = useState<ITumblerPartObserver>({reportEvent: async () => {}});
 
     useEffect(() => {
         const onObserveEvent = async (evt: TumblerEvent) => {
@@ -20,7 +23,9 @@ export const Crossover : React.FC<CrossoverProps> = ({crossover}) => {
                 ballRef.current?.classList.add('reverse');
             }
 
-            await new Promise(r => setTimeout(r, 350));
+            const delayDiff = 50;
+            const delay = delayTime <= delayDiff ? 0 : delayTime - delayDiff;
+            await new Promise(r => setTimeout(r, delay));
 
             ballRef.current?.classList.remove('transit-across');
             ballRef.current?.classList.remove('reverse');
@@ -30,8 +35,12 @@ export const Crossover : React.FC<CrossoverProps> = ({crossover}) => {
             return;
         }
 
-        crossover.addObserver({reportEvent: onObserveEvent})
-    }, [crossover]);
+        observer.reportEvent = onObserveEvent;
+    }, [crossover, delayTime, observer]);
+
+    useEffect(() => {
+        crossover.addObserver(observer);
+    }, [crossover, observer])
 
     let ballRef = useRef<HTMLDivElement>(null);
 

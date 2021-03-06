@@ -31,6 +31,12 @@ export const InterceptorInner : React.FC<InterceptorInnerProps> = ({interceptor,
 
         interceptor.addObserver({reportEvent: onObserveEvent})
     }, [interceptor]);
+
+    useEffect(() => {
+        if (!showBall) {
+            setBallColor(undefined);
+        }
+    }, [showBall, setBallColor]);
     
     const renderBall = () => {
         if (showBall && ballColor !== undefined) {

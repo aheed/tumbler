@@ -6,6 +6,7 @@ import { TumblerPart } from "../logic/TumblerPart";
 import { TumblerPartType } from "../logic/TumblerTypes";
 import { AppContext, AppStatus } from '../services/AppContext';
 import { Board } from "./Board";
+import { SpeedController } from "./SpeedController";
 import { ToolBar } from "./ToolBar";
 
 interface ControllerProps {
@@ -209,6 +210,7 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
         onClickCallback={onClick}
       ></Board>
       <ToolBar selectedTool={tool} onToolSelected={onToolSelected}></ToolBar>
+      <SpeedController></SpeedController>
     </>
   );
 };

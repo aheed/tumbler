@@ -2,55 +2,52 @@ import { useEffect, useRef, useState } from "react";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerGear } from "../logic/TumblerGear";
 import { ITumblerPartObserver } from "../logic/TumblerTypes";
-import './Gear.css';
+import "./Gear.css";
 
 interface GearProps {
-    gear: TumblerGear,
-    delayTime: number
+  gear: TumblerGear;
+  delayTime: number;
 }
 
-export const Gear : React.FC<GearProps> = ({gear, delayTime}) => {
+export const Gear: React.FC<GearProps> = ({ gear, delayTime }) => {
+  const [observer] = useState<ITumblerPartObserver>({ reportEvent: async () => {} });
 
-    const [observer] = useState<ITumblerPartObserver>({reportEvent: async () => {}});
-    
-    useEffect(() => {
-
-        const updateBitState = () => {
-            if (imgRef.current) {
-                if (gear.gearSet) {
-                    imgRef.current.classList.add('gear-tilt');
-                }
-                else {
-                    imgRef.current.classList.remove('gear-tilt');
-                }
-            }
+  useEffect(() => {
+    const updateBitState = () => {
+      if (imgRef.current) {
+        if (gear.gearSet) {
+          imgRef.current.classList.add("gear-tilt");
+        } else {
+          imgRef.current.classList.remove("gear-tilt");
         }
+      }
+    };
 
-        const onObserveEvent = async (evt: TumblerEvent) => {
-            console.log(`gear event: ${TumblerEventType[evt.eventType]}`);
-            
-            updateBitState();
+    const onObserveEvent = async (evt: TumblerEvent) => {
+      console.log(`gear event: ${TumblerEventType[evt.eventType]}`);
 
-            const delay = delayTime + 100;
-            await new Promise(r => setTimeout(r, delay));
+      updateBitState();
 
-            return;
-        }
+      const delay = delayTime + 100;
+      await new Promise((r) => setTimeout(r, delay));
 
-        updateBitState();
+      return;
+    };
 
-        observer.reportEvent = onObserveEvent;
-    }, [gear, delayTime, observer]);
+    updateBitState();
 
-    useEffect(() => {
-        gear.addObserver(observer);
-    }, [gear, observer])
+    observer.reportEvent = onObserveEvent;
+  }, [gear, delayTime, observer]);
 
-    let imgRef = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    gear.addObserver(observer);
+  }, [gear, observer]);
 
-    return (
-        <div className={`gear-outer`}>
-            <img className={`gear`} src='./gear.png' alt='gear' ref={imgRef}></img>
-        </div>
-    );
-}
+  let imgRef = useRef<HTMLImageElement>(null);
+
+  return (
+    <div className={`gear-outer`}>
+      <img className={`gear`} src="./gear.png" alt="gear" ref={imgRef}></img>
+    </div>
+  );
+};

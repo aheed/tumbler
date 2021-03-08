@@ -1,18 +1,18 @@
 .gear {
-    transition-property: all;
-    transition-duration: var(--duration);
-    transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
-    transition-delay: 0s;
-    transform: rotateZ(-22.5deg);
-    position: absolute;
+  transition-property: all;
+  transition-duration: var(--duration);
+  transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
+  transition-delay: 0s;
+  transform: rotateZ(-22.5deg);
+  position: absolute;
 }
 
 .gear-outer {
-    --duration: calc(var(--anim-ms) * 1ms);
-    width: 82px;
-    height: 82px;
+  --duration: calc(var(--anim-ms) * 1ms);
+  width: 82px;
+  height: 82px;
 }
 
 .gear.gear-tilt {
-    transform: rotateZ(-112.5deg);
+  transform: rotateZ(-112.5deg);
 }

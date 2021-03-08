@@ -1,3 +1,3 @@
 export interface InteractionProps {
-    onClick: () => void
+  onClick: () => void;
 }

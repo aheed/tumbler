@@ -10,9 +10,7 @@ export enum EditorToolType {
   Interceptor,
 }
 
-export const getPartTypeByTool = (
-  toolType: EditorToolType
-): TumblerPartType | null => {
+export const getPartTypeByTool = (toolType: EditorToolType): TumblerPartType | null => {
   switch (toolType) {
     case EditorToolType.Erase:
       return null;

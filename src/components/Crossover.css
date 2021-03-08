@@ -1,44 +1,43 @@
-
 @keyframes crossover-ball-movement-across {
-    0% {
-      transform: translate(5px, -17px);
-    }
-    5% {
-        transform: translate(8px, -14px);
-    }
-    30% {
-        transform: translate(35px, 50px);
-    }
-    100% {
-        transform: translate(55px, 48px);
-    }
+  0% {
+    transform: translate(5px, -17px);
+  }
+  5% {
+    transform: translate(8px, -14px);
+  }
+  30% {
+    transform: translate(35px, 50px);
+  }
+  100% {
+    transform: translate(55px, 48px);
+  }
 }
 
 .crossover-outer .ball-outer {
-    --duration: calc(var(--anim-ms) * 1ms);
-    position: absolute;
-    display: flex;
-    z-index: 2;
+  --duration: calc(var(--anim-ms) * 1ms);
+  position: absolute;
+  display: flex;
+  z-index: 2;
 }
 
 .crossover-outer .ball-outer.reverse {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .crossover-outer .ball {
-    opacity: 0;
-    animation-fill-mode: forwards;
+  opacity: 0;
+  animation-fill-mode: forwards;
 }
 
 .crossover-outer .ball-outer.ball-blue .ball > circle {
-    fill: blue;
+  fill: blue;
 }
 
 .crossover-outer .ball-outer.ball-red .ball > circle {
-    fill: red;
+  fill: red;
 }
 
 .crossover-outer .ball-outer.transit-across .ball {
-    animation: crossover-ball-movement-across var(--duration) 1 linear;
-    opacity: 1;
+  animation: crossover-ball-movement-across var(--duration) 1 linear;
+  opacity: 1;
 }

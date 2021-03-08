@@ -5,10 +5,7 @@ interface ToolBarProps {
   onToolSelected: (selectedTool: EditorToolType) => void;
 }
 
-export const ToolBar: React.FC<ToolBarProps> = ({
-  selectedTool,
-  onToolSelected,
-}) => {
+export const ToolBar: React.FC<ToolBarProps> = ({ selectedTool, onToolSelected }) => {
   const onChangeValue = (event: any) => {
     console.log(event.target.value);
     onToolSelected(parseInt(event.target.value));
@@ -24,14 +21,7 @@ export const ToolBar: React.FC<ToolBarProps> = ({
       .filter((value) => !isNaN(Number(value)))
       .map((tool) => (
         <div key={tool}>
-          <input
-            type="radio"
-            id={tool}
-            value={tool}
-            defaultChecked={parseInt(tool) === selectedTool}
-            onChange={onChangeValue}
-            name="tool"
-          />
+          <input type="radio" id={tool} value={tool} defaultChecked={parseInt(tool) === selectedTool} onChange={onChangeValue} name="tool" />
           <label htmlFor={tool}>{EditorToolType[parseInt(tool)]}</label>
         </div>
       ));

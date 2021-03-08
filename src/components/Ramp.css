@@ -1,88 +1,88 @@
 .ramp {
-    transition-property: all;
-    transition-duration: var(--duration);
-    transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
-    transition-delay: 0s;
-    position: absolute;
+  transition-property: all;
+  transition-duration: var(--duration);
+  transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
+  transition-delay: 0s;
+  position: absolute;
 }
 
 .ramp-outer {
-    --duration: calc(var(--anim-ms) * 1ms);
-    width: 80px;
-    height: 80px;
+  --duration: calc(var(--anim-ms) * 1ms);
+  width: 80px;
+  height: 80px;
 }
 
 .ramp-outer.reverse {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .part.part-tilt {
-    transform: rotateZ(-90deg);
+  transform: rotateZ(-90deg);
 }
 
 @keyframes ramp-ball-movement-across {
-    0% {
-      transform: translate(55px, -17px);
-    }
-    5% {
-        transform: translate(53px, -14px);
-      }
-    25% {
-        transform: translate(10px, -2px);
-    }
-    50% {
-        transform: translate(0px, 12px);
-    }    
-    95% {
-        transform: translate(-14px, 27px);
-    }
-    100% {
-        transform: translate(-15px, 48px);
-    }
+  0% {
+    transform: translate(55px, -17px);
+  }
+  5% {
+    transform: translate(53px, -14px);
+  }
+  25% {
+    transform: translate(10px, -2px);
+  }
+  50% {
+    transform: translate(0px, 12px);
+  }
+  95% {
+    transform: translate(-14px, 27px);
+  }
+  100% {
+    transform: translate(-15px, 48px);
+  }
 }
 
 @keyframes ramp-ball-movement-down {
-    0% {
-      transform: translate(5px, -17px);
-    }
-    5% {
-        transform: translate(2px, -14px);
-      }
-    25% {
-        transform: translate(0px, -2px);
-    }
-    50% {
-        transform: translate(-3px, 12px);
-    }    
-    95% {
-        transform: translate(-10px, 27px);
-    }
-    100% {
-        transform: translate(-15px, 48px);
-    }
+  0% {
+    transform: translate(5px, -17px);
+  }
+  5% {
+    transform: translate(2px, -14px);
+  }
+  25% {
+    transform: translate(0px, -2px);
+  }
+  50% {
+    transform: translate(-3px, 12px);
+  }
+  95% {
+    transform: translate(-10px, 27px);
+  }
+  100% {
+    transform: translate(-15px, 48px);
+  }
 }
 
 .ramp-outer .ball {
-    position: absolute;
-    opacity: 0;
-    z-index: 2;
-    animation-fill-mode: forwards;
+  position: absolute;
+  opacity: 0;
+  z-index: 2;
+  animation-fill-mode: forwards;
 }
 
 .ramp-outer .ball.ball-blue > circle {
-    fill: blue;
+  fill: blue;
 }
 
 .ramp-outer .ball.ball-red > circle {
-    fill: red;
+  fill: red;
 }
 
 .ramp-outer .ball.in-transit.transit-across {
-    animation: ramp-ball-movement-across var(--duration) 1 linear;
-    opacity: 1;
+  animation: ramp-ball-movement-across var(--duration) 1 linear;
+  opacity: 1;
 }
 
 .ramp-outer .ball.in-transit.transit-down {
-    animation: ramp-ball-movement-down var(--duration) 1 linear;
-    opacity: 1;
+  animation: ramp-ball-movement-down var(--duration) 1 linear;
+  opacity: 1;
 }

@@ -1,9 +1,9 @@
 .interceptor-outer {
-    height: 104px;
+  height: 104px;
 }
 
 .interceptor-outer .ball {
-    position: relative;
-    top: -79px;
-    left: 42px;
+  position: relative;
+  top: -79px;
+  left: 42px;
 }

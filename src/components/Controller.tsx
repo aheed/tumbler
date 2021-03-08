@@ -4,7 +4,7 @@ import { BoardModel } from "../logic/model/BoardModel";
 import { TumblerBoard } from "../logic/TumblerBoard";
 import { TumblerPart } from "../logic/TumblerPart";
 import { TumblerPartType } from "../logic/TumblerTypes";
-import { AppContext, AppStatus } from '../services/AppContext';
+import { AppContext, AppStatus } from "../services/AppContext";
 import { Board } from "./Board";
 import { SpeedController } from "./SpeedController";
 import { ToolBar } from "./ToolBar";
@@ -21,11 +21,7 @@ interface ControllerInnerProps {
   controllerProps: ControllerProps;
 }
 
-const ControllerInner: React.FC<ControllerInnerProps> = ({
-  token,
-  loadEnabled,
-  controllerProps,
-}) => {
+const ControllerInner: React.FC<ControllerInnerProps> = ({ token, loadEnabled, controllerProps }) => {
   let { columns, rows } = controllerProps;
 
   const [response, setResponse] = useState("Welcome!");
@@ -203,12 +199,11 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
   return (
     <>
       <button onClick={onSaveClicked}>Save</button>
-      <button onClick={onLoadClicked} disabled={!loadEnabled}>Load</button>
+      <button onClick={onLoadClicked} disabled={!loadEnabled}>
+        Load
+      </button>
       <div>{response}</div>
-      <Board
-        board={board}
-        onClickCallback={onClick}
-      ></Board>
+      <Board board={board} onClickCallback={onClick}></Board>
       <ToolBar selectedTool={tool} onToolSelected={onToolSelected}></ToolBar>
       <SpeedController></SpeedController>
     </>
@@ -218,13 +213,13 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({
 export const Controller = (props: ControllerProps) => {
   return (
     <AppContext.Consumer>
-    {(appState) => (
+      {(appState) => (
         <ControllerInner
           token={appState.userState.token}
           loadEnabled={appState.appStatus === AppStatus.Idle}
           controllerProps={props}
         ></ControllerInner>
-    )}
+      )}
     </AppContext.Consumer>
   );
 };

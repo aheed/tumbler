@@ -1,47 +1,45 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import './App.css';
-import { UserInfo } from './components/UserInfo';
-import { Controller } from './components/Controller';
-import { AppContext, AppStatus, UserState } from './services/AppContext';
+import React, { useCallback, useEffect, useState } from "react";
+import "./App.css";
+import { UserInfo } from "./components/UserInfo";
+import { Controller } from "./components/Controller";
+import { AppContext, AppStatus, UserState } from "./services/AppContext";
 
 function App() {
-
   const _setUserState = (userState: UserState) => {
     setUserState({
       userState: userState,
-      setUserState: _setUserState
-    })
-  }
+      setUserState: _setUserState,
+    });
+  };
 
   const [userState, setUserState] = useState({
     userState: {
       userLoggedIn: false,
-      token: ''
+      token: "",
     },
-    setUserState: _setUserState
+    setUserState: _setUserState,
   });
-  
+
   const _setAppStatusState = (appStatus: AppStatus) => {
     setAppStatusState({
       appStatus: appStatus,
-      setAppStatus: _setAppStatusState
-    })
-  }
+      setAppStatus: _setAppStatusState,
+    });
+  };
 
   const [appStatusState, setAppStatusState] = useState({
     appStatus: AppStatus.Idle,
-    setAppStatus: _setAppStatusState
+    setAppStatus: _setAppStatusState,
   });
 
   const _setDelayTimeState = useCallback((delayTime: number) => {
-
-    var r = document.querySelector(':root');
-    r?.setAttribute('style', `--anim-ms: ${delayTime};`);
+    var r = document.querySelector(":root");
+    r?.setAttribute("style", `--anim-ms: ${delayTime};`);
 
     setDelayTimeState({
       delayTime: delayTime,
-      setDelayTime: _setDelayTimeState
-    })
+      setDelayTime: _setDelayTimeState,
+    });
   }, []);
 
   const [delayTimeState, setDelayTimeState] = useState({
@@ -57,7 +55,7 @@ function App() {
     }
 
     return ret;
-  }
+  };
 
   const initialDelayMs = 501;
   const setInitialDelayTimeState = useCallback(() => _setDelayTimeState(initialDelayMs), [_setDelayTimeState]);
@@ -68,7 +66,7 @@ function App() {
 
   return (
     <>
-      <AppContext.Provider value={{...appStatusState, ...userState, ...delayTimeState}}>
+      <AppContext.Provider value={{ ...appStatusState, ...userState, ...delayTimeState }}>
         <div className="App">
           <div>This site is a work in progress</div>
         </div>

@@ -1,83 +1,83 @@
 .gearbit {
-    transition-property: all;
-    transition-duration: var(--duration);
-    transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
-    transition-delay: 0s;
-    position: absolute;
-    top: -42px;
-    left: -42px;
+  transition-property: all;
+  transition-duration: var(--duration);
+  transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
+  transition-delay: 0s;
+  position: absolute;
+  top: -42px;
+  left: -42px;
 }
 
 .gearbit-background {
-    position: absolute;
-    top: -40px;
-    left: -40px;
+  position: absolute;
+  top: -40px;
+  left: -40px;
 }
 
 .gearbit-outer {
-    --duration: calc(var(--anim-ms) * 1ms);
-    position: relative;
+  --duration: calc(var(--anim-ms) * 1ms);
+  position: relative;
 }
 
 .gearbit.gearbit-tilt {
-    transform: rotateZ(90deg);
+  transform: rotateZ(90deg);
 }
 
 @keyframes gearbit-ball-movement-down {
-    0% {
-        transform: translate(5px, -17px);
-    }    
-    100% {
-        transform: translate(-15px, 48px);
-    }
+  0% {
+    transform: translate(5px, -17px);
+  }
+  100% {
+    transform: translate(-15px, 48px);
+  }
 }
 
-@keyframes gearbit-ball-movement-across {    
-    0% {
-        transform: translate(5px, -17px);
-    }
-    5% {
-        transform: translate(8px, -14px);
-    }
-    30% {
-        transform: translate(35px, -14px);
-    }
-    100% {
-        transform: translate(50px, 48px);
-    }
+@keyframes gearbit-ball-movement-across {
+  0% {
+    transform: translate(5px, -17px);
+  }
+  5% {
+    transform: translate(8px, -14px);
+  }
+  30% {
+    transform: translate(35px, -14px);
+  }
+  100% {
+    transform: translate(50px, 48px);
+  }
 }
 
 .gearbit-outer .ball-outer {
-    position: absolute;
-    display: flex;
-    z-index: 2;
-    top: -40px;
-    left: -40px;
+  position: absolute;
+  display: flex;
+  z-index: 2;
+  top: -40px;
+  left: -40px;
 }
 
 .gearbit-outer .ball-outer.reverse {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .gearbit-outer .ball {
-    opacity: 0;
-    animation-fill-mode: forwards;
+  opacity: 0;
+  animation-fill-mode: forwards;
 }
 
 .gearbit-outer .ball-outer.ball-blue .ball > circle {
-    fill: blue;
+  fill: blue;
 }
 
 .gearbit-outer .ball-outer.ball-red .ball > circle {
-    fill: red;
+  fill: red;
 }
 
 .gearbit-outer .ball-outer.transit-down .ball {
-    animation: gearbit-ball-movement-down var(--duration) 1 linear;
-    opacity: 1;
+  animation: gearbit-ball-movement-down var(--duration) 1 linear;
+  opacity: 1;
 }
 
 .gearbit-outer .ball-outer.transit-across .ball {
-    animation: gearbit-ball-movement-across var(--duration) 1 linear;
-    opacity: 1;
+  animation: gearbit-ball-movement-across var(--duration) 1 linear;
+  opacity: 1;
 }

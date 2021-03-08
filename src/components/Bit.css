@@ -1,74 +1,74 @@
 .bit {
-    transition-property: all;
-    transition-duration: var(--duration);
-    transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
-    transition-delay: 0s;
-    position: absolute;
+  transition-property: all;
+  transition-duration: var(--duration);
+  transition-timing-function: cubic-bezier(0.92, 0.29, 0.74, 1.29);
+  transition-delay: 0s;
+  position: absolute;
 }
 
 .bit-outer {
-    --duration: calc(var(--anim-ms) * 1ms);
-    width: 80px;
-    height: 80px;
+  --duration: calc(var(--anim-ms) * 1ms);
+  width: 80px;
+  height: 80px;
 }
 
 .bit.bit-tilt {
-    transform: rotateZ(90deg);
+  transform: rotateZ(90deg);
 }
 
 @keyframes bit-ball-movement-down {
-    0% {
-      transform: translate(5px, -17px);
-    }    
-    100% {
-        transform: translate(-15px, 48px);
-    }
+  0% {
+    transform: translate(5px, -17px);
+  }
+  100% {
+    transform: translate(-15px, 48px);
+  }
 }
 
 @keyframes bit-ball-movement-across {
-    0% {
-      transform: translate(5px, -17px);
-    }
-    5% {
-        transform: translate(8px, -14px);
-    }
-    30% {
-        transform: translate(35px, -14px);
-    }
-    100% {
-        transform: translate(50px, 48px);
-    }
+  0% {
+    transform: translate(5px, -17px);
+  }
+  5% {
+    transform: translate(8px, -14px);
+  }
+  30% {
+    transform: translate(35px, -14px);
+  }
+  100% {
+    transform: translate(50px, 48px);
+  }
 }
 
 .bit-outer .ball-outer {
-    position: absolute;
-    display: flex;
-    z-index: 2;
+  position: absolute;
+  display: flex;
+  z-index: 2;
 }
 
 .bit-outer .ball-outer.reverse {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .bit-outer .ball {
-    opacity: 0;
-    animation-fill-mode: forwards;
+  opacity: 0;
+  animation-fill-mode: forwards;
 }
 
 .bit-outer .ball-outer.ball-blue .ball > circle {
-    fill: blue;
+  fill: blue;
 }
 
 .bit-outer .ball-outer.ball-red .ball > circle {
-    fill: red;
+  fill: red;
 }
 
 .bit-outer .ball-outer.transit-down .ball {
-    animation: bit-ball-movement-down var(--duration) 1 linear;
-    opacity: 1;
+  animation: bit-ball-movement-down var(--duration) 1 linear;
+  opacity: 1;
 }
 
 .bit-outer .ball-outer.transit-across .ball {
-    animation: bit-ball-movement-across var(--duration) 1 linear;
-    opacity: 1;
+  animation: bit-ball-movement-across var(--duration) 1 linear;
+  opacity: 1;
 }

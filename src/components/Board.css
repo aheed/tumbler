@@ -1,38 +1,38 @@
 .board-outer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .part-grid {
-    display: grid;
-    grid-template-columns: repeat(11, 70px);
-    grid-template-rows: repeat(11, 70px);
-    justify-items: center;
-    align-items: center;
-    user-select: none;
+  display: grid;
+  grid-template-columns: repeat(11, 70px);
+  grid-template-rows: repeat(11, 70px);
+  justify-items: center;
+  align-items: center;
+  user-select: none;
 }
 
 .dispenser-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-width: 600px;
-    max-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 600px;
+  max-width: 600px;
 }
 
 .trigger-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-width: 500px;
-    max-width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 500px;
+  max-width: 500px;
 }
 
 .sink-bar {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    min-width: 600px;
-    max-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 600px;
+  max-width: 600px;
 }

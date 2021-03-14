@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerInterceptor } from "../logic/TumblerInterceptor";
 import { TumblerBallColor } from "../logic/TumblerTypes";
@@ -64,9 +64,7 @@ export const InterceptorInner: React.FC<InterceptorInnerProps> = ({ interceptor,
 };
 
 export const Interceptor = (props: InterceptorProps) => {
-  return (
-    <AppContext.Consumer>
-      {(appState) => <InterceptorInner interceptor={props.interceptor} showBall={appState.appStatus === AppStatus.Idle}></InterceptorInner>}
-    </AppContext.Consumer>
-  );
+  const appState = useContext(AppContext);
+
+  return <InterceptorInner interceptor={props.interceptor} showBall={appState.appStatus === AppStatus.Idle}></InterceptorInner>;
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { EditorToolType, getPartTypeByTool } from "../logic/EditorTools";
 import { BoardModel } from "../logic/model/BoardModel";
 import { TumblerBoard } from "../logic/TumblerBoard";
@@ -211,15 +211,9 @@ const ControllerInner: React.FC<ControllerInnerProps> = ({ token, loadEnabled, c
 };
 
 export const Controller = (props: ControllerProps) => {
+  const appState = useContext(AppContext);
+
   return (
-    <AppContext.Consumer>
-      {(appState) => (
-        <ControllerInner
-          token={appState.userState.token}
-          loadEnabled={appState.appStatus === AppStatus.Idle}
-          controllerProps={props}
-        ></ControllerInner>
-      )}
-    </AppContext.Consumer>
+    <ControllerInner token={appState.userState.token} loadEnabled={appState.appStatus === AppStatus.Idle} controllerProps={props}></ControllerInner>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerRamp } from "../logic/TumblerRamp";
 import { ITumblerPartObserver, TumblerBallColor } from "../logic/TumblerTypes";
@@ -9,13 +9,10 @@ interface RampProps {
   ramp: TumblerRamp;
 }
 
-interface RampInnerProps extends RampProps {
-  ramp: TumblerRamp;
-  delayTime: number;
-}
-
-export const RampInner: React.FC<RampInnerProps> = ({ ramp, delayTime }) => {
+export const Ramp: React.FC<RampProps> = ({ ramp }) => {
   const [observer] = useState<ITumblerPartObserver>({ reportEvent: async () => {} });
+
+  const { delayTime } = useContext(AppContext);
 
   useEffect(() => {
     const onObserveEvent = async (evt: TumblerEvent) => {
@@ -63,8 +60,4 @@ export const RampInner: React.FC<RampInnerProps> = ({ ramp, delayTime }) => {
       <img className={`ramp part`} src="./ramp.png" alt="ramp" ref={imgRef}></img>
     </div>
   );
-};
-
-export const Ramp = (props: RampProps) => {
-  return <AppContext.Consumer>{(appState) => <RampInner ramp={props.ramp} delayTime={appState.delayTime}></RampInner>}</AppContext.Consumer>;
 };

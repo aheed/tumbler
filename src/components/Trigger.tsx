@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { ITumblerObservable } from "../logic/TumblerObservable";
 import { IReleaseButton } from "../logic/TumblerTypes";
@@ -10,12 +10,9 @@ interface TriggerProps {
   releaseButtonText: string;
 }
 
-interface TriggerInnerProps extends TriggerProps {
-  enabled: boolean;
-  setAppStatus: (appStatus: AppStatus) => void;
-}
+export const Trigger: React.FC<TriggerProps> = ({ observableButton, releaseButton, releaseButtonText }) => {
+  const { appStatus, setAppStatus } = useContext(AppContext);
 
-export const TriggerInner: React.FC<TriggerInnerProps> = ({ observableButton, releaseButton, releaseButtonText, enabled, setAppStatus }) => {
   useEffect(() => {
     const onObserveEvent = async (evt: TumblerEvent) => {
       console.log(`trigger event: ${TumblerEventType[evt.eventType]}`);
@@ -31,24 +28,8 @@ export const TriggerInner: React.FC<TriggerInnerProps> = ({ observableButton, re
   };
 
   return (
-    <button onClick={onTrig} disabled={!enabled}>
+    <button onClick={onTrig} disabled={appStatus !== AppStatus.Idle}>
       {releaseButtonText}
     </button>
-  );
-};
-
-export const Trigger: React.FC<TriggerProps> = ({ observableButton, releaseButton, releaseButtonText }) => {
-  return (
-    <AppContext.Consumer>
-      {(appState) => (
-        <TriggerInner
-          observableButton={observableButton}
-          releaseButton={releaseButton}
-          releaseButtonText={releaseButtonText}
-          enabled={appState.appStatus === AppStatus.Idle}
-          setAppStatus={appState.setAppStatus}
-        ></TriggerInner>
-      )}
-    </AppContext.Consumer>
   );
 };

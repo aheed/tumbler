@@ -1,12 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { AppContext, UserState } from "../services/AppContext";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { AppContext } from "../services/AppContext";
 
-interface UserInfoInnerProps {
-  userState: UserState;
-  setUserState: (userState: UserState) => void;
-}
+export const UserInfo: React.FC = () => {
+  const { userState, setUserState } = useContext(AppContext);
 
-const UserInfoInner: React.FC<UserInfoInnerProps> = ({ userState, setUserState }) => {
   const [initialized, setInitialized] = useState(false);
   const [signedIn, setSignedIn] = useState(userState.userLoggedIn);
 
@@ -126,13 +123,5 @@ const UserInfoInner: React.FC<UserInfoInnerProps> = ({ userState, setUserState }
       <div>User</div>
       {initialized ? signedIn ? renderSignedIn() : renderSignedOut() : <div>initializing...</div>}
     </div>
-  );
-};
-
-export const UserInfo = () => {
-  return (
-    <AppContext.Consumer>
-      {(appState) => <UserInfoInner userState={appState.userState} setUserState={appState.setUserState}></UserInfoInner>}
-    </AppContext.Consumer>
   );
 };

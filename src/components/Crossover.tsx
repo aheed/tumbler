@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { TumblerCrossover } from "../logic/TumblerCrossover";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { ITumblerPartObserver, TumblerBallColor } from "../logic/TumblerTypes";
+import { AppContext } from "../services/AppContext";
 import "./Crossover.css";
 
 interface CrossoverProps {
   crossover: TumblerCrossover;
-  delayTime: number;
 }
 
-export const Crossover: React.FC<CrossoverProps> = ({ crossover, delayTime }) => {
+export const Crossover: React.FC<CrossoverProps> = ({ crossover }) => {
   const [observer] = useState<ITumblerPartObserver>({ reportEvent: async () => {} });
+
+  const { delayTime } = useContext(AppContext);
 
   useEffect(() => {
     const onObserveEvent = async (evt: TumblerEvent) => {

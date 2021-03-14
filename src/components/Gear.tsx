@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerGear } from "../logic/TumblerGear";
 import { ITumblerPartObserver } from "../logic/TumblerTypes";
+import { AppContext } from "../services/AppContext";
 import "./Gear.css";
 
 interface GearProps {
   gear: TumblerGear;
-  delayTime: number;
 }
 
-export const Gear: React.FC<GearProps> = ({ gear, delayTime }) => {
+export const Gear: React.FC<GearProps> = ({ gear }) => {
   const [observer] = useState<ITumblerPartObserver>({ reportEvent: async () => {} });
+
+  const { delayTime } = useContext(AppContext);
 
   useEffect(() => {
     const updateBitState = () => {

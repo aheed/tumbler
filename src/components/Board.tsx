@@ -20,18 +20,13 @@ import { Interceptor } from "./Interceptor";
 import { TumblerRamp } from "../logic/TumblerRamp";
 import { TumblerCrossover } from "../logic/TumblerCrossover";
 import { Sink } from "./Sink";
-import { AppContext } from "../services/AppContext";
 
 interface BoardProps {
   board: TumblerBoard;
   onClickCallback: (colIndex: number, rowIndex: number) => void;
 }
 
-interface BoardInnerProps extends BoardProps {
-  delayTime: number;
-}
-
-export const BoardInner: React.FC<BoardInnerProps> = ({ board, onClickCallback, delayTime }) => {
+export const Board: React.FC<BoardProps> = ({ board, onClickCallback }) => {
   const renderPartGrid = () => {
     return (
       <div className="part-grid-outer">
@@ -56,13 +51,13 @@ export const BoardInner: React.FC<BoardInnerProps> = ({ board, onClickCallback, 
         case TumblerPartType.Ramp:
           return <Ramp ramp={part as TumblerRamp}></Ramp>;
         case TumblerPartType.Bit:
-          return <Bit bit={part as TumblerBit} delayTime={delayTime}></Bit>;
+          return <Bit bit={part as TumblerBit}></Bit>;
         case TumblerPartType.Crossover:
-          return <Crossover crossover={part as TumblerCrossover} delayTime={delayTime}></Crossover>;
+          return <Crossover crossover={part as TumblerCrossover}></Crossover>;
         case TumblerPartType.GearBit:
-          return <GearBit bit={part as TumblerGearBit} delayTime={delayTime}></GearBit>;
+          return <GearBit bit={part as TumblerGearBit} ></GearBit>;
         case TumblerPartType.Gear:
-          return <Gear gear={part as TumblerGear} delayTime={delayTime}></Gear>;
+          return <Gear gear={part as TumblerGear} ></Gear>;
         case TumblerPartType.Interceptor:
           return <Interceptor interceptor={part as TumblerInterceptor}></Interceptor>;
         default:
@@ -96,8 +91,4 @@ export const BoardInner: React.FC<BoardInnerProps> = ({ board, onClickCallback, 
       </div>
     </>
   );
-};
-
-export const Board = (props: BoardProps) => {
-  return <AppContext.Consumer>{(appState) => <BoardInner {...props} delayTime={appState.delayTime}></BoardInner>}</AppContext.Consumer>;
 };

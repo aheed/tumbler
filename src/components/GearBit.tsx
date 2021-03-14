@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { TumblerGearBit } from "../logic/TumblerGearBit";
 import { ITumblerPartObserver, TumblerBallColor } from "../logic/TumblerTypes";
+import { AppContext } from "../services/AppContext";
 import "./GearBit.css";
 
 interface GearBitProps {
   bit: TumblerGearBit;
-  delayTime: number;
 }
 
-export const GearBit: React.FC<GearBitProps> = ({ bit, delayTime }) => {
+export const GearBit: React.FC<GearBitProps> = ({ bit }) => {
   const [observer] = useState<ITumblerPartObserver>({ reportEvent: async () => {} });
+
+  const { delayTime } = useContext(AppContext);
 
   useEffect(() => {
     const updateBitState = () => {

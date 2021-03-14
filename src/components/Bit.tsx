@@ -1,16 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { TumblerBit } from "../logic/TumblerBit";
 import { TumblerEvent, TumblerEventType } from "../logic/TumblerEvent";
 import { ITumblerPartObserver, TumblerBallColor } from "../logic/TumblerTypes";
+import { AppContext } from "../services/AppContext";
 import "./Bit.css";
 
 interface BitProps {
   bit: TumblerBit;
-  delayTime: number;
 }
 
-export const Bit: React.FC<BitProps> = ({ bit, delayTime }) => {
+export const Bit: React.FC<BitProps> = ({ bit }) => {
   const [observer] = useState<ITumblerPartObserver>({ reportEvent: async () => {} });
+
+  const { delayTime } = useContext(AppContext);
 
   useEffect(() => {
     const updateBitState = () => {

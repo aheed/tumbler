@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tumbler-backend-deployment
+  labels:
+    app: tumbler
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      app: tumbler
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tumbler
+        tier: backend
+    spec:
+      containers:
+      - name: backend
+        image: tumbler_backend:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: tumbler-configmap

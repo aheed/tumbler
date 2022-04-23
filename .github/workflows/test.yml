@@ -1,15 +1,6 @@
 name: test-action
 on: [push]
 jobs:
-  check-bats-version:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-      - run: npm install -g bats
-      - run: bats -v
   ssh-remote-cmds:
     runs-on: ubuntu-latest
     steps:
@@ -25,15 +16,16 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/scribble/myremotesubdir/tumbler
-            pwd
-            echo ${GITHUB_REF}
-            echo ${GITHUB_REF##*/}
-            echo "apa"
-            echo ${{ steps.extract_branch.outputs.branch }}
-            echo "apa2"
             git checkout ${{ steps.extract_branch.outputs.branch }}
-            echo "bpa"
-            git status
-            echo "cpa"
             git pull
+            kubectl delete -f service.yml
+            kubectl delete -f backend-service.yml
+            kubectl delete -f deployment.yml
+            kubectl delete -f backend-deployment.yml
+            kubectl apply -f backend-deployment.yml
+            kubectl apply -f deployment.yml
+            kubectl apply -f backend-service.yml
+            kubectl apply -f service.yml
+
+
             

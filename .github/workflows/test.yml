@@ -21,6 +21,11 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/scribble/myremotesubdir/tumbler
+            pwd
+            echo "apa"
             git checkout ${GITHUB_REF##*/}
+            echo "bpa"
+            git status
+            echo "cpa"
             git pull
             

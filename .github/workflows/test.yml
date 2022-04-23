@@ -20,5 +20,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            whoami
-            ls -lt
+            cd ~/scribble/myremotesubdir/tumbler
+            git checkout ${GITHUB_REF##*/}
+            git pull
+            

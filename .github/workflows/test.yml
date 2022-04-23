@@ -13,6 +13,10 @@ jobs:
   ssh-remote-cmds:
     runs-on: ubuntu-latest
     steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:
@@ -22,8 +26,12 @@ jobs:
           script: |
             cd ~/scribble/myremotesubdir/tumbler
             pwd
+            echo ${GITHUB_REF}
+            echo ${GITHUB_REF##*/}
             echo "apa"
-            git checkout ${GITHUB_REF##*/}
+            echo ${{ steps.extract_branch.outputs.branch }}
+            echo "apa2"
+            git checkout ${{ steps.extract_branch.outputs.branch }}
             echo "bpa"
             git status
             echo "cpa"

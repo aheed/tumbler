@@ -18,11 +18,13 @@ jobs:
             cd ~/scribble/myremotesubdir/tumbler
             git checkout ${{ steps.extract_branch.outputs.branch }}
             git pull
-            docker-compose build
             kubectl delete -f service.yaml
             kubectl delete -f backend-service.yaml
             kubectl delete -f deployment.yaml
             kubectl delete -f backend-deployment.yaml
+            docker-compose build
+            kind load docker-image tumbler_backend:latest
+            kind load docker-image tumbler_frontend:latest
             kubectl apply -f backend-deployment.yaml
             kubectl apply -f deployment.yaml
             kubectl apply -f backend-service.yaml

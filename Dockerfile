@@ -25,8 +25,6 @@ FROM nginx
 
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 
-COPY fullchain.pem /etc/ssl/
-COPY privkey.pem /etc/ssl/
 COPY default.conf /etc/nginx/conf.d/
 
 

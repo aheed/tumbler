@@ -5,10 +5,10 @@ metadata:
 spec:
   tls:
     - hosts:
-      - fakedotspin
+      - www.dotspin.se
       secretName: tumbler-secret-tls
   rules:
-  - host: fakedotspin
+  - host: www.dotspin.se
     http:
       paths:
       - pathType: Prefix

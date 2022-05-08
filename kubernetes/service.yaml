@@ -6,7 +6,6 @@ metadata:
     app: tumbler
     tier: frontend
 spec:
-  type: LoadBalancer
   selector:
     app: tumbler
     tier: frontend
@@ -15,8 +14,4 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 80
-    - name: tls
-      protocol: TCP
-      port: 443
-      targetPort: 443
   

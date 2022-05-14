@@ -18,18 +18,18 @@ jobs:
             cd ~/scribble/myremotesubdir/tumbler
             git checkout ${{ steps.extract_branch.outputs.branch }}
             git pull
-            kubectl delete -f service.yaml
-            kubectl delete -f backend-service.yaml
-            kubectl delete -f deployment.yaml
-            kubectl delete -f backend-deployment.yaml
+            kubectl delete -f kubernetes/service.yaml
+            kubectl delete -f kubernetes/backend-service.yaml
+            kubectl delete -f kubernetes/deployment.yaml
+            kubectl delete -f kubernetes/backend-deployment.yaml
             kubectl delete -f kubernetes/ingress.yaml
             kubectl create secret tls tumbler-secret-tls --cert=fullchain.pem --key=privkey.pem || true
             docker-compose build
             docker build -f frontend-k8s.Dockerfile -t tumbler_frontend_k8s .
-            kind load docker-image tumbler_backend:latest --name my-cluster
-            kind load docker-image tumbler_frontend_k8s:latest --name my-cluster
-            kubectl apply -f backend-deployment.yaml
-            kubectl apply -f deployment.yaml
-            kubectl apply -f backend-service.yaml
-            kubectl apply -f service.yaml
+            kind load docker-image tumbler_backend:latest --name my-cluster || true
+            kind load docker-image tumbler_frontend_k8s:latest --name my-cluster || true
+            kubectl apply -f kubernetes/backend-deployment.yaml
+            kubectl apply -f kubernetes/deployment.yaml
+            kubectl apply -f kubernetes/backend-service.yaml
+            kubectl apply -f kubernetes/service.yaml
             kubectl apply -f kubernetes/ingress.yaml

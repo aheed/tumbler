@@ -66,3 +66,4 @@ Variable speed for all part components.
   implemented for Ramp
 
 Skip-to-the-end button.
+

@@ -21,6 +21,8 @@
 .eslintcache
 .vscode
 .env
+*.pem
+/kubernetes/configmap.yaml
 
 npm-debug.log*
 yarn-debug.log*

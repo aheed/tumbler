@@ -1,0 +1,35 @@
+name: kubernetes-deploy-action
+on: [push]
+jobs:
+  ssh-remote-cmds:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/scribble/myremotesubdir/tumbler
+            git checkout ${{ steps.extract_branch.outputs.branch }}
+            git pull
+            kubectl delete -f kubernetes/service.yaml
+            kubectl delete -f kubernetes/backend-service.yaml
+            kubectl delete -f kubernetes/deployment.yaml
+            kubectl delete -f kubernetes/backend-deployment.yaml
+            kubectl delete -f kubernetes/ingress.yaml
+            kubectl create secret tls tumbler-secret-tls --cert=fullchain.pem --key=privkey.pem || true
+            docker-compose build
+            docker build -f frontend-k8s.Dockerfile -t tumbler_frontend_k8s .
+            kind load docker-image tumbler_backend:latest --name my-cluster || true
+            kind load docker-image tumbler_frontend_k8s:latest --name my-cluster || true
+            kubectl apply -f kubernetes/backend-deployment.yaml
+            kubectl apply -f kubernetes/deployment.yaml
+            kubectl apply -f kubernetes/backend-service.yaml
+            kubectl apply -f kubernetes/service.yaml
+            kubectl apply -f kubernetes/ingress.yaml

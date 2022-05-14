@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tumbler-deployment
+  labels:
+    app: tumbler
+    tier: frontend
+spec:
+  selector:
+    matchLabels:
+      app: tumbler
+      tier: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tumbler
+        tier: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: tumbler_frontend_k8s:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          name: vanilla
+

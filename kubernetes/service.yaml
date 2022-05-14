@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tumbler-service
+  labels:
+    app: tumbler
+    tier: frontend
+spec:
+  selector:
+    app: tumbler
+    tier: frontend
+  ports:
+    - name: vanilla
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  

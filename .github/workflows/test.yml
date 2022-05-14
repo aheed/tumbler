@@ -22,10 +22,14 @@ jobs:
             kubectl delete -f backend-service.yaml
             kubectl delete -f deployment.yaml
             kubectl delete -f backend-deployment.yaml
+            kubectl delete -f kubernetes/ingress.yaml
+            kubectl create secret tls tumbler-secret-tls --cert=fullchain.pem --key=privkey.pem || true
             docker-compose build
-            kind load docker-image tumbler_backend:latest
-            kind load docker-image tumbler_frontend:latest
+            docker build -f frontend-k8s.Dockerfile -t tumbler_frontend_k8s .
+            kind load docker-image tumbler_backend:latest --name my-cluster
+            kind load docker-image tumbler_frontend_k8s:latest --name my-cluster
             kubectl apply -f backend-deployment.yaml
             kubectl apply -f deployment.yaml
             kubectl apply -f backend-service.yaml
             kubectl apply -f service.yaml
+            kubectl apply -f kubernetes/ingress.yaml

@@ -67,11 +67,3 @@ Variable speed for all part components.
 
 Skip-to-the-end button.
 
-------
-Add some more deployment info to README
-
-to build frontend images for k8s deployment:
-docker build -f frontend-k8s.Dockerfile -t tumbler_frontend_k8s .
-
-to create configmaps for https certificate:
-kubectl create configmap tumbler-https --from-file=privkey.pem --from-file=fullchain.pem

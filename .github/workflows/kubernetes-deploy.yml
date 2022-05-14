@@ -18,11 +18,6 @@ jobs:
             cd ~/scribble/myremotesubdir/tumbler
             git checkout ${{ steps.extract_branch.outputs.branch }}
             git pull
-            kubectl delete -f kubernetes/service.yaml
-            kubectl delete -f kubernetes/backend-service.yaml
-            kubectl delete -f kubernetes/deployment.yaml
-            kubectl delete -f kubernetes/backend-deployment.yaml
-            kubectl delete -f kubernetes/ingress.yaml
             kubectl create secret tls tumbler-secret-tls --cert=fullchain.pem --key=privkey.pem || true
             docker-compose build
             docker build -f frontend-k8s.Dockerfile -t tumbler_frontend_k8s .

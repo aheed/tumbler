@@ -1,4 +1,4 @@
-name: test-action
+name: kubernetes-deploy-action
 on: [push]
 jobs:
   ssh-remote-cmds:

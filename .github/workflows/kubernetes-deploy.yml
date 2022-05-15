@@ -20,9 +20,9 @@ jobs:
             git pull
             kubectl create secret tls tumbler-secret-tls --cert=fullchain.pem --key=privkey.pem || true
             docker-compose build
-            docker build -f frontend-k8s.Dockerfile -t tumbler_frontend_k8s:build$GITHUB_RUN_NUMBER .
+            docker build -f frontend-k8s.Dockerfile -t tumbler_frontend_k8s:build${{ env.GITHUB_RUN_NUMBER}} .
             kind load docker-image tumbler_backend:latest --name my-cluster || true
-            kind load docker-image tumbler_frontend_k8s:build$GITHUB_RUN_NUMBER --name my-cluster || true
+            kind load docker-image tumbler_frontend_k8s:build${{ env.GITHUB_RUN_NUMBER}} --name my-cluster || true
             kubectl apply -f kubernetes/backend-deployment.yaml
             kubectl apply -f kubernetes/deployment.yaml
             kubectl apply -f kubernetes/backend-service.yaml

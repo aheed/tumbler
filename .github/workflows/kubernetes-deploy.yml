@@ -8,6 +8,14 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
+      - name: Get version
+        shell: bash
+        run: echo "##[set-output name=version;]$(echo ${GITHUB_RUN_NUMBER})"
+        id: get_version
+      - name: Get version2
+        shell: bash
+        run: echo $GITHUB_RUN_NUMBER
+        id: get_version2
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:

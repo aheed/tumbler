@@ -26,7 +26,7 @@ jobs:
           context: .
           file: frontend-k8s.Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.get_version.outputs.version }}
+          tags: aheed/tumbler_frontend:${{ steps.get_version.outputs.version }}
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@master
         with:

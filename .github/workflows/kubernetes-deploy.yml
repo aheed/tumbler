@@ -12,6 +12,8 @@ jobs:
         shell: bash
         run: echo "##[set-output name=version;]$(echo ${GITHUB_RUN_NUMBER})"
         id: get_version
+      - name: Check out the repo
+        uses: actions/checkout@v3
       - name: Login to DockerHub
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v2

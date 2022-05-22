@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: tumbler_frontend_k8s:latest
+        image: tumbler_frontend_k8s:{{TUMBLER_VERSION}}
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80

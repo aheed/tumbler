@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: tumbler_frontend_k8s:{{TUMBLER_VERSION}}
+        image: aheed/tumbler_frontend:TUMBLER_VERSION_PLACEHOLDER
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80

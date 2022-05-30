@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: tumbler_backend:latest
+        image: aheed/tumbler_backend:TUMBLER_VERSION_PLACEHOLDER
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000

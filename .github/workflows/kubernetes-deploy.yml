@@ -44,6 +44,7 @@ jobs:
             cd ~/scribble/myremotesubdir/tumbler
             git checkout ${{ steps.extract_branch.outputs.branch }}
             git pull
+            uname -a
             alias
             ps -p $$
             echo "$SHELL"

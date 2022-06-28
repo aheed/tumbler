@@ -46,7 +46,6 @@ jobs:
             git pull
             uname -a
             alias
-            ps -p $$
             echo "$SHELL"
             kubectl create secret tls tumbler-secret-tls --cert=fullchain.pem --key=privkey.pem || true
             cat kubernetes/deployment.yaml | sed s/TUMBLER_VERSION_PLACEHOLDER/${{ steps.get_version.outputs.version }}/g > kubernetes/deployment_modified.yaml

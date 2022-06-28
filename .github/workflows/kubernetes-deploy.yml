@@ -49,11 +49,11 @@ jobs:
             alias kubectl='minikube kubectl --'
             alias
             echo "$SHELL"
-            kubectl create secret tls tumbler-secret-tls --cert=fullchain.pem --key=privkey.pem || true
+            minikube kubectl -- create secret tls tumbler-secret-tls --cert=fullchain.pem --key=privkey.pem || true
             cat kubernetes/deployment.yaml | sed s/TUMBLER_VERSION_PLACEHOLDER/${{ steps.get_version.outputs.version }}/g > kubernetes/deployment_modified.yaml
             cat kubernetes/backend-deployment.yaml | sed s/TUMBLER_VERSION_PLACEHOLDER/${{ steps.get_version.outputs.version }}/g > kubernetes/backend-deployment_modified.yaml
-            kubectl apply -f kubernetes/backend-deployment_modified.yaml
-            kubectl apply -f kubernetes/deployment_modified.yaml
-            kubectl apply -f kubernetes/backend-service.yaml
-            kubectl apply -f kubernetes/service.yaml
-            kubectl apply -f kubernetes/ingress.yaml
+            minikube kubectl -- apply -f kubernetes/backend-deployment_modified.yaml
+            minikube kubectl -- apply -f kubernetes/deployment_modified.yaml
+            minikube kubectl -- apply -f kubernetes/backend-service.yaml
+            minikube kubectl -- apply -f kubernetes/service.yaml
+            minikube kubectl -- apply -f kubernetes/ingress.yaml

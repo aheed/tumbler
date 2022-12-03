@@ -142,3 +142,13 @@ At the moment the app is in Testing status. Only registered test users can log i
 APIs & Services > OAuth Consent screen > Test users
 
 More info: <https://developers.google.com/identity/sign-in/web/sign-in>
+
+### Update certificate
+microk8s disable ingress
+sudo certbot certonly --standalone
+cd /home/conrad/scribble/myremotesubdir/tumbler
+sudo cp /etc/letsencrypt/live/www.dotspin.se/privkey.pem .
+sudo cp /etc/letsencrypt/live/www.dotspin.se/privkey.pem .
+kc delete secret tumbler-secret-tls
+microk8s enable ingress
+rerun deployment workflow

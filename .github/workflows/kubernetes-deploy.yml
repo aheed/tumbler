@@ -45,6 +45,5 @@ jobs:
             git checkout ${{ steps.extract_branch.outputs.branch }}
             git pull
             microk8s kubectl create secret tls tumbler-secret-tls --cert=fullchain.pem --key=privkey.pem || true
-            microk8s kubectl apply -f configmap.yaml
             microk8s helm3 upgrade --install --set Frontend.ContainerVersion=${{ steps.get_version.outputs.version }} --set Backend.ContainerVersion=${{ steps.get_version.outputs.version }} --set Backend.DbConnectionString="${{ secrets.DB_CONN }}" tumbler helm/tumbler-helm-chart/
 
